@@ -2,13 +2,25 @@ import java.util.ArrayList;
 
 public class Plateau {
 	static ArrayList <Case> touteCase;
+	static ArrayList <CarteChance> listeCarteChance;
+	static ArrayList <CarteCommunaute> listeCarteCommunaute;
 	private int nbCase;
 	
 	// constructeur vide
 	Plateau () {
 		touteCase = new ArrayList <Case> ();
+		listeCarteChance = new ArrayList <CarteChance> ();
+		listeCarteCommunaute = new ArrayList <CarteCommunaute> ();
 		this.nbCase = 39;
 	
+		// on créer toutes les cartes chance
+		for (int i=0; i<15; i++) // 16 cartes en tout
+			listeCarteChance.add(new CarteChance(i));
+		
+		// on créer toutes les cartes caisse de communaute
+		for (int j=0; j<15; j++) // toujours 16 cartes
+			listeCarteCommunaute.add(new CarteCommunaute(j));
+		
 		// on créer toutes les cases
 		touteCase.add(new Case(1,"Départ",0));
 		touteCase.add(new Case(2,"Boulevard De Belleville",60, "marron"));
