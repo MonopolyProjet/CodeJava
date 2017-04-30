@@ -4,6 +4,7 @@ public class Joueur {
 	private String nom;
 	private int argent;
 	private Pion sonPion;
+	private String couleur;
 	ArrayList <CarteChance> listeCarteChance;
 	ArrayList <CarteCommunaute> listeCarteCommunaute;
 	ArrayList <Case> listePropriete;
