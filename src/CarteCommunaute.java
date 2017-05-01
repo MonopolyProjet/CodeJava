@@ -3,21 +3,21 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class CarteCommunaute {
+public class CarteCommunaute extends Carte{
 	private int numCarteCommunaute;
 	private String texte;
 	private String type;
 	
-	// on va créer un constructeur qui construit les cartes a partir de la lecture d'un fichier .txt
+	// on va crï¿½er un constructeur qui construit les cartes a partir de la lecture d'un fichier .txt
 	CarteCommunaute (int i) { // est l'indice de la carte a creer
 		int nbCarteChance = i;
 		String description = ""; // va recevoir le texte de la carte
 		String type =""; // va recevoir le type de la carte (bonus malus)
 		
-		// on déclare le nouveau fichier
+		// on dï¿½clare le nouveau fichier
 		File f = new File ("carte"+i +".txt");
 		
-		// si le fichier existe on va faire les opération suivante
+		// si le fichier existe on va faire les opï¿½ration suivante
 		if (f.exists())
 		{
 			// on test si pas de probleme

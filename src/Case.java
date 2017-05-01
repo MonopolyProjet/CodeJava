@@ -13,7 +13,7 @@ public class Case {
 		
 	}
 	
-	// Constructeur avec tout les nom, prix et couleur pour les propriétés
+	// Constructeur avec tout les nom, prix et couleur pour les propriï¿½tï¿½s
 	Case (int numCase, String nom, int prix, String couleur) {
 		this.numCase = numCase;
 		this.nomCase = nom;
@@ -56,7 +56,7 @@ public class Case {
 		return this.numCase;
 	}
 	
-	// methode pour recuperer le propriétaire
+	// methode pour recuperer le propriï¿½taire
 	private Joueur getProprietaire () {
 		return this.proprietaire;
 	}
@@ -67,8 +67,9 @@ public class Case {
 	}
 	
 	// methode toString
-	private String toString () {
+	public String toString() {
 		String s = "";
 		s = s + "Nom de la case : " +nomCase +"\n" +"Couleur : " +couleurCase +"\n" +"prix de la case : " +prixCase;
+		return(s);
 	}
 }	// fin de la clase Case
