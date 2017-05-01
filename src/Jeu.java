@@ -68,6 +68,18 @@ public class Jeu {
 		
 		return nbAlea;
 	}
+	
+	// fonction pour voir si une propriété n'est pas déjà a quelqu'un
+	boolean appartientDeja (Case c) {
+		boolean appartient = false;
+		
+		for (int i=0; i<nbJoueur; i++)
+		{
+			if (lesJoueurs.get(i).aCase(c))
+				appartient = true;
+		}
+		return appartient;
+	}
 
 	/////////////////////////////////////////////////////
 	/////////////// FONCTIONS MAIN //////////////////////
@@ -96,19 +108,30 @@ public class Jeu {
 		{
 		case 0:	// il va lancer son dé et on va le faire avancer
 				int avance = jeu.lanceDe();
-				// on avance le joueur
-				lesJoueurs.get(ordre).avancerJoueur(avance);
+				if (avance == 12)
+				{
+					// le joueur doit recuperer l'argent qu'il y a sur le plateau
+					lesJoueurs.get(ordre).gagneArgent (p.getArgent());
+				}
+				else
+				{
+					// on avance le joueur
+					lesJoueurs.get(ordre).avancerJoueur(avance);
+				}
 				
-				if () // on vérifie que la case n'appartient pas a quelqu'un avant de demander de l'acheter
+				// on vérifie que la case n'appartient pas a quelqu'un avant de demander de l'acheter
+				boolean appartient = appartientDeja(lesJoueurs.get(ordre).getCaseActuelle());
 				// on va demander si il veut acheter la propriété en lui montrant son argent
 				System.out.println("Votre argent : " +lesJoueurs.get(ordre).getArgent());
-				System.out.println("Voulez vous achetez la propriété : " +p.getCase(avance));
+				System.out.println("Voulez vous achetez la propriété : " +lesJoueurs.get(ordre).getCaseActuelle());
 				System.out.println(" 1) Oui");
 				System.out.println(" 2) Non");
 				int op = sc.nextInt();
 				
 				if (op == 1)
-					lesJoueurs.get(ordre).acheterCase(p.getCase(avance));
+					lesJoueurs.get(ordre).acheterCase(lesJoueurs.get(ordre).getCaseActuelle());
+				else
+					System.out.println("Nous allons donc passer à la mise au enchere");
 				
 		} 	// fin du switch pour l'ordre des joueurs
 				

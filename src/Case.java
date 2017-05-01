@@ -8,10 +8,11 @@ public class Case {
 	private String nom;
 	private int nbMaison;
 	private int nbHotel;
-	private String couleurCase;
 	private Joueur proprietaire;
+	private int valeur;
 	
 	private int loyer;
+	private String couleurCase;
 	private int loyer1maison;
 	private int loyer2maison;
 	private int loyer3maison;
@@ -62,21 +63,12 @@ public class Case {
 			e.printStackTrace();
 		}
 		
+		this.valeur = 2 * this.hypo;
 		this.nbMaison = 0;
 		this.nbHotel = 0;
 		this.proprietaire = null;
 		
 	} // fin du constructeur
-	
-	// Constructeur avec tout les nom, prix et couleur pour les propriï¿½tï¿½s
-	Case (int numCase, String nom, int prix, String couleur) {
-		this.numCase = numCase;
-		this.nomCase = nom;
-		this.prixCase = prix;
-		this.nbMaison = 0;
-		this.nbHotel = 0;
-		this.couleurCase = couleur;
-	}
 	
 	// methode pour ajouter une maison
 	private void ajouteMaison (int nbMaison) {
@@ -96,35 +88,36 @@ public class Case {
 			System.out.println("Il manque des maisons pour faire mettre un hotel ...");
 	}
 		
-	// methode pour supprimer une maison 
+	// methode pour supprimer un hotel 
 	private void suppHotel (int nbSupp) {
 		this.nbHotel -= nbSupp;
 	}
 	
 	// methode pour recuperer le nom
 	String getNomCase () {
-		return this.nomCase;
+		return this.nom;
 	}
 	
-	// methode pour recupere le numero de la case
-	int getNumCase () {
-		return this.numCase;
+	// methode pour assigner un propriétaire
+	void ajouterProprio (Joueur j) {
+		this.proprietaire = j;
 	}
 	
-	// methode pour recuperer le propriï¿½taire
+	// methode pour recuperer le propriétaire
 	private Joueur getProprietaire () {
 		return this.proprietaire;
 	}
 	
 	//methode pour recuperer le prix
 	int getPrix () {
-		return this.prixCase;
+		return this.valeur;
 	}
 	
 	// methode toString
 	public String toString() {
 		String s = "";
-		s = s + "Nom de la case : " +nomCase +"\n" +"Couleur : " +couleurCase +"\n" +"prix de la case : " +prixCase;
+		s = s + "Nom de la case : " +nom +"\n" +"Couleur : " +couleurCase +"\n" +"prix de la case : " +valeur;
 		return(s);
 	}
+	
 }	// fin de la clase Case

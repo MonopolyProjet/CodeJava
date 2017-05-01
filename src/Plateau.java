@@ -13,6 +13,7 @@ public class Plateau {
 		listeCarteChance = new ArrayList <CarteChance> ();
 		listeCarteCommunaute = new ArrayList <CarteCommunaute> ();
 		this.nbCase = 39;
+		this.argentPlateau = 0;
 	
 		// on créer toutes les cartes chance
 		for (int i=0; i<15; i++) // 16 cartes en tout
@@ -64,23 +65,25 @@ public class Plateau {
 		touteCase.add(new Case("taxe-de-luxe"));
 		touteCase.add(new Case("paix"));
 		
-		
+	} // fin du constructeur
+	
+	// methode pour recuperer l'argent qu'il y a sur le plateau
+	int getArgent () {
+		int tempSomme = 0;
+		tempSomme = argentPlateau;
+		// on remet l'argenta 0;
+		retirerArgentPlateau ();
+		return tempSomme;
 	}
 	
-	// fonction pour renvoyer une case identifiée avec son numero de case
-	Case getCase (int numCase) {
-		boolean trouve = false;
-		int i = 0, indCase=0;
-		
-		while (!trouve) {
-			if (touteCase.get(i).getNumCase() == numCase )
-			{
-				indCase = i;
-				trouve = true;
-			}
-			else
-				i++;
-		}
-		return touteCase.get(indCase);
+	// methode pour ajouter de l'argent sur le plateau
+	void ajouterArgentPlateau (int somme) {
+		this.argentPlateau += somme;
 	}
+
+	// methode pour reinitialisé l'argent sur le plateau
+	void retirerArgentPlateau() {
+		this.argentPlateau = 0;
+	}
+	
 }	// fin de la classe Plateau
