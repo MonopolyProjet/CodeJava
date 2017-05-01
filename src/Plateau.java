@@ -23,46 +23,48 @@ public class Plateau {
 			listeCarteCommunaute.add(new CarteCommunaute(j));
 		
 		// on créer toutes les cases
-		touteCase.add(new Case(1,"Départ",0));
-		touteCase.add(new Case(2,"Boulevard De Belleville",60, "marron"));
-		touteCase.add(new Case(3,"Caisse de communauté",0));
-		touteCase.add(new Case(4,"Rue Lecourbe",60, "marron"));
-		touteCase.add(new Case(5,"Impôt sur le revenu",0));
-		touteCase.add(new Case(6,"Gare Monparnasse",200));
-		touteCase.add(new Case(7,"Rue De Vaugirard",100, "bleu clair"));
-		touteCase.add(new Case(8,"Chance",0));
-		touteCase.add(new Case(9,"Rue De Courcelles",100, "bleu clair"));
-		touteCase.add(new Case(10,"Avenue De La République",120, "bleu clair"));
-		touteCase.add(new Case(11,"Prison",0));
-		touteCase.add(new Case(12,"Boulevard De La Vilette",140, "violet"));
-		touteCase.add(new Case(13,"Compagnie de distribution de l'éléctricité",150));
-		touteCase.add(new Case(14,"Avenue de Neuilly",140, "violet"));
-		touteCase.add(new Case(15,"Rue De Paradis",160, "violet"));
-		touteCase.add(new Case(16,"Gare de Lyon",200));
-		touteCase.add(new Case(17,"Avenue Mozart",180, "orange"));
-		touteCase.add(new Case(18,"Caisse de communauté",0));
-		touteCase.add(new Case(19,"Boulevard Saint-Michel",180, "orange"));
-		touteCase.add(new Case(20,"Place Pigalle",200, "orange"));
-		touteCase.add(new Case(21,"Parc Gratuit",0));
-		touteCase.add(new Case(22,"Avenue Matignon",220, "rouge"));
-		touteCase.add(new Case(23,"Chance",0));
-		touteCase.add(new Case(24,"Boulevard Malesherbes",220, "rouge"));
-		touteCase.add(new Case(25,"Avenue Henri-Martin",240, "rouge"));
-		touteCase.add(new Case(26,"Gare du Nord",200));
-		touteCase.add(new Case(27,"Faubourg Saint-Honoré",260, "jaune"));
-		touteCase.add(new Case(28,"Place De La Bourse",260, "jaune"));
-		touteCase.add(new Case(29,"Compagnie de distribution des eaux",150));
-		touteCase.add(new Case(30,"Rue La Fayette",280, "jaune"));
-		touteCase.add(new Case(31,"Allez en prison",0));
-		touteCase.add(new Case(32,"Avenue De Breteuil",300, "vert"));
-		touteCase.add(new Case(33,"Avenue Foch",300, "vert"));
-		touteCase.add(new Case(34,"Caisse de communauté",0));
-		touteCase.add(new Case(35,"Boulevard Des Capucines",320, "vert"));
-		touteCase.add(new Case(36,"Gare Saint-Lazare",200));
-		touteCase.add(new Case(37,"Chance",0));
-		touteCase.add(new Case(38,"Avenue Des Champs-Eleysées",350, "bleu fonce"));
-		touteCase.add(new Case(39,"Taxe de luxe",100));
-		touteCase.add(new Case(40,"Rue De La Paix",400, "bleu fonce"));
+		touteCase.add(new Case("depart"));
+		touteCase.add(new Case("belleville"));
+		touteCase.add(new Case("communaute"));
+		touteCase.add(new Case("lecourbe"));
+		touteCase.add(new Case("impots sur le revenu"));
+		touteCase.add(new Case("monparnasse"));
+		touteCase.add(new Case("vaugirard"));
+		touteCase.add(new Case("chance"));
+		touteCase.add(new Case("courcelles"));
+		touteCase.add(new Case("republique"));
+		touteCase.add(new Case("prison"));
+		touteCase.add(new Case("villette"));
+		touteCase.add(new Case("electricite"));
+		touteCase.add(new Case("neuilly"));
+		touteCase.add(new Case("paradis"));
+		touteCase.add(new Case("lyon"));
+		touteCase.add(new Case("mozart"));
+		touteCase.add(new Case("communaute"));
+		touteCase.add(new Case("saint-michel"));
+		touteCase.add(new Case("pigalle"));
+		touteCase.add(new Case("parc-gratuit"));
+		touteCase.add(new Case("matignon"));
+		touteCase.add(new Case("chance"));
+		touteCase.add(new Case("malesherbes"));
+		touteCase.add(new Case("henri-martin"));
+		touteCase.add(new Case("nord"));
+		touteCase.add(new Case("saint-honore"));
+		touteCase.add(new Case("bourse"));
+		touteCase.add(new Case("eau"));
+		touteCase.add(new Case("fayette"));
+		touteCase.add(new Case("aller-prison"));
+		touteCase.add(new Case("breteuil"));
+		touteCase.add(new Case("foch"));
+		touteCase.add(new Case("communaute"));
+		touteCase.add(new Case("capucines"));
+		touteCase.add(new Case("saint-lazare"));
+		touteCase.add(new Case("chance"));
+		touteCase.add(new Case("champs"));
+		touteCase.add(new Case("taxe-de-luxe"));
+		touteCase.add(new Case("paix"));
+		
+		
 	}
 	
 	// fonction pour renvoyer une case identifiée avec son numero de case
