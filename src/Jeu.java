@@ -18,58 +18,48 @@ public class Jeu {
 	}
 	
 	
-	// fonction pour créer les joueurs
+	// fonction pour crï¿½er les joueurs
 	public void creerJoueur (int nbJoueur) {
 		
 		Scanner sc2 = new Scanner(System.in); // Scanner pour les String
 		this.nbJoueur = nbJoueur;
 		
-		int i = 0; // compteur pour la déclaration des joueurs
-		int tempInd = 0;
-		String tempNom, tempPion = "";
+		int i = 0; // compteur pour la dï¿½claration des joueurs
+		int tempCouleur;
+		String tempNom;
+		ArrayList arrayPions = new ArrayList <String>();
+		arrayPions.add("Rouge");
+		arrayPions.add("Bleu");
+		arrayPions.add("Noir");
+		arrayPions.add("Rose");
+		arrayPions.add("Marron");
+		arrayPions.add("Mauve");
+		arrayPions.add("Cyan");
+		arrayPions.add("Vert");
 		
-		System.out.println("\n" +"Vous aller entrer les noms de tout les joueurs avant de commencer la partie" +"\n");
+		System.out.println("\n" +"Vous devez entrer les noms de tous les joueurs avant de commencer la partie" +"\n");
 		while (i<nbJoueur) {
-			System.out.println("\n" +"Entrer le nom d'un des joueur");
+			System.out.println("\n" +"Entrez le nom d'un des joueurs: ");
 			tempNom = sc2.nextLine();
-			System.out.println("Entrez le numero du motif du pion que le joueur veut");
-			// on va affichier le tableau des motifs avec le tableau qui contient les noms des pions
-			for (i=0; i<8; i++)
-				System.out.println(i +" : " +tabPion[i]);
+			System.out.println("Entrez la couleur du pion que le joueur veut: ");
 			
-			// on recupere la reponse
-			tempInd = sc2.nextInt ();
-			// tableau pour les pions qui ont déjà été pris
-			int pionDejaPris[] = {10, 10, 10}; // valeur impossible a prendre
-			// on parcourt le tableau des deja choisi
-			for (int j=0 ; j<8; j++)
-			{
-				if (tempInd == pionDejaPris[j])
-					System.out.println("Ce pion a déjè été pris par un autre joueur");
-				else
-				{
-					tempPion = tabPion[tempInd];
-					// on va stocker dans un tableau la liste des piions deja pris
-					pionDejaPris[j] = tempInd;
-				}
+			// on va afficher le tableau des pions avec leurs couleurs
+			for (i=0; i<8; i++){
+				System.out.println( i + ": " + arrayPions.get(i));
 			}
 			
-			// ajoute a la liste de joueur et declaration des objets joueur
-			lesJoueurs.add(new Joueur (tempNom, tempPion));
+			// on recupere la reponse
+			tempCouleur = sc2.nextInt ();
 			
+			// ajoute a la liste de joueur et declaration des objets joueur
+			lesJoueurs.add(new Joueur (tempNom, (String)arrayPions.get(tempCouleur)));
+			
+			arrayPions.remove(tempCouleur);//on enlÃ¨ve la couleur qui a dÃ©jÃ  Ã©tÃ© prise
 			i++; // on augmente i pour stocker dans une autre case et arreter la boucle
 		}		
 	}
 	
-	// fonction pour tirer un dé
-	private int lanceDe () {
-		Random r = new Random();
-		int nbAlea = 2 + r.nextInt(13 - 2);
-		
-		return nbAlea;
-	}
-	
-	// fonction pour voir si une propriété n'est pas déjà a quelqu'un
+	// fonction pour voir si une propriï¿½tï¿½ n'est pas dï¿½jï¿½ a quelqu'un
 	boolean appartientDeja (Case c) {
 		boolean appartient = false;
 		
@@ -82,63 +72,38 @@ public class Jeu {
 	}
 
 	/////////////////////////////////////////////////////
-	/////////////// FONCTIONS MAIN //////////////////////
+	//////////////// FONCTION MAIN //////////////////////
 	/////////////////////////////////////////////////////
 	public static void main (String [] args) {
 		
-		// On créer le jeu
+		// On crï¿½er le jeu
 		Scanner sc = new Scanner(System.in); // pour le type string
 		System.out.println ("Veuillez entrer le nom de la partie");
 		String nom = sc.nextLine();
 		Jeu jeu = new Jeu (nom);
 		
-		// On va créer le plateau de jeu
-		Plateau p = new Plateau ();
+		// On va crï¿½er le plateau de jeu
+		//Plateau p = new Plateau ();
 		
-		// on va créer les joueurs mais on doit savoir combien il y en a
-		System.out.println("\n" +"Entrer mainenant le nombre de joueur de cette partie (entre 2 et 8)");
+		// on va crï¿½er les joueurs mais on doit savoir combien il y en a
+		System.out.println("\n" +"Entrez mainenant le nombre de joueur de cette partie (entre 2 et 8)");
 		int nbJoueur = sc.nextInt();
-		// on appel la méthode pour créer les joueur
+		// on appel la mï¿½thode pour crï¿½er les joueur
 		jeu.creerJoueur(nbJoueur);
 		
 		
-		// on va faire marché les joueurs
-		int ordre = 0; // pour savoir a quel joueur on en est
-		switch (ordre)
-		{
-		case 0:	// il va lancer son dé et on va le faire avancer
-				int avance = jeu.lanceDe();
-				if (avance == 12)
-				{
-					// le joueur doit recuperer l'argent qu'il y a sur le plateau
-					lesJoueurs.get(ordre).gagneArgent (p.getArgent());
-				}
-				else
-				{
-					// on avance le joueur
-					lesJoueurs.get(ordre).avancerJoueur(avance);
-				}
+		// on va faire marchï¿½ les joueurs
+		int i=0;
+		while(i<20){
+			System.out.println(lesJoueurs.get(i).getNom() + " est Ã  la case : " + lesJoueurs.get(i).getCaseActuelle());
+			Random r = new Random();
+			int nbCases = 2 + r.nextInt(12 - 2);	
+			lesJoueurs.get(i).avancerJoueur(nbCases);
+			System.out.println(lesJoueurs.get(i).getNom() + " avance de " + nbCases + " cases.");
+			System.out.println(lesJoueurs.get(i).getNom() + " est Ã  la case : " + lesJoueurs.get(i).getCaseActuelle());
+			i++;			
+		}
 				
-				// on vérifie que la case n'appartient pas a quelqu'un avant de demander de l'acheter
-				boolean appartient = appartientDeja(lesJoueurs.get(ordre).getCaseActuelle());
-				// on va demander si il veut acheter la propriété en lui montrant son argent
-				System.out.println("Votre argent : " +lesJoueurs.get(ordre).getArgent());
-				System.out.println("Voulez vous achetez la propriété : " +lesJoueurs.get(ordre).getCaseActuelle());
-				System.out.println(" 1) Oui");
-				System.out.println(" 2) Non");
-				int op = sc.nextInt();
-				
-				if (op == 1)
-					lesJoueurs.get(ordre).acheterCase(lesJoueurs.get(ordre).getCaseActuelle());
-				else
-					System.out.println("Nous allons donc passer à la mise au enchere");
-				
-		} 	// fin du switch pour l'ordre des joueurs
-				
-				
-		
-		
-		
 	} // Fin de la fonction main
 	
 } 	// Fin de la classe Jeu

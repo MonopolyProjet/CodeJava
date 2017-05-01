@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Joueur {
 	private String nom;
@@ -25,42 +26,47 @@ public class Joueur {
 	}
 	
 	//methode pour avancer le joueur
-	void avancerJoueur (int numCase) {
-		this.indiceCaseActuelle += numCase;
+	public void avancerJoueur (int nbCases) {
+		this.indiceCaseActuelle += nbCases;
+	}
+	
+	//methode pour recuperer le nom du joueur
+	public String getNom(){
+		return(this.nom);
 	}
 	
 	// methode pour recuperer la case actuelle
-	Case getCaseActuelle() {
+	public Case getCaseActuelle() {
 		return caseActuelle;
 	}
 	// methode pour recuperer l'argent
-	int getArgent () {
+	public int getArgent () {
 		return this.argent;
 	}
 	
 	// methode pour acheter une propriete
-	void acheterCase (Case c) {
+	public void acheterCase (Case c) {
 		this.listePropriete.add(c);
 		this.argent -= c.getPrix();
 	}
 
-	void payerTaxe(int montantTaxe){
+	public void payerTaxe(int montantTaxe){
 		this.argent-=montantTaxe;
 	}
 	
-	void gagneArgent (int somme) {
+	public void gagneArgent (int somme) {
 		this.argent += somme;
 	}
 	
-	void retirerArgent (int somme) {
+	public void retirerArgent (int somme) {
 		this.argent -= somme;
 	}
 	
 	// methode pour savoir si le joueur a la case
-	boolean aCase (Case c) {
+	public boolean aCase (Case c) {
 		boolean trouve = false;
 		int cpt = 0;
-		// on parcourt la liste de ces propriétés
+		// on parcourt la liste de ces propriï¿½tï¿½s
 		while (!trouve)
 		{
 			if (listePropriete.get(cpt) == c)
