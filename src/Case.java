@@ -1,17 +1,72 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class Case {
 	private int numCase;
-	private String nomCase;
-	private int prixCase;
+	private String nom;
 	private int nbMaison;
 	private int nbHotel;
 	private String couleurCase;
 	private Joueur proprietaire;
 	
-	//constructeur vide
-	Case () {
+	private int loyer;
+	private int loyer1maison;
+	private int loyer2maison;
+	private int loyer3maison;
+	private int loyer4maison;
+	private int loyerHotel;
+	private int hypo;
+	private int prixMaison;
+	private int prixHotel;
+	
+	Case (String nom) { // est le nom de la carte qui doit etre construite
 		
-	}
+		// on d�clare le nouveau fichier
+		File f = new File (nom +".txt");
+		
+		// si le fichier existe on va faire les op�ration suivante
+		if (f.exists())
+		{
+			// on test si pas de probleme
+			try {
+				f.createNewFile();
+			}
+			// si erreur
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		} // fin du if
+		
+		// on va s'occuper de la lecture
+		try (FileInputStream fis = new FileInputStream(f)) {
+			// on creer un scanner
+			Scanner sc = new Scanner (fis);
+			// on attrape maintenant ligne par ligne (tant qu'il y en a)
+			this.nom = nom;
+			this.couleurCase = sc.nextLine();
+			this.loyer = sc.nextInt();
+			this.loyer1maison = sc.nextInt();
+			this.loyer2maison = sc.nextInt();
+			this.loyer3maison = sc.nextInt();
+			this.loyer4maison = sc.nextInt();
+			this.loyerHotel = sc.nextInt();
+			this.hypo = sc.nextInt();
+			this.prixMaison = sc.nextInt();
+			this.prixHotel = sc.nextInt();
+			
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		this.nbMaison = 0;
+		this.nbHotel = 0;
+		this.proprietaire = null;
+		
+	} // fin du constructeur
 	
 	// Constructeur avec tout les nom, prix et couleur pour les propri�t�s
 	Case (int numCase, String nom, int prix, String couleur) {

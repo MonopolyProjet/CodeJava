@@ -5,6 +5,7 @@ public class Plateau {
 	static ArrayList <CarteChance> listeCarteChance;
 	static ArrayList <CarteCommunaute> listeCarteCommunaute;
 	private int nbCase;
+	private int argentPlateau; // argent qui est poser sur le plateau
 	
 	// constructeur vide
 	Plateau () {
