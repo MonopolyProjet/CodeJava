@@ -44,8 +44,9 @@ public class Jeu {
 			System.out.println("Entrez la couleur du pion que le joueur veut: ");
 			
 			// on va afficher le tableau des pions avec leurs couleurs
-			for (i=0; i<8; i++){
-				System.out.println( i + ": " + arrayPions.get(i));
+			
+			for (int j=0; j<8-i; j++){
+				System.out.println( j + ": " + arrayPions.get(j));
 			}
 			
 			// on recupere la reponse
@@ -96,8 +97,8 @@ public class Jeu {
 		int i=0;
 		while(i<20){
 			System.out.println(lesJoueurs.get(i).getNom() + " est à la case : " + lesJoueurs.get(i).getCaseActuelle());
-			Random r = new Random();
-			int nbCases = 2 + r.nextInt(12 - 2);	
+			Random r = new Random(); //Génération du nombre aléatoire
+			int nbCases = 2 + r.nextInt(12 - 2); //On fait en sorte que le nombre soit compris entre 2 et 12
 			lesJoueurs.get(i).avancerJoueur(nbCases);
 			System.out.println(lesJoueurs.get(i).getNom() + " avance de " + nbCases + " cases.");
 			System.out.println(lesJoueurs.get(i).getNom() + " est à la case : " + lesJoueurs.get(i).getCaseActuelle());
