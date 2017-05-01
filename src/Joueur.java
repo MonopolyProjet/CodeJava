@@ -37,5 +37,8 @@ public class Joueur {
 		this.argent -= c.getPrix();
 	}
 
+	void payerTaxe(int montantTaxe){
+		this.argent-=montantTaxe;
+	}
 	
 } // Fin de la classe joueur
