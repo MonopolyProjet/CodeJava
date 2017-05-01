@@ -1,5 +1,7 @@
 model de carte propriete
+
 nom
+couleur
 loyer
 1 maison
 2 maisons
