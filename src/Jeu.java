@@ -20,8 +20,7 @@ public class Jeu {
 	
 	// fonction pour cr�er les joueurs
 	public void creerJoueur (int nbJoueur) {
-		
-		Scanner sc2 = new Scanner(System.in); // Scanner pour les String
+
 		this.nbJoueur = nbJoueur;
 		
 		int i = 0; // compteur pour la d�claration des joueurs
@@ -39,6 +38,7 @@ public class Jeu {
 		
 		System.out.println("\n" +"Vous devez entrer les noms de tous les joueurs avant de commencer la partie" +"\n");
 		while (i<nbJoueur) {
+			Scanner sc2 = new Scanner(System.in); // Scanner pour les String
 			System.out.println("\n" +"Entrez le nom d'un des joueurs: ");
 			tempNom = sc2.nextLine();
 			System.out.println("Entrez la couleur du pion que le joueur veut: ");
