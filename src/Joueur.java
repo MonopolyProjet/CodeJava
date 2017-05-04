@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Joueur {
+public class Joueur{
 	private String nom;
 	private int argent;
 	private Pion sonPion;
@@ -21,7 +21,7 @@ public class Joueur {
 		this.listeCarteChance = new ArrayList <CarteChance> ();
 		this.listeCarteCommunaute = new ArrayList <CarteCommunaute> ();
 		this.listePropriete = new ArrayList <Case> ();
-		this.caseActuelle = null;
+		this.caseActuelle = new Case("depart");
 		this.indiceCaseActuelle = 0;
 	}
 	

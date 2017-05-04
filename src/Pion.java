@@ -11,10 +11,10 @@ public class Pion {
 		// construction des pions avec lecture dans un fichier
 		
 		String description = ""; // va recevoir le texte de la carte
-			// on déclare le nouveau fichier
+			// on dï¿½clare le nouveau fichier
 			File f = new File ("pion"+i +".txt");
 			
-			// si le fichier existe on va faire les opération suivante
+			// si le fichier existe on va faire les opï¿½ration suivante
 			if (f.exists())
 			{
 				// on test si pas de probleme

@@ -22,7 +22,7 @@ public class Case {
 	private int prixMaison;
 	private int prixHotel;
 	
-	Case (String nom) { // est le nom de la carte qui doit etre construite
+	public Case(String nom) { // est le nom de la carte qui doit etre construite
 		
 		// on dï¿½clare le nouveau fichier
 		File f = new File (nom +".txt");
@@ -98,12 +98,12 @@ public class Case {
 		return this.nom;
 	}
 	
-	// methode pour assigner un propriétaire
+	// methode pour assigner un propriï¿½taire
 	void ajouterProprio (Joueur j) {
 		this.proprietaire = j;
 	}
 	
-	// methode pour recuperer le propriétaire
+	// methode pour recuperer le propriï¿½taire
 	private Joueur getProprietaire () {
 		return this.proprietaire;
 	}
