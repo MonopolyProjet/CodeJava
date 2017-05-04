@@ -14,7 +14,7 @@ public class Joueur{
 	 
 	
 	// constructeur 
-	Joueur (String nom, String couleur) {
+	public Joueur (String nom, String couleur) {
 		this.nom = nom;
 		this.couleur = couleur;
 		this.argent = 1500;
@@ -75,6 +75,10 @@ public class Joueur{
 				cpt ++;
 		}
 		return trouve;
+	}
+	
+	public static void main(String[] args){
+		Joueur Bob = new Joueur("Bob","Jaune");
 	}
 	
 } // Fin de la classe joueur

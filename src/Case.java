@@ -127,7 +127,7 @@ public class Case {
 	/////////////////////////////////////////////////////
 	
 	public static void main (String [] args) {
-	// on va créer 3 cartes (les trois premieres)
+	// on va crï¿½er 3 cartes (les trois premieres)
 	Case c1 = new Case ("champs");
 	Case c2 = new Case ("fayette");
 	Case c3 = new Case ("foch");
