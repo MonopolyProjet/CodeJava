@@ -6,9 +6,9 @@ public class Joueur{
 	private int argent;
 	private Pion sonPion;
 	private String couleur;
-	ArrayList <CarteChance> listeCarteChance;
-	ArrayList <CarteCommunaute> listeCarteCommunaute;
-	ArrayList <Case> listePropriete;
+	private ArrayList <CarteChance> listeCarteChance;
+	private ArrayList <CarteCommunaute> listeCarteCommunaute;
+	private ArrayList <Case> listePropriete;
 	private Case caseActuelle;
 	private int indiceCaseActuelle;
 	 
@@ -24,6 +24,7 @@ public class Joueur{
 		this.caseActuelle = new Case("depart");
 		this.indiceCaseActuelle = 0;
 	}
+	
 	
 	//methode pour avancer le joueur
 	public void avancerJoueur (int nbCases) {
