@@ -47,16 +47,18 @@ public class Case {
 			Scanner sc = new Scanner (fis);
 			// on attrape maintenant ligne par ligne (tant qu'il y en a)
 			this.nom = sc.nextLine();
-			this.couleurCase = sc.nextLine();
-			this.loyer = sc.nextInt();
-			this.loyer1maison = sc.nextInt();
-			this.loyer2maison = sc.nextInt();
-			this.loyer3maison = sc.nextInt();
-			this.loyer4maison = sc.nextInt();
-			this.loyerHotel = sc.nextInt();
-			this.hypo = sc.nextInt();
-			this.prixMaison = sc.nextInt();
-			this.prixHotel = sc.nextInt();
+			if (nom!="depart"){
+				this.couleurCase = sc.nextLine();
+				this.loyer = sc.nextInt();
+				this.loyer1maison = sc.nextInt();
+				this.loyer2maison = sc.nextInt();
+				this.loyer3maison = sc.nextInt();
+				this.loyer4maison = sc.nextInt();
+				this.loyerHotel = sc.nextInt();
+				this.hypo = sc.nextInt();
+				this.prixMaison = sc.nextInt();
+				this.prixHotel = sc.nextInt();
+			}
 			
 		}
 		catch (IOException e) {
@@ -131,10 +133,12 @@ public class Case {
 	Case c1 = new Case ("champs");
 	Case c2 = new Case ("fayette");
 	Case c3 = new Case ("foch");
+	Case c4 = new Case ("depart");
 	
 	// on va les affichers
 	System.out.println(c1);
 	System.out.println(c2);
 	System.out.println(c3);
+	System.out.println(c4);
 	}
 }	// fin de la clase Case
