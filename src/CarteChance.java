@@ -6,16 +6,16 @@ import java.util.Scanner;
 public class CarteChance extends Carte {
 	private int numCarteChance;
 	private String texte;
-	private String type;
+	
 	
 	// on va creer un constructeur qui construit les cartes a partir de la lecture d'un fichier .txt
 	CarteChance (int i) { // est l'indice de la carte a creer
-		int nbCarteChance = i;
+		this.numCarteChance = i;
 		String description = ""; // va recevoir le texte de la carte
-		String type =""; // va recevoir le type de la carte (bonus malus)
+		
 		
 		// on dï¿½clare le nouveau fichier
-		File f = new File ("carte"+i +".txt");
+		File f = new File ("src/CarteChance/carte"+i +".txt");
 		
 		// si le fichier existe on va faire les opï¿½ration suivante
 		if (f.exists())
@@ -37,14 +37,38 @@ public class CarteChance extends Carte {
 			Scanner sc = new Scanner (fis);
 			// on attrape maintenant ligne par ligne (tant qu'il y en a)
 				description = sc.nextLine();
-				type = sc.nextLine();
+				
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		this.texte = description;
-		this.type = type;
+		
 	} // fin du constructeur
 	
+	
+	// methode toString pour afficher une carte chance
+	public String toString () {
+		String s = "";
+		s = s +"num carte : " +numCarteChance +"\n" +texte;
+		return s;
+	}
+	
+	
+	/////////////////////////////////////////////////////
+	//////////////// FONCTION MAIN //////////////////////
+	/////////////////////////////////////////////////////
+	
+	public static void main (String [] args) {
+		// on va créer 3 cartes (les trois premieres)
+		CarteChance c1 = new CarteChance (1);
+		CarteChance c2 = new CarteChance (2);
+		CarteChance c3 = new CarteChance (3);
+		
+		// on va les affichers
+		System.out.println(c1);
+		System.out.println(c2);
+		System.out.println(c3);
+	}
 }	// Fin de la classe CarteChance
