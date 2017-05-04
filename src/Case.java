@@ -22,6 +22,7 @@ public class Case {
 	private int prixMaison;
 	private int prixHotel;
 	
+	// constructeur
 	public Case(String nom) { // est le nom de la carte qui doit etre construite
 		
 		// on d�clare le nouveau fichier
@@ -47,7 +48,7 @@ public class Case {
 			Scanner sc = new Scanner (fis);
 			// on attrape maintenant ligne par ligne (tant qu'il y en a)
 			this.nom = sc.nextLine();
-			if (nom!="depart"){
+			if (nom!="depart" || nom != "aller_prison" || nom != "electricite" || nom != "impots_sur_le_revenu" || nom != "chance" || nom != "communaute" || nom != "eau" || nom != "lyon" || nom != "montparnasse" || nom != "nord" || nom != "parc_gratuit" || nom != "taxe_de_luxe"){
 				this.couleurCase = sc.nextLine();
 				this.loyer = sc.nextInt();
 				this.loyer1maison = sc.nextInt();
