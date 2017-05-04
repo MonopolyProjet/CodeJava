@@ -25,7 +25,7 @@ public class Case {
 	public Case(String nom) { // est le nom de la carte qui doit etre construite
 		
 		// on dï¿½clare le nouveau fichier
-		File f = new File (nom +".txt");
+		File f = new File ("src/CartePropriete/" +nom +".txt");
 		
 		// si le fichier existe on va faire les opï¿½ration suivante
 		if (f.exists())
@@ -46,7 +46,7 @@ public class Case {
 			// on creer un scanner
 			Scanner sc = new Scanner (fis);
 			// on attrape maintenant ligne par ligne (tant qu'il y en a)
-			this.nom = nom;
+			this.nom = sc.nextLine();
 			this.couleurCase = sc.nextLine();
 			this.loyer = sc.nextInt();
 			this.loyer1maison = sc.nextInt();
@@ -116,8 +116,25 @@ public class Case {
 	// methode toString
 	public String toString() {
 		String s = "";
-		s = s + "Nom de la case : " +nom +"\n" +"Couleur : " +couleurCase +"\n" +"prix de la case : " +valeur;
+		s = s + "Nom de la case : " +nom +"\n" +"Couleur : " +couleurCase +"\n" +"prix de la case : " +valeur +"\n";
 		return(s);
 	}
 	
+	
+	
+	/////////////////////////////////////////////////////
+	//////////////// FONCTION MAIN //////////////////////
+	/////////////////////////////////////////////////////
+	
+	public static void main (String [] args) {
+	// on va créer 3 cartes (les trois premieres)
+	Case c1 = new Case ("champs");
+	Case c2 = new Case ("fayette");
+	Case c3 = new Case ("foch");
+	
+	// on va les affichers
+	System.out.println(c1);
+	System.out.println(c2);
+	System.out.println(c3);
+	}
 }	// fin de la clase Case
