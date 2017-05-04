@@ -1,3 +1,5 @@
+package src;
+
 import java.util.ArrayList;
 
 public class Plateau {
@@ -15,15 +17,15 @@ public class Plateau {
 		this.nbCase = 39;
 		this.argentPlateau = 0;
 	
-		// on créer toutes les cartes chance
+		// on crï¿½er toutes les cartes chance
 		for (int i=0; i<15; i++) // 16 cartes en tout
 			listeCarteChance.add(new CarteChance(i));
 		
-		// on créer toutes les cartes caisse de communaute
+		// on crï¿½er toutes les cartes caisse de communaute
 		for (int j=0; j<15; j++) // toujours 16 cartes
 			listeCarteCommunaute.add(new CarteCommunaute(j));
 		
-		// on créer toutes les cases
+		// on crï¿½er toutes les cases
 		touteCase.add(new Case("depart"));
 		touteCase.add(new Case("belleville"));
 		touteCase.add(new Case("communaute"));
@@ -81,7 +83,7 @@ public class Plateau {
 		this.argentPlateau += somme;
 	}
 
-	// methode pour reinitialisé l'argent sur le plateau
+	// methode pour reinitialisï¿½ l'argent sur le plateau
 	void retirerArgentPlateau() {
 		this.argentPlateau = 0;
 	}

@@ -1,9 +1,11 @@
+package src;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Case {
+public class Case<FileInputStream> {
 	private int numCase;
 	private String nom;
 	private int nbMaison;
