@@ -49,9 +49,12 @@ public class Case {
 			// on creer un scanner
 			Scanner sc = new Scanner (fis);
 			// on attrape maintenant ligne par ligne (tant qu'il y en a)
-			this.nom = sc.nextLine();
-			if (nom != "depart" || nom != "aller_prison" || nom != "electricite" || nom != "impots_sur_le_revenu" || nom != "chance" || nom != "communaute" || nom != "eau" || nom != "lyon" || nom != "montparnasse" || nom != "nord" || nom != "parc_gratuit" || nom != "taxe_de_luxe")
+			
+			if (nom == "depart" || nom == "aller_prison" || nom == "electricite" || nom == "impots_sur_le_revenu" || nom == "chance" || nom == "communaute" || nom == "eau" || nom == "lyon" || nom == "montparnasse" || nom == "nord" || nom == "parc_gratuit" || nom == "taxe_de_luxe")
+				this.nom = sc.nextLine();
+			else
 			{
+				this.nom = sc.nextLine();
 				this.couleurCase = sc.nextLine();
 				this.loyer = sc.nextInt();
 				this.loyer1maison = sc.nextInt();
@@ -63,6 +66,7 @@ public class Case {
 				this.prixMaison = sc.nextInt();
 				this.prixHotel = sc.nextInt();
 			}
+			
 			
 		}
 		catch (IOException e) {
@@ -137,9 +141,9 @@ public class Case {
 	public String toString() {
 		String s = "";
 		
-		/* if (nom != "depart" || nom != "aller_prison" || nom != "electricite" || nom != "impots_sur_le_revenu" || nom != "chance" || nom != "communaute" || nom != "eau" || nom != "lyon" || nom != "montparnasse" || nom != "nord" || nom != "parc_gratuit" || nom != "taxe_de_luxe")
+		if (nom != "depart" || nom != "aller_prison" || nom != "electricite" || nom != "impots_sur_le_revenu" || nom != "chance" || nom != "communaute" || nom != "eau" || nom != "lyon" || nom != "montparnasse" || nom != "nord" || nom != "parc_gratuit" || nom != "taxe_de_luxe")
 			s = s + "Nom de la case : " +nom;
-		else */
+		else
 			s = s + "Nom de la case : " +nom +"\n" +"Couleur : " +couleurCase +"\n" +"prix de la case : " +valeur +"\n";
 		return(s);
 	}
@@ -184,13 +188,13 @@ public class Case {
 	System.out.println("Il y a : " +c1.getNbMaison() +" maisons sur cette case");
 	// on supprime l'hotel et on réaffiche le nombre d'hotel
 	c1.suppHotel();
-	System.out.println("Il y a : " +c1.getNbHotel() +" sur cette case");
+	System.out.println("Il y a : " +c1.getNbHotel() +" hôtel sur cette case");
 	System.out.println("Il y a : " +c1.getNbMaison() +" maisons sur cette case");
 	// puis on supprime une maison et on la réaffiche
 	c1.suppMaion(1);
 	System.out.println("Il y a : " +c1.getNbMaison() +" maisons sur cette case");
 	
 	// enfin on affiche la valeur de la case
-	c1.getPrix();
+	System.out.println("Le prix de cette propriété est de : " +c1.getPrix());
 	}
 }	// fin de la clase Case
