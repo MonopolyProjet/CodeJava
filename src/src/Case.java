@@ -1,3 +1,5 @@
+package src;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,12 +24,13 @@ public class Case {
 	private int prixMaison;
 	private int prixHotel;
 	
+	// constructeur
 	public Case(String nom) { // est le nom de la carte qui doit etre construite
 		
 		// on d�clare le nouveau fichier
 		File f = new File ("src/CartePropriete/" +nom +".txt");
 		
-		// si le fichier existe on va faire les op�ration suivante
+		// si le fichier existe on va faire les operation suivante
 		if (f.exists())
 		{
 			// on test si pas de probleme
@@ -46,8 +49,12 @@ public class Case {
 			// on creer un scanner
 			Scanner sc = new Scanner (fis);
 			// on attrape maintenant ligne par ligne (tant qu'il y en a)
-			this.nom = sc.nextLine();
-			if (nom!="depart"){
+			
+			if (nom == "depart" || nom == "aller_prison" || nom == "electricite" || nom == "impots_sur_le_revenu" || nom == "chance" || nom == "communaute" || nom == "eau" || nom == "lyon" || nom == "montparnasse" || nom == "nord" || nom == "parc_gratuit" || nom == "taxe_de_luxe")
+				this.nom = sc.nextLine();
+			else
+			{
+				this.nom = sc.nextLine();
 				this.couleurCase = sc.nextLine();
 				this.loyer = sc.nextInt();
 				this.loyer1maison = sc.nextInt();
@@ -60,11 +67,13 @@ public class Case {
 				this.prixHotel = sc.nextInt();
 			}
 			
+			
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		// valeurs par defauts
 		this.valeur = 2 * this.hypo;
 		this.nbMaison = 0;
 		this.nbHotel = 0;
@@ -82,17 +91,30 @@ public class Case {
 		this.nbMaison -= nbSupp;
 	}
 	
+	//methode pour recuperer le nombre de maison sur la case
+	private int getNbMaison() {
+		return nbMaison;
+	}
 	// methode pour ajouter un hotel
-	private void ajouteHotel (int nbHotel) {
+	private void ajouteHotel () { // il ne peut y avoir que une maison
 		if (nbMaison == 4)
-			this.nbHotel += nbHotel;
+		{
+			this.nbHotel = 1;
+			this.nbMaison = 0;
+		}
 		else
 			System.out.println("Il manque des maisons pour faire mettre un hotel ...");
 	}
 		
 	// methode pour supprimer un hotel 
-	private void suppHotel (int nbSupp) {
-		this.nbHotel -= nbSupp;
+	private void suppHotel () {
+		this.nbHotel--;
+		this.nbMaison = 4;
+	}
+	
+	// methode pour recupererle nombre d'hotel
+	private int getNbHotel () {
+		return nbHotel;
 	}
 	
 	// methode pour recuperer le nom
@@ -118,7 +140,11 @@ public class Case {
 	// methode toString
 	public String toString() {
 		String s = "";
-		s = s + "Nom de la case : " +nom +"\n" +"Couleur : " +couleurCase +"\n" +"prix de la case : " +valeur +"\n";
+		
+		if (nom != "depart" || nom != "aller_prison" || nom != "electricite" || nom != "impots_sur_le_revenu" || nom != "chance" || nom != "communaute" || nom != "eau" || nom != "lyon" || nom != "montparnasse" || nom != "nord" || nom != "parc_gratuit" || nom != "taxe_de_luxe")
+			s = s + "Nom de la case : " +nom;
+		else
+			s = s + "Nom de la case : " +nom +"\n" +"Couleur : " +couleurCase +"\n" +"prix de la case : " +valeur +"\n";
 		return(s);
 	}
 	
@@ -134,11 +160,41 @@ public class Case {
 	Case c2 = new Case ("fayette");
 	Case c3 = new Case ("foch");
 	Case c4 = new Case ("depart");
+	Case c5 = new Case ("chance");
 	
 	// on va les affichers
 	System.out.println(c1);
 	System.out.println(c2);
 	System.out.println(c3);
 	System.out.println(c4);
+	
+	// on affiche le nom de la case
+	c1.getNomCase();
+	
+	// on créer un propriétaire
+	Joueur j1 = new Joueur ("Ludo", "bleu");
+	
+	// on ajoute un propriétaire 
+	c1.ajouterProprio (j1);
+	// on recupere le propriétaire et on l'affiche
+	System.out.println(c1.getProprietaire ());
+	
+	// on ajoute a la case champs elysée 4 maisons
+	c1.ajouteMaison (4);
+	// on ajoute un hotel
+	c1.ajouteHotel();
+	// on affiche le nombre d'hotel sur la case
+	System.out.println("Il y a : " +c1.getNbHotel() +" hôtel sur cette case");
+	System.out.println("Il y a : " +c1.getNbMaison() +" maisons sur cette case");
+	// on supprime l'hotel et on réaffiche le nombre d'hotel
+	c1.suppHotel();
+	System.out.println("Il y a : " +c1.getNbHotel() +" hôtel sur cette case");
+	System.out.println("Il y a : " +c1.getNbMaison() +" maisons sur cette case");
+	// puis on supprime une maison et on la réaffiche
+	c1.suppMaion(1);
+	System.out.println("Il y a : " +c1.getNbMaison() +" maisons sur cette case");
+	
+	// enfin on affiche la valeur de la case
+	System.out.println("Le prix de cette propriété est de : " +c1.getPrix());
 	}
 }	// fin de la clase Case

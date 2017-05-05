@@ -1,3 +1,5 @@
+package src;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -76,6 +78,14 @@ public class Joueur{
 				cpt ++;
 		}
 		return trouve;
+	}
+	
+	// methode toString du joueur
+	public String toString() {
+		String s = "";
+		
+		s = s +"Le joueur s'appel : " +nom +" Il a la couleur " +couleur +" et a : " +argent +" milles";
+		return s;
 	}
 	
 	public static void main(String[] args){
