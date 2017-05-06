@@ -74,6 +74,11 @@ public class Plateau {
 		return touteCase.get(ind);
 	}
 	
+	// methode pour recuperer une carte chance en fonction d'un nombre aleatoire
+	CarteChance getCarteChance (int nb) {
+		return listeCarteChance.get(nb);
+	}
+	
 	// methode pour afficher l'argent sur le plateau
 	private static int getArgentPlateau () {
 		return argentPlateau;

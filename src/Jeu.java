@@ -9,7 +9,7 @@ import javax.swing.SingleSelectionModel;
 public class Jeu {
 	// les attributs
 	String nom;
-	int nbJoueur;
+	static int nbJoueur;
 	static ArrayList <Joueur> lesJoueurs;
 	
 	
@@ -84,6 +84,57 @@ public class Jeu {
 		return nbAlea;
 	}
 	
+	// methode pour tirer un nombre au hasard (pour les cartes)
+	private static int nombreAlea () {
+		int nbAlea = 0;
+		
+		Random r = new Random(); //Génération du nombre aléatoire
+		nbAlea = 2 + r.nextInt(16); //On fait en sorte que le nombre soit compris entre 2 et 12
+		
+		return nbAlea;
+	}
+		
+	// methode pour les encheres
+	private static void mettreAuxEncheres (int ordre) {
+		// on parcourt tout la liste de joueur pour qu'il rencherissent chacun leur tour jusqu'a ce qu'ils ne veulent plus
+		boolean arret = false; // pour dire quand arrete
+		int cptAbsen = 0; 			// compteur pour lr nombre de "non"
+		int valeurProp = lesJoueurs.get(ordre).getCaseActuelle().getPrix();
+		int indiceJoueur = 0;		// pour savoir quel joueur va acheter au final
+		int nbParti = nbJoueur - 1;  // pour compter le nombre de participant
+		while (!arret)
+		{
+			for (int i=0; i< nbParti; i++)
+			{
+				// si il veut acheter, on ajoute 0.5 mille a la valeur de la carte
+				if (lesJoueurs.get(i).veutAcheter(lesJoueurs.get(i)))
+				{
+					valeurProp += 50;
+					indiceJoueur = i;
+				}
+				else
+				{
+					cptAbsen++;
+					nbParti --;
+					if (nbParti == 1)
+						arret = true;
+				}
+			}
+		}
+		// le joueur qui a encherie en dernier va acheter la propriété
+		lesJoueurs.get(indiceJoueur).acheterCase(lesJoueurs.get(ordre).getCaseActuelle());
+	}
+	
+	// methode pour tirer une carte chance et l'ensemble de l'execution qui en suit
+	private void tirerCarteChance() {
+		// on tire une carte au hasard dans la liste des cartes
+		CarteChance chance = p.getCarteChance(nombreAlea());
+		// on va l'afficher
+		System.out.println(chance);
+		
+		// on va s'occuper de chacunes des cartes
+	}
+	
 	/////////////////////////////////////////////////////
 	//////////////// FONCTION MAIN //////////////////////
 	/////////////////////////////////////////////////////
@@ -121,27 +172,36 @@ public class Jeu {
 			System.out.println(lesJoueurs.get(ordre).getNom() + " avance de " + nbCasesAvance + " cases.");
 			System.out.println(lesJoueurs.get(ordre).getNom() + " est à la case : " + lesJoueurs.get(ordre).getCaseActuelle());
 			
-			// on va voir si le joueur veut acheter la propriété
-			if (lesJoueurs.get(ordre).veutAcheter(lesJoueurs.get(ordre)))		// si le joueur veut acheter
+			/////////////////////////////////////////////////////////////////////////////
+			/// ON VA VOIR L'ACTION A REALISER EN FONCTION DU TYPE DE LA CASE ///////////
+			
+			if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "chance")	// si c'est une case de type chance
 			{
-				//il l'acheter et on donne une phrase de réponse
-				lesJoueurs.get(ordre).acheterCase(lesJoueurs.get(ordre).getCaseActuelle());
-				System.out.println("Vous avez bien acheter cette propriete");
+				
+				
+				
+				
 			}
-			else	// on va mettre au enchere la popriété
+			else if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "communaute")	// si c'est une case de type caisse de communaute
 			{
-				// on parcourt tout la liste de joueur pour qu'il rencherissent chacun leur tour jusqu'a ce qu'ils ne veulent plus
-				boolean arret = false; // pour dire quand arrete
-				while (!arret)
+				
+				
+				
+				
+			}
+			else
+				// on va voir si le joueur veut acheter la propriété
+				if (lesJoueurs.get(ordre).veutAcheter(lesJoueurs.get(ordre)))		// si le joueur veut acheter
 				{
-					for (int i=0; i<nbJoueur; i++)
-					{
-						
-					}
+					//il l'acheter et on donne une phrase de réponse
+					lesJoueurs.get(ordre).acheterCase(lesJoueurs.get(ordre).getCaseActuelle());
+					System.out.println("Vous avez bien acheter cette propriete");
 				}
-			}
-			ordre++;			
-		}
+				else	// on va mettre au enchere la popriété
+					mettreAuxEncheres(ordre);
+			
+			ordre++;	// pour passer au joueur suivant (2)			
+		} // fin du switch
 				
 	} // Fin de la fonction main
 	
