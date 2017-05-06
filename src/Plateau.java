@@ -7,7 +7,7 @@ public class Plateau {
 	static ArrayList <CarteChance> listeCarteChance;
 	static ArrayList <CarteCommunaute> listeCarteCommunaute;
 	private int nbCase;
-	private int argentPlateau; // argent qui est poser sur le plateau
+	private static int argentPlateau; // argent qui est poser sur le plateau
 	
 	// constructeur vide
 	Plateau () {
@@ -69,23 +69,30 @@ public class Plateau {
 		
 	} // fin du constructeur
 	
-	// methode pour recuperer l'argent qu'il y a sur le plateau
-	int getArgent () {
+	// methode pour afficher l'argent sur le plateau
+	private static int getArgentPlateau () {
+		return argentPlateau;
+	}
+	
+	// methode pour recuperer (donner a un joueur) l'argent qu'il y a sur le plateau
+	private static int recupererArgent (Joueur j) {
 		int tempSomme = 0;
 		tempSomme = argentPlateau;
+		// on le donne au joueur 
+		j.gagneArgent (tempSomme);
 		// on remet l'argenta 0;
 		retirerArgentPlateau ();
 		return tempSomme;
 	}
 	
 	// methode pour ajouter de l'argent sur le plateau
-	void ajouterArgentPlateau (int somme) {
+	private void ajouterArgentPlateau (int somme) {
 		this.argentPlateau += somme;
 	}
 
 	// methode pour reinitialis� l'argent sur le plateau
-	void retirerArgentPlateau() {
-		this.argentPlateau = 0;
+	private static void retirerArgentPlateau() {
+		argentPlateau = 0;
 	}
 	
 	
@@ -96,5 +103,17 @@ public class Plateau {
 		// on créer un plateau
 		Plateau p = new Plateau ();
 		System.out.println("Plateau crée");
+		
+		// on s'occupe de l'argent sur le plateau
+		// on ajoute de k'argent au plateau (2 milles)
+		p.ajouterArgentPlateau(2);
+		// on affiche 
+		System.out.println("Argent sur le plateau : " +getArgentPlateau());
+		// on donne l'argent a un joueur et on reaffcihe la somme sur le plateau
+		Joueur j = new Joueur ("Ludo", "bleu");
+		recupererArgent(j);
+		System.out.println("Argent sur le plateau apres avoir recuperer par joueur : " +getArgentPlateau());
+		
+		
 	}
 }	// fin de la classe Plateau
