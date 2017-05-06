@@ -6,7 +6,6 @@ import java.util.Random;
 public class Joueur{
 	private String nom;
 	private int argent;
-	private Pion sonPion;
 	private String couleur;
 	private ArrayList <CarteChance> listeCarteChance;
 	private ArrayList <CarteCommunaute> listeCarteCommunaute;
