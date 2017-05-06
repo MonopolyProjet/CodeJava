@@ -50,7 +50,7 @@ public class Case {
 			Scanner sc = new Scanner (fis);
 			// on attrape maintenant ligne par ligne (tant qu'il y en a)
 			
-			if (nom == "depart" || nom == "aller_prison" || nom == "electricite" || nom == "impots_sur_le_revenu" || nom == "chance" || nom == "communaute" || nom == "eau" || nom == "lyon" || nom == "montparnasse" || nom == "nord" || nom == "parc_gratuit" || nom == "taxe_de_luxe")
+			if (nom == "depart" || nom == "aller_prison" || nom == "electricite" || nom == "impots_sur_le_revenu" || nom == "chance" || nom == "communaute" || nom == "eau" || nom == "lyon" || nom == "montparnasse" || nom == "nord" || nom == "saint-lazare" || nom == "parc_gratuit" || nom == "taxe_de_luxe" || nom == "prison")
 				this.nom = sc.nextLine();
 			else
 			{
@@ -141,7 +141,7 @@ public class Case {
 	public String toString() {
 		String s = "";
 		
-		if (nom == "depart" || nom == "aller_prison" || nom == "electricite" || nom == "impots_sur_le_revenu" || nom == "chance" || nom == "communaute" || nom == "eau" || nom == "lyon" || nom == "montparnasse" || nom == "nord" || nom == "parc_gratuit" || nom == "taxe_de_luxe")
+		if (nom == "depart" || nom == "aller_prison" || nom == "prison" || nom == "electricite" || nom == "impots_sur_le_revenu" || nom == "chance" || nom == "communaute" || nom == "eau" || nom == "lyon" || nom == "montparnasse" || nom == "nord" || nom == "saint-lazare" || nom == "parc_gratuit" || nom == "taxe_de_luxe")
 			s = s + "Nom de la case : " +nom;
 		else
 			s = s + "Nom de la case : " +nom +"\n" +"Couleur : " +couleurCase +"\n" +"prix de la case : " +valeur +"\n";
