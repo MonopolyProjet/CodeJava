@@ -49,9 +49,27 @@ public class Case {
 			// on creer un scanner
 			Scanner sc = new Scanner (fis);
 			// on attrape maintenant ligne par ligne (tant qu'il y en a)
-			
-			if (nom == "depart" || nom == "aller_prison" || nom == "electricite" || nom == "impots_sur_le_revenu" || nom == "chance" || nom == "communaute" || nom == "eau" || nom == "lyon" || nom == "montparnasse" || nom == "nord" || nom == "saint-lazare" || nom == "parc_gratuit" || nom == "taxe_de_luxe" || nom == "prison")
+			// pour les cartes sans valeurs numérique de loyer dedans
+			if (nom == "depart" || nom == "aller_prison" || nom == "impots_sur_le_revenu" || nom == "chance" || nom == "communaute" || nom == "parc_gratuit" || nom == "taxe_de_luxe" || nom == "prison")
 				this.nom = sc.nextLine();
+			// pour les gares
+			else if (nom == "lyon" || nom == "nord" || nom == "montparnasse" || nom == "saint-lazare")
+			{
+				this.nom = sc.nextLine();
+				this.loyer1maison = sc.nextInt();
+				this.loyer2maison = sc.nextInt();
+				this.loyer3maison = sc.nextInt();
+				this.loyer4maison = sc.nextInt();
+				this.hypo = sc.nextInt();
+			}
+			// pour les compagnies d'eau et electricite
+			else if (nom == "eau" || nom == "electricite")
+			{
+				this.nom = sc.nextLine();
+				this.loyer1maison = sc.nextInt();
+				this.loyer2maison = sc.nextInt();
+			}
+			// pour les cartes de propriété
 			else
 			{
 				this.nom = sc.nextLine();
@@ -140,9 +158,16 @@ public class Case {
 	// methode toString
 	public String toString() {
 		String s = "";
-		
-		if (nom == "depart" || nom == "aller_prison" || nom == "prison" || nom == "electricite" || nom == "impots_sur_le_revenu" || nom == "chance" || nom == "communaute" || nom == "eau" || nom == "lyon" || nom == "montparnasse" || nom == "nord" || nom == "saint-lazare" || nom == "parc_gratuit" || nom == "taxe_de_luxe")
+		// pour les cases sans valeur de loyer
+		if (nom == "depart" || nom == "aller_prison" || nom == "prison" || nom == "impots_sur_le_revenu" || nom == "chance" || nom == "communaute" || nom == "parc_gratuit" || nom == "taxe_de_luxe")
 			s = s + "Nom de la case : " +nom;
+		// pour les comapgnies
+		else if (nom == "eau" || nom == "electricite")
+			s = s +"Nom de la case : " +nom +"\n" +"Prix de la case : " +valeur;
+		//pour les gares
+		else if (nom == "lyon" || nom == "nord" || nom == "saint-lazare" || nom == "montparnasse")
+			s = s +"Nom de la case : " +nom +"\n" +"Prix de la case : " +valeur;
+		// pour les cartes de propriété
 		else
 			s = s + "Nom de la case : " +nom +"\n" +"Couleur : " +couleurCase +"\n" +"prix de la case : " +valeur +"\n";
 		return(s);
