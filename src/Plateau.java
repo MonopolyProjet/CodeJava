@@ -26,48 +26,53 @@ public class Plateau {
 			listeCarteCommunaute.add(new CarteCommunaute(j));
 		
 		// on cr�er toutes les cases
-		touteCase.add(new Case("depart"));
-		touteCase.add(new Case("belleville"));
-		touteCase.add(new Case("communaute"));
-		touteCase.add(new Case("lecourbe"));
-		touteCase.add(new Case("impots_sur_le_revenu"));
-		touteCase.add(new Case("montparnasse"));
-		touteCase.add(new Case("vaugirard"));
-		touteCase.add(new Case("chance"));
-		touteCase.add(new Case("courcelles"));
-		touteCase.add(new Case("republique"));
-		touteCase.add(new Case("prison"));
-		touteCase.add(new Case("villette"));
-		touteCase.add(new Case("electricite"));
-		touteCase.add(new Case("neuilly"));
-		touteCase.add(new Case("paradis"));
-		touteCase.add(new Case("lyon"));
-		touteCase.add(new Case("mozart"));
-		touteCase.add(new Case("communaute"));
-		touteCase.add(new Case("saint-michel"));
-		touteCase.add(new Case("pigalle"));
-		touteCase.add(new Case("parc_gratuit"));
-		touteCase.add(new Case("matignon"));
-		touteCase.add(new Case("chance"));
-		touteCase.add(new Case("malesherbes"));
-		touteCase.add(new Case("henri-martin"));
-		touteCase.add(new Case("nord"));
-		touteCase.add(new Case("saint-honore"));
-		touteCase.add(new Case("bourse"));
-		touteCase.add(new Case("eau"));
-		touteCase.add(new Case("fayette"));
-		touteCase.add(new Case("aller_prison"));
-		touteCase.add(new Case("breteuil"));
-		touteCase.add(new Case("foch"));
-		touteCase.add(new Case("communaute"));
-		touteCase.add(new Case("capucines"));
-		touteCase.add(new Case("saint-lazare"));
-		touteCase.add(new Case("chance"));
-		touteCase.add(new Case("champs"));
-		touteCase.add(new Case("taxe_de_luxe"));
-		touteCase.add(new Case("paix"));
+		touteCase.add(new Case("depart", touteCase.size() + 1));
+		touteCase.add(new Case("belleville", touteCase.size() + 1));
+		touteCase.add(new Case("communaute", touteCase.size() + 1));
+		touteCase.add(new Case("lecourbe", touteCase.size() + 1));
+		touteCase.add(new Case("impots_sur_le_revenu", touteCase.size() + 1));
+		touteCase.add(new Case("montparnasse", touteCase.size() + 1));
+		touteCase.add(new Case("vaugirard", touteCase.size() + 1));
+		touteCase.add(new Case("chance", touteCase.size() + 1));
+		touteCase.add(new Case("courcelles", touteCase.size() + 1));
+		touteCase.add(new Case("republique", touteCase.size() + 1));
+		touteCase.add(new Case("prison", touteCase.size() + 1));
+		touteCase.add(new Case("villette", touteCase.size() + 1));
+		touteCase.add(new Case("electricite",touteCase.size() + 1));
+		touteCase.add(new Case("neuilly", touteCase.size() + 1));
+		touteCase.add(new Case("paradis", touteCase.size() + 1));
+		touteCase.add(new Case("lyon", touteCase.size() + 1));
+		touteCase.add(new Case("mozart", touteCase.size() + 1));
+		touteCase.add(new Case("communaute", touteCase.size() + 1));
+		touteCase.add(new Case("saint-michel", touteCase.size() + 1));
+		touteCase.add(new Case("pigalle", touteCase.size() + 1));
+		touteCase.add(new Case("parc_gratuit", touteCase.size() + 1));
+		touteCase.add(new Case("matignon", touteCase.size() + 1));
+		touteCase.add(new Case("chance", touteCase.size() + 1));
+		touteCase.add(new Case("malesherbes", touteCase.size() + 1));
+		touteCase.add(new Case("henri-martin", touteCase.size() + 1));
+		touteCase.add(new Case("nord", touteCase.size() + 1));
+		touteCase.add(new Case("saint-honore", touteCase.size() + 1));
+		touteCase.add(new Case("bourse", touteCase.size() + 1));
+		touteCase.add(new Case("eau", touteCase.size() + 1));
+		touteCase.add(new Case("fayette", touteCase.size() + 1));
+		touteCase.add(new Case("aller_prison", touteCase.size() + 1));
+		touteCase.add(new Case("breteuil", touteCase.size() + 1));
+		touteCase.add(new Case("foch", touteCase.size() + 1));
+		touteCase.add(new Case("communaute", touteCase.size() + 1));
+		touteCase.add(new Case("capucines", touteCase.size() + 1));
+		touteCase.add(new Case("saint-lazare", touteCase.size() + 1));
+		touteCase.add(new Case("chance", touteCase.size() + 1));
+		touteCase.add(new Case("champs", touteCase.size() + 1));
+		touteCase.add(new Case("taxe_de_luxe", touteCase.size() + 1));
+		touteCase.add(new Case("paix", touteCase.size() + 1));
 		
 	} // fin du constructeur
+	
+	// methode pour retourner une case en fonction de son numero
+	Case getCase (int ind) {
+		return touteCase.get(ind);
+	}
 	
 	// methode pour afficher l'argent sur le plateau
 	private static int getArgentPlateau () {

@@ -74,6 +74,16 @@ public class Jeu {
 		return appartient;
 	}
 
+	// methode pour lancer les dés
+	private int lanceDes () {
+		int nbAlea = 0;
+		
+		Random r = new Random(); //Génération du nombre aléatoire
+		nbAlea = 2 + r.nextInt(12 - 2); //On fait en sorte que le nombre soit compris entre 2 et 12
+		
+		return nbAlea;
+	}
+	
 	/////////////////////////////////////////////////////
 	//////////////// FONCTION MAIN //////////////////////
 	/////////////////////////////////////////////////////
@@ -83,7 +93,9 @@ public class Jeu {
 		Scanner sc = new Scanner(System.in); // pour le type string
 		System.out.println ("Veuillez entrer le nom de la partie");
 		String nom = sc.nextLine();
+		// on créer le jeu et le plateau
 		Jeu jeu = new Jeu (nom);
+		Plateau p = new Plateau();
 		
 		// On va cr�er le plateau de jeu
 		//Plateau p = new Plateau ();
@@ -96,15 +108,39 @@ public class Jeu {
 		
 		
 		// on va faire march� les joueurs
-		int i=0;
-		while(i<20){
-			System.out.println(lesJoueurs.get(i).getNom() + " est à la case : " + lesJoueurs.get(i).getCaseActuelle());
-			Random r = new Random(); //Génération du nombre aléatoire
-			int nbCases = 2 + r.nextInt(12 - 2); //On fait en sorte que le nombre soit compris entre 2 et 12
-			lesJoueurs.get(i).avancerJoueur(nbCases);
-			System.out.println(lesJoueurs.get(i).getNom() + " avance de " + nbCases + " cases.");
-			System.out.println(lesJoueurs.get(i).getNom() + " est à la case : " + lesJoueurs.get(i).getCaseActuelle());
-			i++;			
+		int ordre = 0;
+		switch (ordre) {
+		case 0:
+			System.out.println(lesJoueurs.get(ordre).getNom() + " est à la case : " + lesJoueurs.get(ordre).getCaseActuelle());
+			// on le fais avancer en lancant les dés
+			int nbCasesAvance = jeu.lanceDes();
+			int ind = lesJoueurs.get(ordre).getIndCaseActuelle() + nbCasesAvance;
+			lesJoueurs.get(ordre).avancerJoueur(p.getCase(ind), nbCasesAvance);
+			
+			// phrase pour dire de combien de case le joueur a avancé et on affiche sa case actuelle
+			System.out.println(lesJoueurs.get(ordre).getNom() + " avance de " + nbCasesAvance + " cases.");
+			System.out.println(lesJoueurs.get(ordre).getNom() + " est à la case : " + lesJoueurs.get(ordre).getCaseActuelle());
+			
+			// on va voir si le joueur veut acheter la propriété
+			if (lesJoueurs.get(ordre).veutAcheter(lesJoueurs.get(ordre)))		// si le joueur veut acheter
+			{
+				//il l'acheter et on donne une phrase de réponse
+				lesJoueurs.get(ordre).acheterCase(lesJoueurs.get(ordre).getCaseActuelle());
+				System.out.println("Vous avez bien acheter cette propriete");
+			}
+			else	// on va mettre au enchere la popriété
+			{
+				// on parcourt tout la liste de joueur pour qu'il rencherissent chacun leur tour jusqu'a ce qu'ils ne veulent plus
+				boolean arret = false; // pour dire quand arrete
+				while (!arret)
+				{
+					for (int i=0; i<nbJoueur; i++)
+					{
+						
+					}
+				}
+			}
+			ordre++;			
 		}
 				
 	} // Fin de la fonction main

@@ -2,6 +2,7 @@ package src;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Joueur{
 	private String nom;
@@ -22,14 +23,20 @@ public class Joueur{
 		this.listeCarteChance = new ArrayList <CarteChance> ();
 		this.listeCarteCommunaute = new ArrayList <CarteCommunaute> ();
 		this.listePropriete = new ArrayList <Case> ();
-		this.caseActuelle = new Case("depart");
+		this.caseActuelle = new Case("depart",0);
 		this.indiceCaseActuelle = 0;
 	}
 	
 	
 	//methode pour avancer le joueur
-	public void avancerJoueur (int nbCases) {
+	public void avancerJoueur (Case c, int nbCases) {
+		this.caseActuelle = c;
 		this.indiceCaseActuelle += nbCases;
+	}
+	
+	// methode pour recupere l'indice de la case actuelle
+	public int getIndCaseActuelle() {
+		return indiceCaseActuelle;
 	}
 	
 	//methode pour recuperer le nom du joueur
@@ -44,6 +51,22 @@ public class Joueur{
 	// methode pour recuperer l'argent
 	public int getArgent () {
 		return this.argent;
+	}
+	
+	// methode pour demander si le joueur veut acheter la propriété
+	public boolean veutAcheter (Joueur j) {
+		boolean veut = false;
+		// on affiche le nom pour savoir a qui on parle
+		System.out.println(j.getNom ());
+		System.out.println("Voulez vous acheter la propriété ? (entrer le numéro de votre réponse)");
+		System.out.println("1) Oui");
+		System.out.println("2) Non");
+		
+		Scanner sc = new Scanner(System.in); // pour le type string
+		int rep = sc.nextInt();
+		if (rep == 1)
+			veut = true;
+		return veut;
 	}
 	
 	// methode pour acheter une propriete
@@ -109,7 +132,7 @@ public class Joueur{
 	//////////////////////////////////////////////////
 	public static void main (String [] args) {
 		Joueur j = new Joueur("Bob","Jaune");
-		j.avancerJoueur(6);
+		// j.avancerJoueur(6);
 		//on affiche le nom du joueur
 		System.out.println("Le nom du joueur est : " +j.getNom());
 		// on affiche la case actuelle du joueur
@@ -123,7 +146,7 @@ public class Joueur{
 		System.out.println("Le joueur a : " +j.getArgent() +" mille(s) apres le retrait");
 		
 		//on va lui faire acheter une propriete
-		Case c = new Case("champs");
+		Case c = new Case("champs", 0);
 		
 		j.acheterCase(c);
 		// on va vérifier qu'il est la case
@@ -133,7 +156,7 @@ public class Joueur{
 			System.out.println("La transaction n'a pas fonctionné");
 		
 		// on va afficher toute les propriétés du joueur
-		Case c2 = new Case("pigalle");
+		Case c2 = new Case("pigalle", 1);
 		j.acheterCase(c2);
 		j.afficherPropri();
 		

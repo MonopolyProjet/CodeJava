@@ -25,8 +25,8 @@ public class Case {
 	private int prixHotel;
 	
 	// constructeur
-	public Case(String nom) { // est le nom de la carte qui doit etre construite
-		
+	public Case(String nom, int ind) { // est le nom de la carte qui doit etre construite
+		this.numCase = ind;
 		// on d�clare le nouveau fichier
 		File f = new File ("src/CartePropriete/" +nom +".txt");
 		
@@ -181,11 +181,11 @@ public class Case {
 	
 	public static void main (String [] args) {
 	// on va cr�er 3 cartes (les trois premieres)
-	Case c1 = new Case ("champs");
-	Case c2 = new Case ("fayette");
-	Case c3 = new Case ("foch");
-	Case c4 = new Case ("depart");
-	Case c5 = new Case ("chance");
+	Case c1 = new Case ("champs", 0);
+	Case c2 = new Case ("fayette", 1);
+	Case c3 = new Case ("foch", 2);
+	Case c4 = new Case ("depart", 3);
+	Case c5 = new Case ("chance", 4);
 	
 	// on va les affichers
 	System.out.println(c1);
