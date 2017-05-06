@@ -18,11 +18,11 @@ public class Plateau {
 		this.argentPlateau = 0;
 	
 		// on cr�er toutes les cartes chance
-		for (int i=0; i<15; i++) // 16 cartes en tout
+		for (int i=1; i<16; i++) // 16 cartes en tout
 			listeCarteChance.add(new CarteChance(i));
 		
 		// on cr�er toutes les cartes caisse de communaute
-		for (int j=0; j<15; j++) // toujours 16 cartes
+		for (int j=1; j<16; j++) // toujours 16 cartes
 			listeCarteCommunaute.add(new CarteCommunaute(j));
 		
 		// on cr�er toutes les cases
@@ -30,8 +30,8 @@ public class Plateau {
 		touteCase.add(new Case("belleville"));
 		touteCase.add(new Case("communaute"));
 		touteCase.add(new Case("lecourbe"));
-		touteCase.add(new Case("impots sur le revenu"));
-		touteCase.add(new Case("monparnasse"));
+		touteCase.add(new Case("impots_sur_le_revenu"));
+		touteCase.add(new Case("montparnasse"));
 		touteCase.add(new Case("vaugirard"));
 		touteCase.add(new Case("chance"));
 		touteCase.add(new Case("courcelles"));
@@ -46,7 +46,7 @@ public class Plateau {
 		touteCase.add(new Case("communaute"));
 		touteCase.add(new Case("saint-michel"));
 		touteCase.add(new Case("pigalle"));
-		touteCase.add(new Case("parc-gratuit"));
+		touteCase.add(new Case("parc_gratuit"));
 		touteCase.add(new Case("matignon"));
 		touteCase.add(new Case("chance"));
 		touteCase.add(new Case("malesherbes"));
@@ -56,7 +56,7 @@ public class Plateau {
 		touteCase.add(new Case("bourse"));
 		touteCase.add(new Case("eau"));
 		touteCase.add(new Case("fayette"));
-		touteCase.add(new Case("aller-prison"));
+		touteCase.add(new Case("aller_prison"));
 		touteCase.add(new Case("breteuil"));
 		touteCase.add(new Case("foch"));
 		touteCase.add(new Case("communaute"));
@@ -64,7 +64,7 @@ public class Plateau {
 		touteCase.add(new Case("saint-lazare"));
 		touteCase.add(new Case("chance"));
 		touteCase.add(new Case("champs"));
-		touteCase.add(new Case("taxe-de-luxe"));
+		touteCase.add(new Case("taxe_de_luxe"));
 		touteCase.add(new Case("paix"));
 		
 	} // fin du constructeur
@@ -88,4 +88,13 @@ public class Plateau {
 		this.argentPlateau = 0;
 	}
 	
+	
+	//////////////////////////////////////////////////
+	/////////// FONCTION MAIN ////////////////////////
+	//////////////////////////////////////////////////
+	public static void main (String [] args) {
+		// on créer un plateau
+		Plateau p = new Plateau ();
+		System.out.println("Plateau crée");
+	}
 }	// fin de la classe Plateau
