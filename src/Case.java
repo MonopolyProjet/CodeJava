@@ -110,9 +110,10 @@ public class Case {
 	}
 	
 	//methode pour recuperer le nombre de maison sur la case
-	public int getNbMaison() {
+	int getNbMaison() {
 		return nbMaison;
 	}
+	
 	// methode pour ajouter un hotel
 	private void ajouteHotel () { // il ne peut y avoir que une maison
 		if (nbMaison == 4)
@@ -123,12 +124,6 @@ public class Case {
 		else
 			System.out.println("Il manque des maisons pour faire mettre un hotel ...");
 	}
-	
-	//procedure return boolean true if it belongs to someone
-	public boolean appartientA(){
-		if (this.proprietaire!=null) return(true);
-		else return(false);
-	}
 		
 	// methode pour supprimer un hotel 
 	private void suppHotel () {
@@ -137,15 +132,22 @@ public class Case {
 	}
 	
 	// methode pour recupererle nombre d'hotel
-	public int getNbHotel () {
+	int getNbHotel () {
 		return nbHotel;
 	}
 	
+	//procedure return boolean true if it belongs to someone
+	public boolean appartientA(){
+		if (this.proprietaire!=null) return(true);
+		else return(false);
+	}
+		
 	// methode pour recuperer le nom
-	public String getNomCase () {
+	String getNomCase () {
 		return this.nom;
 	}
 	
+	// methode pour retourner le numero de la case
 	public int getNumCase() {
 		return (this.numCase);
 	}
@@ -156,7 +158,7 @@ public class Case {
 	}
 	
 	// methode pour recuperer le propri�taire
-	public Joueur getProprietaire () {
+	Joueur getProprietaire () {
 		return this.proprietaire;
 	}
 	
@@ -171,7 +173,7 @@ public class Case {
 		// pour les cases sans valeur de loyer
 		if (nom == "depart" || nom == "aller_prison" || nom == "prison" || nom == "impots_sur_le_revenu" || nom == "chance" || nom == "communaute" || nom == "parc_gratuit" || nom == "taxe_de_luxe")
 			s = s + "Nom de la case : " +nom;
-		// pour les comapgnies
+		// pour les compagnies
 		else if (nom == "eau" || nom == "electricite")
 			s = s +"Nom de la case : " +nom +"\n" +"Prix de la case : " +valeur;
 		//pour les gares

@@ -54,6 +54,11 @@ public class CarteCommunaute extends Carte{
 		return s;
 	}
 	
+	// methode pour obtenir le numero de la carte
+	public int getNum () {
+		return this.numCarteCommunaute;
+	}
+	
 	/////////////////////////////////////////////////////
 	//////////////// FONCTION MAIN //////////////////////
 	/////////////////////////////////////////////////////

@@ -20,14 +20,14 @@ public class Joueur{
 	public Joueur (String nom, String couleur) {
 		this.nom = nom;
 		this.couleur = couleur;
-		this.argent = 1500000;
+		this.argent = 150000;
 		this.listeCarteChance = new ArrayList <CarteChance> ();
 		this.listeCarteCommunaute = new ArrayList <CarteCommunaute> ();
 		this.listePropriete = new ArrayList <Case> ();
 		this.caseActuelle = new Case("depart",0);
 		this.indiceCaseActuelle = 0;
-		this.nbGares=0;
-	}
+		this.nbGares = 0;
+	};
 	
 	//méthode pour connaitre le nb de maisons qu'il possède en tout
 	public int getNbMaisons(){
@@ -38,33 +38,49 @@ public class Joueur{
 		return(nbMaisons);
 	}
 	
-	//méthode pour connaitre le nb de maisons qu'il possède en tout
-		public int getNbHotels(){
-			int nbHotels=0;
-			for(int i=0; i<listePropriete.size();i++){
-				nbHotels+=listePropriete.get(i).getNbHotel();
-			}
-			return(nbHotels);
+	//méthode pour connaitre le nb d'hotel qu'il possède en tout
+	public int getNbHotels(){
+		int nbHotels=0;
+		for(int i=0; i<listePropriete.size();i++){
+			nbHotels+=listePropriete.get(i).getNbHotel();
 		}
+		return(nbHotels);
+	}
 	
 	//méthode pour faire reculer un joueur
 	public void reculerJoueur(int nbCases){
 		this.indiceCaseActuelle=this.getIndCaseActuelle()-nbCases;
 	}
+			
+	// methode a lancer quand on passe la case depart
+	public void passeCaseDepart () {
+		gagneArgent(200000);
+	}
 	
+	// methode pour ajouter carte de communaute
+	public void ajouterCarteCommunaute (CarteCommunaute carte){
+		listeCarteCommunaute.add(carte);
+	}
+	
+	//methode pour ajouter une carte chance
+	public void ajouterCarteChance(CarteChance e){
+		this.listeCarteChance.add(e);
+	}
+		
 	//methode pour avancer le joueur
 	public void avancerJoueur (Case c, int nbCases) {
 		this.caseActuelle = c;
 		this.indiceCaseActuelle += nbCases;
 	}
 	
+	// methode pour changer la case actuelle depuis une case donnée
+	public void setIndCaseActuelle(String nomCase, int numCase){
+		this.caseActuelle = new Case(nomCase,numCase);
+	}
+	
 	// methode pour recupere l'indice de la case actuelle
 	public int getIndCaseActuelle() {
 		return indiceCaseActuelle;
-	}
-	
-	public void setIndCaseActuelle(String nomCase, int numCase){
-		this.caseActuelle = new Case(nomCase,numCase);
 	}
 	
 	//methode pour recuperer le nom du joueur
@@ -104,19 +120,11 @@ public class Joueur{
 		{
 			this.listePropriete.add(c);
 			this.argent -= c.getPrix();
-			if (c.getNomCase() == "lyon" || c.getNomCase() == "nord" || c.getNomCase() == "montparnasse" || c.getNomCase() == "saint-lazare"){
-				this.nbGares++;
-			}
 		}
 		else
 			System.out.println("Le joueur n'a pas assez d'argent");
 	}
-	
-	//Methode pour donner le nombre de gares d'un joueur (utilisé pour les cartes)
-	public int getNbGares(){
-		return(this.nbGares);
-	}
-	
+
 	public void payerTaxe(int montantTaxe){
 		this.argent-=montantTaxe;
 	}
@@ -154,11 +162,6 @@ public class Joueur{
 		}
 	}
 	
-	//methode pour ajouter une carte chance
-	public void ajouterCarteChance(CarteChance e){
-		this.listeCarteChance.add(e);
-	}
-	
 	// methode toString du joueur
 	public String toString() {
 		String s = "";
@@ -167,7 +170,21 @@ public class Joueur{
 		return s;
 	}
 	
+	// methode pour renvnoyer le nombre de propriété que le joueur a
+	public int getNbProp () {
+		return listePropriete.size();
+	}
 	
+	// methode pour retourner une propriété du joueur
+	public Case getProprieteJoueur (int ind) {
+		return listePropriete.get(ind);
+	}
+	
+	//Methode pour donner le nombre de gares d'un joueur (utilisé pour les cartes)
+	public int getNbGares(){
+		return(this.nbGares);
+	}
+		
 	//////////////////////////////////////////////////
 	/////////// FONCTION MAIN ////////////////////////
 	//////////////////////////////////////////////////
