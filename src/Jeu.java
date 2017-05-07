@@ -126,14 +126,155 @@ public class Jeu {
 	}
 	
 	// methode pour tirer une carte chance et l'ensemble de l'execution qui en suit
-	private void tirerCarteChance() {
+	private void tirerCarteChance(Plateau p, int ordre) {
 		// on tire une carte au hasard dans la liste des cartes
 		CarteChance chance = p.getCarteChance(nombreAlea());
 		// on va l'afficher
 		System.out.println(chance);
 		
 		// on va s'occuper de chacunes des cartes
+		// on recuperer l'indice de la carte
+				int indCarte = chance.getNum();
+				switch (indCarte)
+				{
+				case 1:
+					//"Aller tout droit en prison"
+					lesJoueurs.get(ordre).setIndCaseActuelle("prison", 10);
+					break;
+				case 2:
+					//"Aller à la gare la plus proche. Si vous passez par la case départ recevez 200 000
+					if (lesJoueurs.get(ordre).getCaseActuelle().getNumCase()==7) {
+						lesJoueurs.get(ordre).setIndCaseActuelle("lyon", 15);
+						if(lesJoueurs.get(ordre).getCaseActuelle().appartientA()){
+							if(lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().getNbGares()==1) {
+								lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().gagneArgent(25000);;
+								lesJoueurs.get(ordre).retirerArgent(25000);
+							}
+							else if (lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().getNbGares()==2) {
+								lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().gagneArgent(50000);;
+								lesJoueurs.get(ordre).retirerArgent(50000);
+							}
+							else if (lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().getNbGares()==3){
+								lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().gagneArgent(100000);;
+								lesJoueurs.get(ordre).retirerArgent(100000);
+							}
+							else if (lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().getNbGares()==4){
+								lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().gagneArgent(200000);;
+								lesJoueurs.get(ordre).retirerArgent(200000);
+							}
+						}
+					}
+					else if (lesJoueurs.get(ordre).getCaseActuelle().getNumCase()==22) {
+						lesJoueurs.get(ordre).setIndCaseActuelle("nord", 15);
+						if(lesJoueurs.get(ordre).getCaseActuelle().appartientA()){
+							if(lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().getNbGares()==1) {
+								lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().gagneArgent(25000);;
+								lesJoueurs.get(ordre).retirerArgent(25000);
+							}
+							else if (lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().getNbGares()==2) {
+								lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().gagneArgent(50000);;
+								lesJoueurs.get(ordre).retirerArgent(50000);
+							}
+							else if (lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().getNbGares()==3){
+								lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().gagneArgent(100000);;
+								lesJoueurs.get(ordre).retirerArgent(100000);
+							}
+							else if (lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().getNbGares()==4){
+								lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().gagneArgent(200000);;
+								lesJoueurs.get(ordre).retirerArgent(200000);
+							}
+						}
+					}
+					else if (lesJoueurs.get(ordre).getCaseActuelle().getNumCase()==36) {
+						lesJoueurs.get(ordre).setIndCaseActuelle("montparnasse", 5);
+						lesJoueurs.get(ordre).gagneArgent(200000);
+						if(lesJoueurs.get(ordre).getCaseActuelle().appartientA()){
+							if(lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().getNbGares()==1) {
+								lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().gagneArgent(25000);;
+								lesJoueurs.get(ordre).retirerArgent(25000);
+							}
+							else if (lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().getNbGares()==2) {
+								lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().gagneArgent(50000);;
+								lesJoueurs.get(ordre).retirerArgent(50000);
+							}
+							else if (lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().getNbGares()==3){
+								lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().gagneArgent(100000);;
+								lesJoueurs.get(ordre).retirerArgent(100000);
+							}
+							else if (lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().getNbGares()==4){
+								lesJoueurs.get(ordre).getCaseActuelle().getProprietaire().gagneArgent(200000);;
+								lesJoueurs.get(ordre).retirerArgent(200000);
+							}
+						}
+					}
+
+					break;
+				case 3:
+					//"Rdv case Henri-Martin. Si vous passez par la case départ recevez 200 000"
+					lesJoueurs.get(ordre).setIndCaseActuelle("henri-martin", 24);
+					if (lesJoueurs.get(ordre).getCaseActuelle().getNumCase()>24){
+						lesJoueurs.get(ordre).gagneArgent(200000);
+					}
+					break;
+				case 4:
+					//"Avancez jusqu'aux Champs Elysées."
+					lesJoueurs.get(ordre).setIndCaseActuelle("champs", 37);
+					break;
+				case 5:
+					//"Votre club de danse orientale dans le centre de Paris vous rapporte M1.5 mille."
+					lesJoueurs.get(ordre).gagneArgent(1500);
+					break;
+				case 6:
+					//﻿"Payer M15 mille pour nettoyer les 32 fenêtres du Louvres."
+					lesJoueurs.get(ordre).payerTaxe(15000);
+					p.ajouterArgentPlateau(15000);
+				case 7:
+					//"Payer M50 milles à chaque joueur en échange de nourriture provenant du monde entier." 
+					for(int i=0; i<nbJoueur; i++){
+						if(ordre!=i) {
+							lesJoueurs.get(ordre).payerTaxe(50000);
+							lesJoueurs.get(i).gagneArgent(50000);
+						}
+					}
+					break;
+				case 8:
+					break;
+				case 9:
+					//"Reculez de trois cases."
+					lesJoueurs.get(ordre).reculerJoueur(3);
+					break;
+				case 10:
+					//"Sortie de prison, vous pouvez garder cette carte pour sortir de prison"
+					lesJoueurs.get(ordre).ajouterCarteChance(new CarteChance(10));
+					break;
+				case 11:
+					break;
+				case 12:
+					//"Avancez jusqu'à la case départ, recevez M200 milles."
+					lesJoueurs.get(ordre).setIndCaseActuelle("depart", 0);
+					lesJoueurs.get(ordre).gagneArgent(200000);
+					break;
+				case 13:
+					lesJoueurs.get(ordre).setIndCaseActuelle("villette", 11);
+					if (lesJoueurs.get(ordre).getCaseActuelle().getNumCase()>11){
+						lesJoueurs.get(ordre).gagneArgent(200000);
+					}
+					break;
+				case 14:
+					break;
+				case 15:
+					//"Votre entreprise de réparation de bicyclette vous rapporte 50000"
+					lesJoueurs.get(ordre).gagneArgent(50000);
+					break;
+				case 16:
+					//"Vous faites redécorer vos propriétés par un designer de renommée internationale. 
+					//Pour chaque maison payer M25 milles, pour chaque hôtel payer M100 Milles."
+					lesJoueurs.get(ordre).payerTaxe(lesJoueurs.get(ordre).getNbMaisons()*25000);
+					lesJoueurs.get(ordre).payerTaxe(lesJoueurs.get(ordre).getNbHotels()*100000);
+					break;
+				}
 	}
+	
 	
 	/////////////////////////////////////////////////////
 	//////////////// FONCTION MAIN //////////////////////
@@ -178,15 +319,9 @@ public class Jeu {
 			if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "chance")	// si c'est une case de type chance
 			{
 				
-				
-				
-				
 			}
 			else if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "communaute")	// si c'est une case de type caisse de communaute
 			{
-				
-				
-				
 				
 			}
 			else
@@ -195,9 +330,9 @@ public class Jeu {
 				{
 					//il l'acheter et on donne une phrase de réponse
 					lesJoueurs.get(ordre).acheterCase(lesJoueurs.get(ordre).getCaseActuelle());
-					System.out.println("Vous avez bien acheter cette propriete");
+					System.out.println("Vous avez bien acheté cette propriete");
 				}
-				else	// on va mettre au enchere la popriété
+				else	// on va mettre aux encheres la popriété
 					mettreAuxEncheres(ordre);
 			
 			ordre++;	// pour passer au joueur suivant (2)			

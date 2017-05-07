@@ -10,7 +10,7 @@ public class Plateau {
 	private static int argentPlateau; // argent qui est poser sur le plateau
 	
 	// constructeur vide
-	Plateau () {
+	public Plateau () {
 		touteCase = new ArrayList <Case> ();
 		listeCarteChance = new ArrayList <CarteChance> ();
 		listeCarteCommunaute = new ArrayList <CarteCommunaute> ();
@@ -70,12 +70,12 @@ public class Plateau {
 	} // fin du constructeur
 	
 	// methode pour retourner une case en fonction de son numero
-	Case getCase (int ind) {
+	public Case getCase (int ind) {
 		return touteCase.get(ind);
 	}
 	
 	// methode pour recuperer une carte chance en fonction d'un nombre aleatoire
-	CarteChance getCarteChance (int nb) {
+	public CarteChance getCarteChance (int nb) {
 		return listeCarteChance.get(nb);
 	}
 	
@@ -96,7 +96,7 @@ public class Plateau {
 	}
 	
 	// methode pour ajouter de l'argent sur le plateau
-	private void ajouterArgentPlateau (int somme) {
+	public void ajouterArgentPlateau (int somme) {
 		this.argentPlateau += somme;
 	}
 
@@ -105,6 +105,10 @@ public class Plateau {
 		argentPlateau = 0;
 	}
 	
+	// methode pour recuperer une carte chance en fonction d'un nombre aleatoire
+	public CarteCommunaute getCarteCommunaute (int nb) {
+			return listeCarteCommunaute.get(nb);
+		}
 	
 	//////////////////////////////////////////////////
 	/////////// FONCTION MAIN ////////////////////////

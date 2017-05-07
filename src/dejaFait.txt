@@ -1,0 +1,5 @@
+Case 
+joueur
+Plateau
+CarteChance
+jeu

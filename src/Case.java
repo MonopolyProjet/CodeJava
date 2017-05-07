@@ -110,7 +110,7 @@ public class Case {
 	}
 	
 	//methode pour recuperer le nombre de maison sur la case
-	private int getNbMaison() {
+	public int getNbMaison() {
 		return nbMaison;
 	}
 	// methode pour ajouter un hotel
@@ -123,6 +123,12 @@ public class Case {
 		else
 			System.out.println("Il manque des maisons pour faire mettre un hotel ...");
 	}
+	
+	//procedure return boolean true if it belongs to someone
+	public boolean appartientA(){
+		if (this.proprietaire!=null) return(true);
+		else return(false);
+	}
 		
 	// methode pour supprimer un hotel 
 	private void suppHotel () {
@@ -131,13 +137,17 @@ public class Case {
 	}
 	
 	// methode pour recupererle nombre d'hotel
-	private int getNbHotel () {
+	public int getNbHotel () {
 		return nbHotel;
 	}
 	
 	// methode pour recuperer le nom
-	String getNomCase () {
+	public String getNomCase () {
 		return this.nom;
+	}
+	
+	public int getNumCase() {
+		return (this.numCase);
 	}
 	
 	// methode pour assigner un propri�taire
@@ -146,7 +156,7 @@ public class Case {
 	}
 	
 	// methode pour recuperer le propri�taire
-	private Joueur getProprietaire () {
+	public Joueur getProprietaire () {
 		return this.proprietaire;
 	}
 	

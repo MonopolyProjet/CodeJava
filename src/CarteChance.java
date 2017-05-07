@@ -11,7 +11,7 @@ public class CarteChance extends Carte {
 	
 	
 	// on va creer un constructeur qui construit les cartes a partir de la lecture d'un fichier .txt
-	CarteChance (int i) { // est l'indice de la carte a creer
+	public CarteChance (int i) { // est l'indice de la carte a creer
 		this.numCarteChance = i;
 		String description = ""; // va recevoir le texte de la carte
 		
@@ -55,6 +55,10 @@ public class CarteChance extends Carte {
 		String s = "";
 		s = s +"num carte : " +numCarteChance +"\n" +texte;
 		return s;
+	}
+	
+	public int getNum(){
+		return(this.numCarteChance);
 	}
 	
 	
