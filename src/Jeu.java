@@ -424,6 +424,12 @@ public class Jeu {
 		// on va cr�er les joueurs mais on doit savoir combien il y en a
 		System.out.println("\n" +"Entrez mainenant le nombre de joueur de cette partie (entre 2 et 8)");
 		int nbJoueur = sc.nextInt();
+		// on verifie que le nombre de joueur
+		while (nbJoueur < 2 ||  nbJoueur > 8 )
+		{
+			System.out.println("\n" +"Nombre de joueur incorrect : Entrez maintenant le nombre de joueur de cette partie (entre 2 et 8)");
+			nbJoueur = sc.nextInt();
+		}
 		// on appel la m�thode pour cr�er les joueur
 		jeu.creerJoueur(nbJoueur);
 		
