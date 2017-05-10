@@ -135,6 +135,7 @@ public class Jeu {
 		// on va s'occuper de chacunes des cartes
 		// on recuperer l'indice de la carte
 		int indCarte = chance.getNum();
+		System.out.println(new CarteChance(indCarte));
 		switch (indCarte)
 		{
 		case 1:
@@ -304,6 +305,7 @@ public class Jeu {
 		
 		// on recuperer l'indice de la carte
 		int indCarte = co.getNum();
+		System.out.println(new CarteCommunaute(indCarte));
 		switch (indCarte)
 		{
 		case 1:
@@ -436,8 +438,9 @@ public class Jeu {
 		
 		// on va faire march� les joueurs
 		int ordre = 0;
-		switch (ordre) {
-		case 0:
+		int i=0;
+		while(i<30){
+			ordre = ordre%nbJoueur;
 			System.out.println(lesJoueurs.get(ordre).getNom() + " est à la case : " + lesJoueurs.get(ordre).getCaseActuelle());
 			// on le fais avancer en lancant les dés
 			int nbCasesAvance = jeu.lanceDes();
@@ -459,10 +462,7 @@ public class Jeu {
 			
 			if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "chance")	// si c'est une case de type chance
 			{
-				
-				
-				
-				
+				jeu.tirerCarteChance(p, ordre);
 			}
 			else if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "communaute")	// si c'est une case de type caisse de communaute
 			{
@@ -477,10 +477,10 @@ public class Jeu {
 					lesJoueurs.get(ordre).acheterCase(lesJoueurs.get(ordre).getCaseActuelle());
 					System.out.println("Vous avez bien acheter cette propriete");
 				}
-				else	// on va mettre au enchere la popriété
-					mettreAuxEncheres(ordre);
+			//else	// on va mettre au enchere la popriété
+					//mettreAuxEncheres(ordre);
 			}
-			
+			i++;
 			ordre++;	// pour passer au joueur suivant (2)			
 		} // fin du switch
 				
