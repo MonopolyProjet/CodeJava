@@ -1,5 +1,4 @@
 model de carte propriete
-
 nom
 couleur
 loyer

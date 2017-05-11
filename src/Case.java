@@ -172,16 +172,16 @@ public class Case {
 		String s = "";
 		// pour les cases sans valeur de loyer
 		if (nom == "depart" || nom == "aller_prison" || nom == "prison" || nom == "impots_sur_le_revenu" || nom == "chance" || nom == "communaute" || nom == "parc_gratuit" || nom == "taxe_de_luxe")
-			s = s + "Nom de la case : " +nom;
+			s = s +nom;
 		// pour les compagnies
 		else if (nom == "eau" || nom == "electricite")
-			s = s +"Nom de la case : " +nom +"\n" +"Prix de la case : " +valeur;
+			s = s  +nom +"\n" +"Prix de la case : " +valeur +"\n" +"Multiplié par " +loyer1maison +" la somme des dés si vous avez une des compagnies, sinon par " +loyer2maison;
 		//pour les gares
 		else if (nom == "lyon" || nom == "nord" || nom == "saint-lazare" || nom == "montparnasse")
-			s = s +"Nom de la case : " +nom +"\n" +"Prix de la case : " +valeur;
+			s = s +"gare " +nom +"\n" +"Prix de la case : " +valeur +"\n" +"Somme a multiplié par le nombre de gare : " +loyer1maison;
 		// pour les cartes de propriété
 		else
-			s = s + "Nom de la case : " +nom +"\n" +"Couleur : " +couleurCase +"\n" +"prix de la case : " +valeur +"\n";
+			s = s +nom +"\n" +"Couleur : " +couleurCase +"\n" +"prix de la case : " +valeur +"\n" +"Loyer: " +loyer +"\n" +"1 maison: " +loyer1maison +"\n" +"2 maisons: " +loyer2maison +"\n" +"3 maisons: " +loyer3maison +"\n" +"4 maisons: " +loyer4maison +"\n" +"loyerHôtel: " +loyerHotel +"\n" +"Prix immobilié: " +prixMaison;
 		return(s);
 	}
 	

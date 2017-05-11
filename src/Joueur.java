@@ -98,10 +98,10 @@ public class Joueur{
 	}
 	
 	// methode pour demander si le joueur veut acheter la propriété
-	public boolean veutAcheter (Joueur j) {
+	public boolean veutAcheter () {
 		boolean veut = false;
 		// on affiche le nom pour savoir a qui on parle
-		System.out.println(j.getNom ());
+		System.out.println(nom);
 		System.out.println("Voulez vous acheter la propriété ? (entrer le numéro de votre réponse)");
 		System.out.println("1) Oui");
 		System.out.println("2) Non");
@@ -118,13 +118,29 @@ public class Joueur{
 		//on va verifier qu'il peut l'acheter
 		if (argent >= c.getPrix())
 		{
-			this.listePropriete.add(c);
-			this.argent -= c.getPrix();
+			this.listePropriete.add(c);	// on ajoute la propriete a sa liste de propriete
+			this.argent -= c.getPrix();	// on retire l'argent
+			// on l'informe sur son argent
+			System.out.println("Il vous reste desormais " +argent +" mille(s)");
 		}
 		else
 			System.out.println("Le joueur n'a pas assez d'argent");
 	}
 
+	// methode pour acheter une propriete
+	public void acheterCaseEnchere (Case c, int somme) {
+		//on va verifier qu'il peut l'acheter
+		if (argent >= somme)
+		{
+			this.listePropriete.add(c);	// on ajoute la propriete a sa liste de propriete
+			this.argent -= somme;	// on retire l'argent
+			// on l'informe sur son argent
+			System.out.println("Il vous reste desormais " +argent +" mille(s)");
+		}
+		else
+			System.out.println("Le joueur n'a pas assez d'argent");
+	}
+		
 	public void payerTaxe(int montantTaxe){
 		this.argent-=montantTaxe;
 	}
