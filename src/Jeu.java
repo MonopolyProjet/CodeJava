@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.SingleSelectionModel;
-
+//phrase debile
 public class Jeu {
 	// les attributs
 	String nom;
@@ -442,7 +442,7 @@ public class Jeu {
 			{
 				// on regarde si le joueur est juste en visite simple ou dans la prison
 				//si il est en prison, on 
-				if (lesJoueurs.get(ordre).getPrison())
+				if (lesJoueurs.get(ordre).getPrison()){
 			}
 			else if (nomCase == "aller_prison")
 			{
@@ -465,7 +465,7 @@ public class Jeu {
 				// "taxe_de_luxe" on fait perdre 100 000 au joueur pour les mettre sur le plateau
 				lesJoueurs.get(ordre).retirerArgent(100000);
 				p.ajouterArgentPlateau(100000);
-			}	
+			}
 	} // fin de la procedure
 	
 	/////////////////////////////////////////////////////
