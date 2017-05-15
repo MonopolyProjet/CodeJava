@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.SingleSelectionModel;
-//phrase debile
+//phrase debile c'est Baptiste qui a fait cette merde
 public class Jeu {
 	// les attributs
 	String nom;
