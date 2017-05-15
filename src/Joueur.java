@@ -14,6 +14,8 @@ public class Joueur{
 	private Case caseActuelle;
 	private int indiceCaseActuelle;
 	private int nbGares;
+	private boolean enPrison;	// pour voir si le joueur est en prison ou pas
+	private int nbTourEnPrison; // pour savoir depuis combien de temps le joueur est en prison
 	 
 	
 	// constructeur 
@@ -27,7 +29,38 @@ public class Joueur{
 		this.caseActuelle = new Case("depart",0);
 		this.indiceCaseActuelle = 0;
 		this.nbGares = 0;
+		this.enPrison = false; 			// par defaut on est pas en prison
+		this.nbTourEnPrison = 0; 		// par defaut il na jamais ete en prison
 	};
+	
+	// methode pour ajouter un tour dans la prison
+	public void setNbTourPrison () {
+		this.nbTourEnPrison++;
+	}
+	
+	// methode pour recuperer le nombre de tour qu'il a passer en prison
+	public int getNbTourEnPrison () {
+		return this.nbTourEnPrison;
+	}
+	
+	// methode pour remettre a zero le nombre de tour en prison
+	public void setZeroNbTourEnPrison () {
+		this.nbTourEnPrison = 0;
+	}
+	
+	// methode pour mettre joueur en prison
+	public void vaPrison () {
+		this.caseActuelle = new Case("prison", 10);
+		// on change aussi l'indice de la case à celui de la prison
+		this.indiceCaseActuelle = 11;
+		// on change le boolean pour savoir si le joueur est en prison
+		this.enPrison = true;
+	}
+	
+	// methode pour savoir si le joueur est en prison
+	public boolean getPrison () {
+		return this.enPrison;
+	}
 	
 	//méthode pour connaitre le nb de maisons qu'il possède en tout
 	public int getNbMaisons(){

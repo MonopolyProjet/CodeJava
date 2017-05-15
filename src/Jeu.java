@@ -428,6 +428,46 @@ public class Jeu {
 		}	
 	} // fin de la méthode pour tirer une carte caisse de communaute
 	
+	// methode pour tirer une carte caisse de communaute et l'ensemble de l'execution qui en suit
+		private void tomberCasePiege (Plateau p,int ordre) {
+			// on va recuperer le nom de la case
+			String nomCase = lesJoueurs.get(ordre).getCaseActuelle().getNomCase();
+			
+			// selon le nom de la case
+			if (nomCase == "depart")
+			{
+				lesJoueurs.get(ordre).passeCaseDepart();
+			}
+			else if (nomCase == "prison")
+			{
+				// on regarde si le joueur est juste en visite simple ou dans la prison
+				//si il est en prison, on 
+				if (lesJoueurs.get(ordre).getPrison())
+			}
+			else if (nomCase == "aller_prison")
+			{
+				// le joueur va en prison
+				lesJoueurs.get(ordre).vaPrison();
+			}
+			else if (nomCase == "impots_sur_le_revenu")
+			{
+				// on retire 200 000 au joueur et on les places sur le plateau
+				lesJoueurs.get(ordre).retirerArgent(200000);
+				p.ajouterArgentPlateau(200000);
+			}
+			else if (nomCase == "parc_gratuit")
+			{
+				// le joueur recupere le l'argent du plateau
+				p.recupererArgent(lesJoueurs.get(ordre));
+			}
+			else
+			{
+				// "taxe_de_luxe" on fait perdre 100 000 au joueur pour les mettre sur le plateau
+				lesJoueurs.get(ordre).retirerArgent(100000);
+				p.ajouterArgentPlateau(100000);
+			}	
+	} // fin de la procedure
+	
 	/////////////////////////////////////////////////////
 	//////////////// FONCTION MAIN //////////////////////
 	/////////////////////////////////////////////////////
@@ -484,8 +524,10 @@ public class Jeu {
 			}
 			
 			// faire pour les cases pieges (taxes, prison ... )
-			
-			
+			else if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "depart" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "aller_prison" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "prison" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "impots_sur_le_revenu" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "chance" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "communaute" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "parc_gratuit" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "taxe_de_luxe")
+			{
+				// on lance la méthode pour s'occuper des cases pieges
+			}
 			else	// si c'est une carte de propriété
 			{
 				// on va voir si le joueur veut acheter la propriété

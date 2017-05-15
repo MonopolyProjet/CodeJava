@@ -90,7 +90,7 @@ public class Plateau {
 	}
 	
 	// methode pour recuperer (donner a un joueur) l'argent qu'il y a sur le plateau
-	private static int recupererArgent (Joueur j) {
+	static int recupererArgent (Joueur j) {
 		int tempSomme = 0;
 		tempSomme = argentPlateau;
 		// on le donne au joueur 
