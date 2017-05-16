@@ -39,8 +39,8 @@ public class Fond extends JFrame{
 		pnlCmd.add(chPartie);
 		pnlCmd.add(quit);
 
-		pnlCmd.setBounds(1225, 525, 300, 200);
-		
+		//pnlCmd.setBounds(1225, 525, 300, 200);
+		pnlCmd.setSize(400, 400);
 		pnlFond.add(new JLabel(new ImageIcon("src/Fond/fondMonop.jpg")));
 		pnlFond.setSize(1050, 1050);
 		
