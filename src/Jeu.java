@@ -148,8 +148,8 @@ public class Jeu {
 	
 	// methode pour tirer une carte chance et l'ensemble de l'execution qui en suit
 	private void tirerCarteChance(Plateau p, int ordre) {
-		// on tire une carte au hasard dans la liste des cartes
-		CarteChance chance = p.getCarteChance(nombreAlea());
+		// on tire la carte chance qui est au debut de la pile et on la remet à la fin apres
+		CarteChance chance = p.getCarteChance(0);
 		// on va l'afficher
 		System.out.println(chance);
 		
@@ -314,6 +314,9 @@ public class Jeu {
 			lesJoueurs.get(ordre).payerTaxe(lesJoueurs.get(ordre).getNbHotels()*100000);
 		break;
 		} // fin du switch
+		
+		// on supprime la carte au debut de la liste pour la mettre a la fin
+		p.mettreAjourListeCarteChance();
 	} // fin de la méthode
 	
 	
@@ -321,7 +324,7 @@ public class Jeu {
 	// methode pour tirer une carte caisse de communaute et l'ensemble de l'execution qui en suit
 	private void tirerCarteCaisseCommunaute (Plateau p, int ordre) {
 		// on tire une carte au hasard dans la liste des cartes
-		CarteCommunaute co = p.getCarteCommunaute(nombreAlea());
+		CarteCommunaute co = p.getCarteCommunaute(0);
 		// on va l'afficher
 		System.out.println(co);
 		
@@ -425,7 +428,11 @@ public class Jeu {
 			// "Vous louez votre batiment destiné aux sciences à une équipe de chercheurs étrangers. Recevez M100 milles."
 			lesJoueurs.get(ordre).gagneArgent(100000);
 		break;
-		}	
+		}// fin du sswitch
+		
+		// on supprime la carte au debut de la liste pour la mettre a la fin
+		p.mettreAjourListeCarteCo();
+				
 	} // fin de la méthode pour tirer une carte caisse de communaute
 	
 	// methode pour tirer une carte caisse de communaute et l'ensemble de l'execution qui en suit
@@ -441,8 +448,23 @@ public class Jeu {
 			else if (nomCase == "prison")
 			{
 				// on regarde si le joueur est juste en visite simple ou dans la prison
-				//si il est en prison, on 
-				if (lesJoueurs.get(ordre).getPrison()){
+				//si il est en prison, on va voir depuis combien de temps il y est, si c'est 3, on le fait sorti
+				if (lesJoueurs.get(ordre).getPrison())
+				{
+					 // on regarde si il a fait ses 3 tours de prison
+					if (lesJoueurs.get(ordre).getNbTourEnPrison() == 3)
+					{
+						// on le fait sortir de prison
+						lesJoueurs.get(ordre).sortPrison();
+					}
+					else // sinon il a le droit de tirer les d�s et si il fait un double il peut sortir
+					{
+						if(lanceDes() == 2 || lanceDes() == 4 || lanceDes() == 6 || lanceDes() == 8 || lanceDes() == 10 || lanceDes() == 12)
+							lesJoueurs.get(ordre).sortPrison();
+						else
+							lesJoueurs.get(ordre).setNbTourPrison();
+					}
+				}
 			}
 			else if (nomCase == "aller_prison")
 			{
@@ -457,7 +479,7 @@ public class Jeu {
 			}
 			else if (nomCase == "parc_gratuit")
 			{
-				// le joueur recupere le l'argent du plateau
+				// le joueur recupere l'argent du plateau
 				p.recupererArgent(lesJoueurs.get(ordre));
 			}
 			else
@@ -467,6 +489,95 @@ public class Jeu {
 				p.ajouterArgentPlateau(100000);
 			}
 	} // fin de la procedure
+	
+	// methode pour gerer l'achat de l'immobilier
+	public void acheterImmo(int ordre, Plateau p) {
+		int tempRepImmo = 0;
+		int reponse = 0;
+		int nbMaisonAAjouter = 0;
+		Scanner scImmo = new Scanner(System.in);
+		
+		System.out.println("Voulez vous acheter une maison ou un hôtel ?   (selectionnez le numero correspondant)");
+		System.out.println("1) Oui");
+		System.out.println("2) Non");
+		reponse = scImmo.nextInt();
+		
+		if (reponse == 1)	// si il veut acheter
+		{
+			System.out.println("Quel type d'immobilié voulez vous acheter ?   (selectionnez le numero correspondant)");
+			System.out.println("1) Maison");
+			System.out.println("2) Hôtel");
+			tempRepImmo = scImmo.nextInt();
+			
+			// on va lancer la fonction correspondante
+			if (tempRepImmo == 1)
+			{
+				System.out.println("Combien de maison voulez vous ajouter ?   (entrer le nombre)");
+				nbMaisonAAjouter = scImmo.nextInt();
+				System.out.println("Sur quelle case voulez vous ajouter l'immobilier ?");
+				String caseChoisie = scImmo.nextLine();
+				// on stock la case dans une variable temporraire
+				Case tempCase = p.rechercherCase(caseChoisie);
+				// on regarde qu'il n'y a déjà pas 4 maisons sur la propriete
+				if (tempCase.getNbMaison() + nbMaisonAAjouter <= 4)
+					// on ajoute la maison
+					tempCase.ajouteMaison(nbMaisonAAjouter, lesJoueurs.get(ordre));
+				else
+					System.out.println("Vous ne pouvez pas ajouter autant de maison, il y a déjà " +lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() +" maisons sur cette case");
+			}
+			else if (tempRepImmo == 2) // si il veut acheter un hotel
+			{
+				System.out.println("Sur quelle case voulez vous ajouter l'immobilier ?");
+				String caseChoisie = scImmo.nextLine();
+				// on stock la case dans une variable temporraire
+				Case tempCase = p.rechercherCase(caseChoisie);
+				tempCase.ajouteHotel(lesJoueurs.get(ordre));
+			}
+		}
+		else // si il ne veut pas acheter d'immobilié
+			System.out.println("Très bien, ce sera pour une prochaine fois !");
+		
+	} // fin de la méthode de la gestion des achats de l'immobilier
+	
+	// methode pour payer le loyer a un autre joueur lorsque l'on tombe sur sa case
+	public void payerLoyer(int ordre){
+		// on recupere le joueur qui possède la case
+		Joueur j2 = lesJoueurs.get(ordre).getCaseActuelle().getProprietaire();
+		// on regarde si la case a des maisons ou un hotel
+		boolean vide = true; 	// pour dire de base que la case n'a rien dessus
+		if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() != 0 || lesJoueurs.get(ordre).getCaseActuelle().getNbHotel() !=0)
+			vide = false;
+		
+		int somme = 0;
+		// si la case est vide, on regarde si il a les trois terrains
+		if (vide)
+		{
+			//on va regarder si il a toute les proprietes de la meme couleur pour multiplié le prix du loyer
+			// on va pacourir toute les cartes du joueur qui va recuperer l'argent pour voir si il les a toute
+			j2.aTouteCaseCouleur(lesJoueurs.get(ordre).getCaseActuelle().getCouleur());
+			// on retire l'argent au joueur est on le donne a l'autre
+			somme = (2 * (lesJoueurs.get(ordre).getCaseActuelle().getLoyer()));
+		}
+		else	// si il y a de l'immobilier sur la case
+		{
+			
+			// on va regarder le nombre de maison qu'il y a sur la propriété
+			if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 1)
+				somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyer1Maison();
+			else if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 2)
+				somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyer2Maison();
+			else if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 3)
+				somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyer3Maison();
+			else if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 4)
+				somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyer4Maison();
+			else
+				somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyerHotel();
+		}
+		
+		lesJoueurs.get(ordre).retirerArgent(somme);
+		j2.gagneArgent(somme);
+		
+	} // fin de la méthode des loyers
 	
 	/////////////////////////////////////////////////////
 	//////////////// FONCTION MAIN //////////////////////
@@ -487,12 +598,17 @@ public class Jeu {
 		jeu.creerJoueur();
 		
 		
-		// on va faire march� les joueurs
+		// on va faire marcher les joueurs
 		int ordre = 0;
-		switch (ordre) {
-		case 0:
+		boolean fini = false; 	// lorsque la partie doit d'arreter
+		while (!fini)
+		{
+			///////////////////////////////////////////////////////////
+			/////////////////   deplacement du joueur /////////////////
+			
 			// on affiche la case actuelle du joueur pour qu'il sache ou il est sur le plateau
 			System.out.println(lesJoueurs.get(ordre).getNom() + " est à la case : " + lesJoueurs.get(ordre).getCaseActuelle() +"\n");
+			
 			// on va savoir de combien de case il va avancer en lancant les des
 			int nbCasesAvance = jeu.lanceDes();
 			// si il y a double 6 il ramasse l'argent sur la plateau
@@ -502,7 +618,9 @@ public class Jeu {
 				lesJoueurs.get(ordre).gagneArgent(p.getArgentPlateau());
 				p.retirerArgentPlateau();	// on remet l'argent du plateau a 0
 			}
-			int ind = lesJoueurs.get(ordre).getIndCaseActuelle() + nbCasesAvance;	// on recupere l'indice de la nouvelle case
+			
+			// on gere le deplacement du joueur desormais
+			int ind = lesJoueurs.get(ordre).getIndCaseActuelle() + nbCasesAvance % 40;	// on recupere l'indice de la nouvelle case
 			lesJoueurs.get(ordre).avancerJoueur(p.getCase(ind), nbCasesAvance);		// on dit au joueur d'avancer jusqu'a la nouvelle case
 			
 			// phrase pour dire de combien de case le joueur a avancé et on affiche sa case actuelle
@@ -510,44 +628,63 @@ public class Jeu {
 			System.out.println(lesJoueurs.get(ordre).getNom() + " est maintenant à la case : " + lesJoueurs.get(ordre).getCaseActuelle());
 			
 			/////////////////////////////////////////////////////////////////////////////
-			/// ON VA VOIR L'ACTION A REALISER EN FONCTION DU TYPE DE LA CASE ///////////
+			/////// ON VA VOIR L'ACTION A REALISER EN FONCTION DU TYPE DE LA CASE ///////
 			
-			if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "chance")	// si c'est une case de type chance
+			// si c'est une case de type chance
+			if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "chance")	
 			{
 				// on lance la méthode qui s'occupe des actions des cartes chance
 				jeu.tirerCarteChance(p, ordre);		// on envoi le plateau et l'indice du joueur	
 			}
-			else if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "communaute")	// si c'est une case de type caisse de communaute
+			
+			// si c'est une case de type caisse de communaute
+			else if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "communaute")	
 			{
 				// on lance la méthode qui s'occupe des actions des cartes chance
 				jeu.tirerCarteCaisseCommunaute(p, ordre);		// on envoi le plateau et l'indice du joueur				
 			}
 			
-			// faire pour les cases pieges (taxes, prison ... )
+			// si c'est une case piege (taxes, prison ... )
 			else if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "depart" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "aller_prison" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "prison" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "impots_sur_le_revenu" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "chance" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "communaute" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "parc_gratuit" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "taxe_de_luxe")
 			{
 				// on lance la méthode pour s'occuper des cases pieges
 			}
-			else	// si c'est une carte de propriété
+			
+			// si c'est une carte de propriete
+			else	
 			{
-				// on va voir si le joueur veut acheter la propriété
-				if (lesJoueurs.get(ordre).veutAcheter())	// si le joueur veut acheter
+				// on va voir si la propriété n'appartient deja pas a quelqu'un si c'est non lui demande si il veut acheter
+				if (lesJoueurs.get(ordre).getCaseActuelle().getProprietaire() == null)
 				{
-					//il l'acheter et on donne une phrase de réponse
-					lesJoueurs.get(ordre).acheterCase(lesJoueurs.get(ordre).getCaseActuelle());
-					System.out.println("Vous avez bien acheter cette propriete");
+					// on va voir si le joueur veut acheter la propriété
+					if (lesJoueurs.get(ordre).veutAcheter())	// si le joueur veut acheter
+					{
+						//il l'acheter et on donne une phrase de réponse
+						lesJoueurs.get(ordre).acheterCase(lesJoueurs.get(ordre).getCaseActuelle());
+						System.out.println("Vous avez bien acheter cette propriete");
+					}
+					else	// si il la veut pas, on va la mettre aux encheres
+						mettreAuxEncheres(ordre);
 				}
-				else	// si il la veut pas, on va la mettre aux encheres
-					mettreAuxEncheres(ordre);
+				else // si elles est a quelqu'un, il va payer le taxe
+					jeu.payerLoyer(ordre);
+			}
+			
+			// on va voir si le joueur a la possibilité d'acheter de l'immobilier, si c'est possible on lui demande ce qu'il veut acheter
+			if (lesJoueurs.get(ordre).peutAcheterImmo ())	// on verifie qu'il a trois cartes de la même couleur
+			{
+				// on va lancer la fonction pour acheter de l'immobilier
+				jeu.acheterImmo(ordre, p);
 			}
 			
 			
+			// le fait qu'un joueur puisse hypothequé
+			// Lorsque toute les cartes sont vendu, on va pourvoir faire le Trock
 			
 			
 			
-			
-			ordre++;	// pour passer au joueur suivant (2)			
-		} // fin du switch
+			ordre++;	// pour passer au joueur suivant			
+		} // fin du while
 				
 	} // Fin de la fonction main
 	

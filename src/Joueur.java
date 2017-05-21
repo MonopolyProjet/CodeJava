@@ -33,6 +33,14 @@ public class Joueur{
 		this.nbTourEnPrison = 0; 		// par defaut il na jamais ete en prison
 	};
 	
+	
+	// methode pour sortir un joueur de prison
+	public void sortPrison () {
+		this.enPrison = false;
+		// on remet son nombre de tour en prison a zero
+		this.nbTourEnPrison = 0;
+	}
+	
 	// methode pour ajouter un tour dans la prison
 	public void setNbTourPrison () {
 		this.nbTourEnPrison++;
@@ -41,11 +49,6 @@ public class Joueur{
 	// methode pour recuperer le nombre de tour qu'il a passer en prison
 	public int getNbTourEnPrison () {
 		return this.nbTourEnPrison;
-	}
-	
-	// methode pour remettre a zero le nombre de tour en prison
-	public void setZeroNbTourEnPrison () {
-		this.nbTourEnPrison = 0;
 	}
 	
 	// methode pour mettre joueur en prison
@@ -70,7 +73,7 @@ public class Joueur{
 		}
 		return(nbMaisons);
 	}
-	
+		
 	//méthode pour connaitre le nb d'hotel qu'il possède en tout
 	public int getNbHotels(){
 		int nbHotels=0;
@@ -233,7 +236,78 @@ public class Joueur{
 	public int getNbGares(){
 		return(this.nbGares);
 	}
+	
+	// methode pour voir si leu joueur peut acheter de l'immobiller donc si il a toute les propriété d'une meme famille
+	public boolean peutAcheterImmo () {
+		boolean peutAcheter = false;
+		// on va stocker le nombre de case d'une meme couleur
+		int nbCarteMarron = 0;
+		int nbCarteBleuClair = 0;
+		int nbCarteViolet = 0;
+		int nbCarteOrange = 0;
+		int nbCarteRouge = 0;
+		int nbCarteJaune = 0;
+		int nbCarteVert = 0;
+		int nbCarteBleuFonce = 0;
+		String tempCouleur;
 		
+		//on va parcourir toute ses cartes
+		for (int i=0; i<listePropriete.size(); i++)
+		{
+			// on va recuperer la couleur de la case à chaque fois et remettre les compteurs a jour
+			tempCouleur = listePropriete.get(i).getCouleur();
+			
+			// on s'occuper des compteurs
+			if (tempCouleur == "marron")
+				nbCarteMarron++;
+			else if (tempCouleur == "bleu clair")
+				nbCarteBleuClair++;
+			else if (tempCouleur == "violet")
+				nbCarteViolet++;
+			else if (tempCouleur == "orange")
+				nbCarteOrange++;
+			else if (tempCouleur == "rouge")
+				nbCarteRouge++;
+			else if (tempCouleur == "jaune")
+				nbCarteJaune++;
+			else if (tempCouleur == "vert")
+				nbCarteVert++;
+			else if (tempCouleur == "bleu fonce")
+				nbCarteBleuFonce++;
+			
+			// on s'occupe du bouleen
+			if (nbCarteBleuClair == 3 || nbCarteViolet == 3 || nbCarteOrange == 3 || nbCarteRouge == 3 || nbCarteJaune == 3 || nbCarteVert == 3)
+				peutAcheter = true;
+			else if (nbCarteMarron == 2 || nbCarteBleuFonce == 2)
+				peutAcheter = true;
+		}
+		return peutAcheter;
+	} // fin de la méthode peut acheter
+	
+	// methode pour voir si un joueur a toutes les case d'une meme couleur
+	public boolean aTouteCaseCouleur (String couleurRef) {
+		// on parcourt toutes ces cartes et on renvoi vrai si il a toute les case de la meme couleur
+		int cpt = 0;
+		boolean aTouteCase = false;
+		for (int i=0; i<listePropriete.size(); i++)
+		{
+			if (listePropriete.get(i).getCouleur() == couleurRef)
+				cpt++;
+		}
+		// on gere le boolean
+		if (couleurRef == "marron" || couleurRef == "bleu fonce")
+		{
+			if (cpt == 2)
+				aTouteCase = true;
+		}
+		else
+		{
+			if (cpt == 3)
+				aTouteCase = true;
+		}
+		return aTouteCase;
+	}
+	
 	//////////////////////////////////////////////////
 	/////////// FONCTION MAIN ////////////////////////
 	//////////////////////////////////////////////////

@@ -99,9 +99,35 @@ public class Case {
 		
 	} // fin du constructeur
 	
+	//////////////////////////////////////////////////////////
+	////// Ensenble des getteur pour les loyers //////////////
+	public int getLoyer () {
+		return this.loyer;
+	}
+	public int getLoyer1Maison () {
+		return this.loyer1maison;
+	}
+	public int getLoyer2Maison () {
+		return this.loyer2maison;
+	}
+	public int getLoyer3Maison () {
+		return this.loyer3maison;
+	}
+	public int getLoyer4Maison () {
+		return this.loyer4maison;
+	}
+	public int getLoyerHotel () {
+		return this.loyerHotel;
+	}
+	public int getHypo () {
+		return this.hypo;
+	}
+	
 	// methode pour ajouter une maison
-	private void ajouteMaison (int nbMaison) {
+	void ajouteMaison (int nbMaison, Joueur j) {
 		this.nbMaison += nbMaison;
+		// on enleve l'argent au joueur
+		j.retirerArgent(nbMaison * prixMaison);
 	}
 	
 	// methode pour supprimer une maison 
@@ -115,11 +141,13 @@ public class Case {
 	}
 	
 	// methode pour ajouter un hotel
-	private void ajouteHotel () { // il ne peut y avoir que une maison
+	void ajouteHotel(Joueur j) { // il ne peut y avoir que une maison
 		if (nbMaison == 4)
 		{
 			this.nbHotel = 1;
 			this.nbMaison = 0;
+			// on enleve l'argent au joueur
+			j.retirerArgent(prixHotel);
 		}
 		else
 			System.out.println("Il manque des maisons pour faire mettre un hotel ...");
@@ -134,6 +162,11 @@ public class Case {
 	// methode pour recupererle nombre d'hotel
 	int getNbHotel () {
 		return nbHotel;
+	}
+	
+	// methode pour retourner la couleur
+	public String getCouleur() {
+		return this.couleurCase;
 	}
 	
 	//procedure return boolean true if it belongs to someone
@@ -217,9 +250,9 @@ public class Case {
 	System.out.println(c1.getProprietaire ());
 	
 	// on ajoute a la case champs elysée 4 maisons
-	c1.ajouteMaison (4);
+	// c1.ajouteMaison (4);
 	// on ajoute un hotel
-	c1.ajouteHotel();
+	// c1.ajouteHotel();
 	// on affiche le nombre d'hotel sur la case
 	System.out.println("Il y a : " +c1.getNbHotel() +" hôtel sur cette case");
 	System.out.println("Il y a : " +c1.getNbMaison() +" maisons sur cette case");

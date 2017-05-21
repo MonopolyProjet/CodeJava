@@ -74,6 +74,38 @@ public class Plateau {
 		return touteCase.get(ind);
 	}
 	
+	// methode pour remettre la pile de carte comme il faut
+	public void mettreAjourListeCarteChance(){
+		// on stock la premiere
+		CarteChance tempCarte = listeCarteChance.get(0);
+		// on supprime cette carte
+		listeCarteChance.remove(0);
+		// et on la rajoute à la fin
+		listeCarteChance.add(tempCarte);
+	}
+	
+	// methode pour remettre la pile de carte comme il faut
+	public void mettreAjourListeCarteCo(){
+		// on stock la premiere
+		CarteCommunaute tempCarte = listeCarteCommunaute.get(0);
+		// on supprime cette carte
+		listeCarteCommunaute.remove(0);
+		// et on la rajoute à la fin
+		listeCarteCommunaute.add(tempCarte);
+	}
+		
+	// methode pour rechercher une case a partir de son nom
+	public Case rechercherCase (String nom) {
+		// on parcourt toute les case et on renvoi celle qui a ce nom
+		int indice = 0;
+		for (int i=0; i<touteCase.size(); i++)
+		{
+			if (touteCase.get(i).getNomCase() == nom)
+				indice = i;
+		}
+		return touteCase.get(indice);
+	}
+		
 	// methode pour recuperer une carte chance en fonction d'un nombre aleatoire
 	CarteChance getCarteChance (int nb) {
 		return listeCarteChance.get(nb);
