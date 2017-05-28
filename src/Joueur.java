@@ -186,9 +186,42 @@ public class Joueur{
 	}
 	
 	public void retirerArgent (int somme) {
+		// on va regader que le joueur a assez d'argent sinon on passe par l'hypotheque
+		while (argent - somme < 0)
+		{	
+			System.out.println("Vous n'avez pas asser d'argent, il vous manque: " +(somme-argent));
+			hypotheque();
+		}
+		
 		this.argent -= somme;
 	}
 	
+	// methode pour gerer l'hypotheque
+	public void hypotheque() {
+		int indice = 0;
+		Scanner sc = new Scanner(System.in); // pour la reponse
+		
+		// on va afficher tout les noms de ses proprietes et demander le numero de celle qu'il veut bloquer
+		System.out.println("Vous allez entrer le numero de la case à hypothequer");
+		for (int i=0; i<listePropriete.size(); i++)
+		{
+			// on va verifie qu'elle n'est pas deja hypothequé
+			if (!listePropriete.get(i).estHypotheque())
+				System.out.println(i +") " +listePropriete.get(i).getNomCase());
+		}
+		
+		System.out.print("Case à hypothéquer : ");
+		indice = sc.nextInt();
+		
+		// on recupere la veleur d'hypotheque et on l'ajoute a l'argent du joueur
+		// et on change le statue de la case
+		gagneArgent(listePropriete.get(indice).getHypo());
+		listePropriete.get(indice).hypothequer();
+		//on lui dit combien il a recupere
+		System.out.println("Vous vez récuperé " +listePropriete.get(indice).getHypo());
+	}
+
+
 	// methode pour savoir si le joueur a la case
 	public boolean aCase (Case c) {
 		boolean trouve = false;
@@ -306,6 +339,27 @@ public class Joueur{
 				aTouteCase = true;
 		}
 		return aTouteCase;
+	}
+	
+	// methode pour voir si un joueur est ruiné
+	public boolean ruine () {
+		boolean ruine = false;
+		
+		// on va regarder si toute ces proprietes sont hypotheque
+		boolean touteHypo = false;
+		int cptHypo = 0;
+		for (int i=0; i<listePropriete.size(); i++)
+		{
+			if (listePropriete.get(i).estHypotheque())
+				cptHypo++;
+		}
+		if (cptHypo == listePropriete.size())
+			touteHypo = true;
+		
+		if (touteHypo && argent == 0)
+			ruine = true;
+		
+		return ruine;
 	}
 	
 	//////////////////////////////////////////////////

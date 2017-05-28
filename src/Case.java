@@ -24,6 +24,8 @@ public class Case {
 	private int prixMaison;
 	private int prixHotel;
 	
+	private boolean hypotheque = false;
+	
 	// constructeur
 	public Case(String nom, int ind) { // est le nom de la carte qui doit etre construite
 		this.numCase = ind;
@@ -96,6 +98,7 @@ public class Case {
 		this.nbMaison = 0;
 		this.nbHotel = 0;
 		this.proprietaire = null;
+		this.hypotheque = false;
 		
 	} // fin du constructeur
 	
@@ -267,4 +270,20 @@ public class Case {
 	// enfin on affiche la valeur de la case
 	System.out.println("Le prix de cette propriété est de : " +c1.getPrix());
 	}
+
+	// methode pour marquer qu'une propriete est hypotheque
+	public void hypothequer() {
+		this.hypotheque = true;		
+	}
+	
+	// methode pour qu'une case ne soit plus hypotheque
+	public void dehypothequer() {
+		this.hypotheque = false;
+	}
+	
+	// methode pour vois si une case est hypotheque
+	public boolean estHypotheque () {
+		return this.hypotheque;
+	}
+	
 }	// fin de la clase Case

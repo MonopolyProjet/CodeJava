@@ -510,30 +510,63 @@ public class Jeu {
 			tempRepImmo = scImmo.nextInt();
 			
 			// on va lancer la fonction correspondante
-			if (tempRepImmo == 1)
+			// tant qu'il n'a pas fait d'erreur
+			boolean erreur = true;
+			while (erreur)
 			{
-				System.out.println("Combien de maison voulez vous ajouter ?   (entrer le nombre)");
-				nbMaisonAAjouter = scImmo.nextInt();
-				System.out.println("Sur quelle case voulez vous ajouter l'immobilier ?");
-				String caseChoisie = scImmo.nextLine();
-				// on stock la case dans une variable temporraire
-				Case tempCase = p.rechercherCase(caseChoisie);
-				// on regarde qu'il n'y a déjà pas 4 maisons sur la propriete
-				if (tempCase.getNbMaison() + nbMaisonAAjouter <= 4)
-					// on ajoute la maison
-					tempCase.ajouteMaison(nbMaisonAAjouter, lesJoueurs.get(ordre));
-				else
-					System.out.println("Vous ne pouvez pas ajouter autant de maison, il y a déjà " +lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() +" maisons sur cette case");
-			}
-			else if (tempRepImmo == 2) // si il veut acheter un hotel
-			{
-				System.out.println("Sur quelle case voulez vous ajouter l'immobilier ?");
-				String caseChoisie = scImmo.nextLine();
-				// on stock la case dans une variable temporraire
-				Case tempCase = p.rechercherCase(caseChoisie);
-				tempCase.ajouteHotel(lesJoueurs.get(ordre));
+				if (tempRepImmo == 1)
+				{
+					System.out.println("Combien de maison voulez vous ajouter ?   (entrer le nombre)");
+					nbMaisonAAjouter = scImmo.nextInt();
+					System.out.println("Sur quelle case voulez vous ajouter l'immobilier ?");
+					String caseChoisie = scImmo.nextLine();
+					// on stock la case dans une variable temporraire
+					Case tempCase = p.rechercherCase(caseChoisie);
+					
+					// on regarde que la case n'est pas hypotheque
+					if (!tempCase.estHypotheque())
+					{
+						// on regarde qu'il n'y a déjà pas 4 maisons sur la propriete
+						if (tempCase.getNbMaison() + nbMaisonAAjouter <= 4)
+						{
+							// on ajoute la maison
+							tempCase.ajouteMaison(nbMaisonAAjouter, lesJoueurs.get(ordre));
+							erreur = false;
+						}
+						else
+							System.out.println("Vous ne pouvez pas ajouter autant de maison, il y a déjà " +lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() +" maisons sur cette case");
+					}
+					else
+						System.out.println("Cette propriété est hypothéqué, vous ne pouvez pas ajouter d'immobilié sur cette case");
+				}
+				
+				
+				else if (tempRepImmo == 2) // si il veut acheter un hotel
+				{
+					// tant qu'il a choisi la mauvaise case on recommence
+					boolean choisi = false;
+					while (!choisi)
+					{
+						System.out.println("Sur quelle case voulez vous ajouter l'immobilier ?");
+						String caseChoisie = scImmo.nextLine();
+						// on stock la case dans une variable temporraire
+						Case tempCase = p.rechercherCase(caseChoisie);
+						
+						// on verifie que la case n'est pas hypotheque
+						if (!tempCase.estHypotheque())
+						{
+							tempCase.ajouteHotel(lesJoueurs.get(ordre));
+							choisi = true;
+						}
+						else
+							System.out.println("Cette case est hypothequé, vous ne pouvez pas ajoute d'immo sur cette case");
+				
+					}
+				}
 			}
 		}
+		
+		
 		else // si il ne veut pas acheter d'immobilié
 			System.out.println("Très bien, ce sera pour une prochaine fois !");
 		
@@ -601,6 +634,15 @@ public class Jeu {
 		// on va faire marcher les joueurs
 		int ordre = 0;
 		boolean fini = false; 	// lorsque la partie doit d'arreter
+
+		// on va vérifier qu'in joueur n'est pas ruine
+		for (int j=0; j<lesJoueurs.size(); j++)
+		{
+			//si il est ruiné on le retire de la liste des joueurs
+			if (lesJoueurs.get(j).ruine())
+				lesJoueurs.remove(j);
+		}
+		
 		while (!fini)
 		{
 			///////////////////////////////////////////////////////////
@@ -679,11 +721,12 @@ public class Jeu {
 			
 			
 			// le fait qu'un joueur puisse hypothequé
+			// ne peut pas recevoir les impots sur une case hypotheque
 			// Lorsque toute les cartes sont vendu, on va pourvoir faire le Trock
 			
 			
 			
-			ordre++;	// pour passer au joueur suivant			
+			ordre = (ordre + 1) % lesJoueurs.size();	// pour passer au joueur suivant			
 		} // fin du while
 				
 	} // Fin de la fonction main
