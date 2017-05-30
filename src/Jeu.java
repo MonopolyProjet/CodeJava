@@ -1,5 +1,10 @@
 package src;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,12 +18,97 @@ public class Jeu {
 	static ArrayList <Joueur> lesJoueurs;
 	
 	
-	//constructeur
+	//constructeur pour nouvelle partie
 	Jeu (String nom) {
 		this.nom = nom;
 		lesJoueurs = new ArrayList <Joueur> ();
 	}
 	
+	// contructeur pour charger une partie
+	Jeu (String nomFichier, int num) {
+		this.nom = nomFichier;
+		
+			
+		// on declare le fichier dans lequel on va lire
+		File file = new File ("src/Sauvegarde/" +nomFichier +".txt");
+				
+		// si le fichier existe on va faire les operation suivante
+		if (file.exists())
+		{
+			// on test si pas de probleme
+			try {
+				file.createNewFile();
+			}
+			// si erreur
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		} // fin du if
+				
+		// on va s'occuper de la lecture
+		try (FileOutputStream fos = new FileOutStream(file)) {
+			// on creer un scanner
+			Scanner sc = new Scanner (fos);
+					
+			// on va lire dans le fichier pour ajouter les joueurs
+			lesJoueurs
+				
+	} // fin du constructeur
+	
+	
+	// methode pour sauvegarder le jeu
+	public void sauvegarde(Plateau p) {
+		try
+		{
+			// on y place le nouveau fichier text
+			File dossier = new File ("Sauv" +this.nom +File.separator);
+			if (dossier.isDirectory() == false)
+					dossier.mkdir();
+			
+			// on créer le fichier dans le dossier de la sauvegarde
+			File file = new File (dossier +File.separator +this.nom + ".txt");
+						
+				
+			PrintWriter pw = new PrintWriter (file);
+			pw.write(nom +"\n");
+			pw.write(lesJoueurs.size() +"\n\n");
+			// on va donner le nom des fichiers a ecrire pour les joueurs
+			for (int i=0; i<this.nbJoueur; i++)
+				pw.write("joueur" +i +".txt" +"\n");	// on met le numéro pour pouvoir le reconstruire a partir de ces fichiers
+			pw.write("plateau.txt");
+			pw.close();
+		}
+		catch (IOException exception)
+		{
+			System.out.println("Impossible d'écrire la sauvegarde " +exception.getMessage());
+		}
+		
+		// on lance la sauvegarde de tout les joueurs
+		for (int i=0; i<lesJoueurs.size(); i++)
+			lesJoueurs.get(i).sauvegarde(this.nom, ("joueur" +i +".txt") );
+		// on lance la sauvegarde du plateau
+		p.
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
 	
 	// fonction pour creer les joueurs
 	public void creerJoueur () {
@@ -617,19 +707,38 @@ public class Jeu {
 	/////////////////////////////////////////////////////
 	public static void main (String [] args) {
 		
-		// On creer le jeu
-		Scanner sc = new Scanner(System.in); // pour le type string
-		System.out.print ("Veuillez entrer le nom de la partie: ");
-		String nom = sc.nextLine();
+		// on va demander si on veut charger une partie ou en créer une
+		Scanner sc = new Scanner(System.in); // pour recuperer ce qui est taper au clavier
+		int reponse = 0;
+		while (reponse != 1 || reponse != 2)
+		{
+			System.out.println("1) Nouvelle partie");
+			System.out.println("2) Charger partie");
+			reponse = sc.nextInt();
+		}
 		
-		// on créer le jeu et le plateau
-		Jeu jeu = new Jeu (nom);
-		Plateau p = new Plateau();
-				
-		
-		// on appel la methode pour creer les joueur
-		jeu.creerJoueur();
-		
+		if (reponse == 1)
+		{
+			// On creer le jeu
+			
+			System.out.print ("Veuillez entrer le nom de la partie: ");
+			String nom = sc.nextLine();
+			
+			// on créer le jeu et le plateau
+			Jeu jeu = new Jeu (nom);
+			Plateau p = new Plateau();
+						
+			// on appel la methode pour creer les joueur
+			jeu.creerJoueur();
+		}
+		else if(reponse == 2)
+		{
+			System.out.print ("Veuillez entrer le nom de la partie à charger: ");
+			String nom = sc.nextLine();
+			
+			//Jeu jeu = new Jeu (nom, 1);
+		}
+			
 		
 		// on va faire marcher les joueurs
 		int ordre = 0;

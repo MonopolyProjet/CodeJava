@@ -1,5 +1,8 @@
 package src;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Plateau {
@@ -69,6 +72,53 @@ public class Plateau {
 		
 	} // fin du constructeur
 	
+	// methode pour sauvegarder le joueur
+	public void sauvegarde(String nomPartie, String nomFichier) {
+		try
+		{
+			// on y place le nouveau fichier text
+			File dossier = new File ("Sauv" +nomPartie +File.separator);
+			if (dossier.isDirectory() == false)
+					dossier.mkdir();
+			
+			// on créer le fichier dans le dossier de la sauvegarde
+			File file = new File (dossier +File.separator +nomFichier);
+						
+				
+			PrintWriter pw = new PrintWriter (file);
+			pw.write(this.nom +"\n");
+			pw.write(this.argent +"\n");
+			pw.write(this.couleur +"\n");
+			// on écrit tout les numeros de carte chance qu'il a (apres un saut de ligne)
+			for (int x=0; x<listeCarteChance.size(); x++)
+				pw.write(this.listeCarteChance.get(x).getNum() +"\n");
+			pw.write("\n");
+			// on écrit tout les numeros de carte comunaute qu'il a (apres un saut de ligne)
+			for (int z=0; z<listeCarteCommunaute.size(); z++)
+				pw.write(this.listeCarteCommunaute.get(z).getNum() +"\n");
+			pw.write("\n");
+			// on écrit tout les noms de carte de propriete qu'il a (apres un saut de ligne)
+				for (int w=0; w<listePropriete.size(); w++)
+					pw.write(this.listePropriete.get(w).getNomCase() +"\n");
+			pw.write("\n");
+			// nom de la case actuelle
+			pw.write(this.caseActuelle.getNomCase());
+			pw.write(this.indiceCaseActuelle);
+			pw.write(this.nbGares);
+			// on gere si il est en prison
+			if (this.enPrison == true)
+				pw.write("true");
+			else
+				pw.write("false");
+			pw.write(this.nbTourEnPrison);
+			pw.close();
+		}
+		catch (IOException exception)
+		{
+			System.out.println("Impossible d'écrire la sauvegarde " +exception.getMessage());
+		}
+	}
+		
 	// methode pour retourner une case en fonction de son numero
 	Case getCase (int ind) {
 		return touteCase.get(ind);
