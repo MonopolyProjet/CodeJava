@@ -88,25 +88,7 @@ public class Jeu {
 		for (int i=0; i<lesJoueurs.size(); i++)
 			lesJoueurs.get(i).sauvegarde(this.nom, ("joueur" +i +".txt") );
 		// on lance la sauvegarde du plateau
-		p.
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		p.sauvegarde(this.nom, "plateau.txt");		
 		
 	}
 	

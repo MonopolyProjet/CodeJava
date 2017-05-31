@@ -1,3 +1,4 @@
+///////////////////////////////////////////////////
 // Fichier de sauvegarde du jeu
 nom
 nbJoueur
@@ -7,7 +8,7 @@ nom fichier joueur 1 : joueur1.txt
 ...
 nom fichier pour le plateau : plateau.txt
 
-
+///////////////////////////////////////////////////
 // Fichier de sauvegarde d'un joueur
 String nomJoueur
 int argentJoueur
@@ -28,4 +29,16 @@ int nbGare
 boolean enPrison	// true or false
 int nbTourEnPrison
 
-// on va maintenant copier toute les case
+///////////////////////////////////////////////
+// Fichier de sauvegarde du plateau
+ArrayList toutCase
+// liste de tout les noms de case
+
+ArrayList listeCarte change
+// liste des numero
+
+ArrayList listeCarteCommunaute
+// liste des numero
+
+nbCase
+argentPlateau

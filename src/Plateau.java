@@ -86,31 +86,23 @@ public class Plateau {
 						
 				
 			PrintWriter pw = new PrintWriter (file);
-			pw.write(this.nom +"\n");
-			pw.write(this.argent +"\n");
-			pw.write(this.couleur +"\n");
-			// on écrit tout les numeros de carte chance qu'il a (apres un saut de ligne)
-			for (int x=0; x<listeCarteChance.size(); x++)
-				pw.write(this.listeCarteChance.get(x).getNum() +"\n");
+			// on va ecrire tout les noms de case
+			for (int i=0; i<touteCase.size(); i++)
+				pw.write(touteCase.get(i).getNomCase() +"\n");
 			pw.write("\n");
-			// on écrit tout les numeros de carte comunaute qu'il a (apres un saut de ligne)
-			for (int z=0; z<listeCarteCommunaute.size(); z++)
-				pw.write(this.listeCarteCommunaute.get(z).getNum() +"\n");
+			
+			// on va ecrire tout les numeros de carte
+			for (int x=0; x<this.listeCarteChance.size(); x++)
+				pw.write(this.listeCarteChance.get(x).getNum());
 			pw.write("\n");
-			// on écrit tout les noms de carte de propriete qu'il a (apres un saut de ligne)
-				for (int w=0; w<listePropriete.size(); w++)
-					pw.write(this.listePropriete.get(w).getNomCase() +"\n");
+			
+			// on va ecrire tout les numeros de carte
+			for (int z=0; z<this.listeCarteCommunaute.size(); z++)
+				pw.write(this.listeCarteCommunaute.get(z).getNum());
 			pw.write("\n");
-			// nom de la case actuelle
-			pw.write(this.caseActuelle.getNomCase());
-			pw.write(this.indiceCaseActuelle);
-			pw.write(this.nbGares);
-			// on gere si il est en prison
-			if (this.enPrison == true)
-				pw.write("true");
-			else
-				pw.write("false");
-			pw.write(this.nbTourEnPrison);
+				
+			pw.write(this.nbCase);
+			pw.write(this.argentPlateau);
 			pw.close();
 		}
 		catch (IOException exception)
