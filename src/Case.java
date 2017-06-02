@@ -2,7 +2,9 @@ package src;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Case {
@@ -27,9 +29,9 @@ public class Case {
 	private boolean hypotheque = false;
 	
 	// constructeur
-	public Case(String nom, int ind) { // est le nom de la carte qui doit etre construite
+	Case(String nom, int ind) { // est le nom de la carte qui doit etre construite
 		this.numCase = ind;
-		// on dï¿½clare le nouveau fichier
+		// on declare le nouveau fichier dans lequel on va lire
 		File f = new File ("src/CartePropriete/" +nom +".txt");
 		
 		// si le fichier existe on va faire les operation suivante
@@ -102,8 +104,114 @@ public class Case {
 		
 	} // fin du constructeur
 	
+	
+	// methode pour construire une partie pour un chargement (reprendre une partie en cours)
+	Case (String nomPartieACharger, String fichierACharger, int num) throws FileNotFoundException, IOException {
+		// on declare le fichier dans lequel on va lire
+		File file = new File ("Sauv" +nomPartieACharger +File.separator +fichierACharger);
+					
+		// si le fichier existe on va faire les operation suivante
+		if (file.exists())
+		{
+			// on test si pas de probleme
+			try 
+			{
+				file.createNewFile();
+			}
+			// si erreur
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		} // fin du if
+				
+		// on va s'occuper de la lecture
+		try (FileInputStream fis = new FileInputStream(file)) 
+		{
+			// on creer un scanner
+			Scanner sc = new Scanner (fis);
+			
+			String temp = "";
+			
+			// on va recuperer tout les attributs un par un
+			this.numCase = sc.nextInt();
+			this.nom = sc.nextLine();
+			this.nbMaison = sc.nextInt();
+			this.nbHotel = sc.nextInt();
+			// on recupere le joueur proprietaire
+			this.proprietaire = new Joueur(nomPartieACharger, sc.nextLine()+".txt", 1);
+			
+			this.valeur = sc.nextInt();
+			this.loyer = sc.nextInt();
+			this.couleurCase = sc.nextLine();
+			this.loyer1maison = sc.nextInt();
+			this.loyer2maison = sc.nextInt();
+			this.loyer3maison = sc.nextInt();
+			this.loyer4maison = sc.nextInt();
+			this.loyerHotel = sc.nextInt();
+			this.hypo = sc.nextInt();
+			this.prixMaison = sc.nextInt();
+			this.prixHotel = sc.nextInt();
+			if (sc.nextLine() == "true")
+				this.hypotheque = true;
+			else
+				this.hypotheque = false;
+				
+		}
+	} // fin du constructeur
+	
+		
+	// methode pour sauvegarder le joueur
+	public void sauvegarde(String nomPartie) {
+		try
+		{
+			// on y place le nouveau fichier text
+			File dossier = new File ("Sauv" +nomPartie +File.separator);
+			if (dossier.isDirectory() == false)
+				dossier.mkdir();
+			
+			// on creer le fichier dans le dossier de la sauvegarde
+			File file = new File (dossier +File.separator +this.nom +".txt");
+						
+				
+			PrintWriter pw = new PrintWriter (file);
+			//on y place tout les attributs
+			pw.write(this.numCase);
+			pw.write(this.nom);
+			pw.write(this.nbMaison);
+			pw.write(this.nbHotel);
+			// pour le propriétaire, on marque son nom
+			pw.write(this.proprietaire.getNom());
+			pw.write(this.valeur);
+			pw.write(this.loyer);
+			pw.write(this.couleurCase);
+			pw.write(this.loyer1maison);
+			pw.write(this.loyer2maison);
+			pw.write(this.loyer3maison);
+			pw.write(this.loyer4maison);
+			pw.write(this.loyerHotel);
+			pw.write(this.hypo);
+			pw.write(this.prixMaison);
+			pw.write(this.prixHotel);
+			if (this.hypotheque)
+				pw.write("true");
+			else
+				pw.write("false");
+		}
+		catch (IOException exception)
+		{
+			System.out.println("Impossible d'ecrire la sauvegarde de cette case" +exception.getMessage());
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
 	//////////////////////////////////////////////////////////
-	////// Ensenble des getteur pour les loyers //////////////
+	////// Ensemble des getteur pour les loyers //////////////
 	public int getLoyer () {
 		return this.loyer;
 	}

@@ -1,6 +1,8 @@
 package src;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -36,6 +38,83 @@ public class Joueur{
 		this.nbTourEnPrison = 0; 		// par defaut il na jamais ete en prison
 	}
 	
+	// methode pour construire une partie pour un chargement (reprendre une partie en cours)
+	Joueur (String nomPartieACharger, String fichierACharger, int num) throws FileNotFoundException, IOException {
+		
+		// on declare le fichier dans lequel on va lire
+		File file = new File ("Sauv" +nomPartieACharger +File.separator +fichierACharger);
+					
+		// si le fichier existe on va faire les operation suivante
+		if (file.exists())
+		{
+			// on test si pas de probleme
+			try 
+			{
+				file.createNewFile();
+			}
+			// si erreur
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		} // fin du if
+				
+		// on va s'occuper de la lecture
+		try (FileInputStream fis = new FileInputStream(file)) 
+		{
+			// on creer un scanner
+			Scanner sc = new Scanner (fis);
+			
+			String temp = "";
+			
+			// on va recuperer tout les attributs un par un
+			this.nom = sc.nextLine();
+			this.argent = sc.nextInt();
+			this.couleur = sc.nextLine();
+			
+			// on va recuperer les numéros de carte chance et ajoute les cartes correspondante à la liste des cartes du joueur
+			int indiceTempChance = 0;
+			Plateau p = new Plateau ();
+			while (sc.nextLine() != "/")
+			{
+				// on recupere le numero et on recheche la carte avant de l'ajouter
+				indiceTempChance = sc.nextInt();
+				// on recupere la carte issu du plateau
+				this.listeCarteChance.add(p.getCarteChance(indiceTempChance));
+			}
+			temp = sc.nextLine();
+			// on va recuperer les numéros de carte chance et ajoute les cartes correspondante à la liste des cartes du joueur
+			int indiceTempCo = 0;
+			while (sc.nextLine() != "/")
+			{
+				// on recupere le numero et on recheche la carte avant de l'ajouter
+				indiceTempCo = sc.nextInt();
+				// on recupere la carte issu du plateau
+				this.listeCarteCommunaute.add(p.getCarteCommunaute(indiceTempCo));
+			}
+			temp = sc.nextLine();
+			// on va recuperer toute les cases qu'il a a partir de leur nom, on recherche la case et on la retournera
+			String nom = "";
+			while (sc.nextLine() != "/")
+			{
+				// on recupere le nom de la case
+				nom = sc.nextLine();
+				// ajoute a la liste
+				this.listePropriete.add(p.rechercherCase(nom));
+			}
+			
+			this.caseActuelle = p.rechercherCase(sc.nextLine());
+			this.indiceCaseActuelle = sc.nextInt();
+			this.nbGares = sc.nextInt();
+			if (sc.nextLine() == "true")
+				this.enPrison = true;
+			else
+				this.enPrison = false;
+			this.nbTourEnPrison = sc.nextInt();
+		}
+	} // fin du constructeur
+	
+	
 	// methode pour sauvegarder le joueur
 	public void sauvegarde(String nomPartie, String nomFichier) {
 		try
@@ -50,18 +129,19 @@ public class Joueur{
 						
 				
 			PrintWriter pw = new PrintWriter (file);
+			
 			pw.write(this.nom +"\n");
 			pw.write(this.argent +"\n");
 			pw.write(this.couleur +"\n");
-			// on Ã©crit tout les numeros de carte chance qu'il a (apres un saut de ligne)
+			// on ecrit tout les numeros de carte chance qu'il a (apres un saut de ligne)
 			for (int x=0; x<listeCarteChance.size(); x++)
 				pw.write(this.listeCarteChance.get(x).getNum() +"\n");
 			pw.write("\n");
-			// on Ã©crit tout les numeros de carte comunaute qu'il a (apres un saut de ligne)
+			// on ecrit tout les numeros de carte comunaute qu'il a (apres un saut de ligne)
 			for (int z=0; z<listeCarteCommunaute.size(); z++)
 				pw.write(this.listeCarteCommunaute.get(z).getNum() +"\n");
 			pw.write("\n");
-			// on Ã©crit tout les noms de carte de propriete qu'il a (apres un saut de ligne)
+			// on ecrit tout les noms de carte de propriete qu'il a (apres un saut de ligne)
 				for (int w=0; w<listePropriete.size(); w++)
 					pw.write(this.listePropriete.get(w).getNomCase() +"\n");
 			pw.write("\n");
@@ -79,7 +159,7 @@ public class Joueur{
 		}
 		catch (IOException exception)
 		{
-			System.out.println("Impossible d'Ã©crire la sauvegarde " +exception.getMessage());
+			System.out.println("Impossible d'ecrire la sauvegarde de ce joueur " +exception.getMessage());
 		}
 	}
 		

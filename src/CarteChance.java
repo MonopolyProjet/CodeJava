@@ -6,13 +6,12 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class CarteChance extends Carte {
-	private int numCarteChance;
-	private String texte;
+	
 	
 	
 	// on va creer un constructeur qui construit les cartes a partir de la lecture d'un fichier .txt
 	CarteChance (int i) { // est l'indice de la carte a creer
-		this.numCarteChance = i;
+		this.numCarte = i;
 		String description = ""; // va recevoir le texte de la carte
 		
 		
@@ -53,15 +52,9 @@ public class CarteChance extends Carte {
 	// methode toString pour afficher une carte chance
 	public String toString () {
 		String s = "";
-		s = s +"num carte : " +numCarteChance +"\n" +texte;
+		s = s +"num carte chance : " +numCarte +"\n" +texte;
 		return s;
 	}
-	
-	// methode pour retourner le numero de la carte
-	public int getNum(){
-		return(this.numCarteChance);
-	}
-	
 	
 	/////////////////////////////////////////////////////
 	//////////////// FONCTION MAIN //////////////////////

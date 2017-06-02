@@ -2,6 +2,7 @@ package src;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,7 +11,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.SingleSelectionModel;
-//phrase debile c'est Baptiste qui a fait cette merde
+
 public class Jeu {
 	// les attributs
 	String nom;
@@ -24,19 +25,17 @@ public class Jeu {
 		lesJoueurs = new ArrayList <Joueur> ();
 	}
 	
-	// contructeur pour charger une partie
-	Jeu (String nomFichier, int num) {
-		this.nom = nomFichier;
-		
-			
+	// methode pour construire une partie pour un chargement (reprendre une partie en cours)
+	Jeu (String nomPartieACharger, int num) throws FileNotFoundException, IOException {
 		// on declare le fichier dans lequel on va lire
-		File file = new File ("src/Sauvegarde/" +nomFichier +".txt");
+		File file = new File ("Sauv" +nomPartieACharger +File.separator +nomPartieACharger +".txt");
 				
 		// si le fichier existe on va faire les operation suivante
 		if (file.exists())
 		{
 			// on test si pas de probleme
-			try {
+			try 
+			{
 				file.createNewFile();
 			}
 			// si erreur
@@ -47,13 +46,24 @@ public class Jeu {
 		} // fin du if
 				
 		// on va s'occuper de la lecture
-		try (FileOutputStream fos = new FileOutStream(file)) {
-			// on creer un scanner
-			Scanner sc = new Scanner (fos);
-					
-			// on va lire dans le fichier pour ajouter les joueurs
-			lesJoueurs
-				
+		try (FileInputStream fis = new FileInputStream(file)) 
+		{
+			// on declare l'ecouteur
+			Scanner sc = new Scanner (fis);
+			String temp = "";
+			
+			this.nom = sc.next();
+			this.nbJoueur = sc.nextInt();
+			
+			// on ajoute les joueurs a la liste de joueur en les construissant en meme temps
+			while (sc.nextLine() != "/")
+			{
+				this.lesJoueurs.add(new Joueur (this.nom, sc.nextLine()));
+			}
+			temp = sc.nextLine();
+			// on lance la creation du plateau
+			Plateau p = new Plateau (this.nom, sc.nextLine());
+		}	
 	} // fin du constructeur
 	
 	
@@ -72,23 +82,28 @@ public class Jeu {
 				
 			PrintWriter pw = new PrintWriter (file);
 			pw.write(nom +"\n");
-			pw.write(lesJoueurs.size() +"\n\n");
+			pw.write(lesJoueurs.size() +"\n");
+			pw.write("/" +"\n");  		// pour symbolyse le saut de ligne
 			// on va donner le nom des fichiers a ecrire pour les joueurs
 			for (int i=0; i<this.nbJoueur; i++)
 				pw.write("joueur" +i +".txt" +"\n");	// on met le numéro pour pouvoir le reconstruire a partir de ces fichiers
+			pw.write("/" +"\n");  		// pour symbolyse le saut de ligne
 			pw.write("plateau.txt");
 			pw.close();
+			
+			// on lance la sauvegarde de tout les joueurs
+			for (int i=0; i<lesJoueurs.size(); i++)
+				lesJoueurs.get(i).sauvegarde(this.nom, (lesJoueurs.get(i).getNom() +".txt") );
+			// on lance la sauvegarde du plateau
+			p.sauvegarde(this.nom, "plateau.txt");	
+			
 		}
 		catch (IOException exception)
 		{
-			System.out.println("Impossible d'écrire la sauvegarde " +exception.getMessage());
+			System.out.println("Impossible d'ecrire la sauvegarde " +exception.getMessage());
 		}
 		
-		// on lance la sauvegarde de tout les joueurs
-		for (int i=0; i<lesJoueurs.size(); i++)
-			lesJoueurs.get(i).sauvegarde(this.nom, ("joueur" +i +".txt") );
-		// on lance la sauvegarde du plateau
-		p.sauvegarde(this.nom, "plateau.txt");		
+			
 		
 	}
 	
@@ -110,7 +125,7 @@ public class Jeu {
 		arrayPions.add("Vert");
 		Scanner sc = new Scanner(System.in);
 		
-		// on va cr�er les joueurs mais on doit savoir combien il y en a
+		// on va creer les joueurs mais on doit savoir combien il y en a
 		System.out.println("\n" +"Entrez mainenant le nombre de joueur de cette partie (entre 2 et 8)");
 		this.nbJoueur = sc.nextInt();	//on donne une valeur à la variable
 		// on verifie que le nombre de joueur
@@ -124,15 +139,30 @@ public class Jeu {
 		// on fait une boucle pour creer les joueurs un par un
 		while (i<nbJoueur) {
 			Scanner sc2 = new Scanner(System.in); // Scanner pour recevoir les donnees
-			System.out.print("\n" +"Entrez le nom d'un des joueurs: ");
-			tempNom = sc2.nextLine();
+			boolean valide = false;
+			String tempNom1 = "";
+			while (!valide)
+			{
+				System.out.print("\n" +"Entrez le nom d'un des joueurs: ");
+				tempNom1 = sc2.nextLine();
+				
+				// on va verifier que le nom n'est pas deja pris
+				// on parcourt tout les joueurs
+				for (int y=0; y<lesJoueurs.size(); y++)
+				{
+					if (tempNom1 == lesJoueurs.get(y).getNom())
+						System.out.println("Ce nom est deja pris par un autre joueur, recommencez");
+					else
+						valide = true;
+				}
+			}
 				
 			// on va afficher le tableau des pions avec leurs couleurs
 			for (int j=0; j<8-i; j++)
 				System.out.println( j+1 + ": " + arrayPions.get(j));
 						
 			// on recupere la reponse
-			System.out.print("Entrez le chiffre correspondant à la couleur du pion que le joueur veut: ");
+			System.out.print("Entrez le chiffre correspondant a la couleur du pion que le joueur veut: ");
 			tempCouleur = sc2.nextInt ();
 			// on vérifie que la donnees est valide
 			if(tempCouleur > 8 - i) // -i car une couleur est enlever à chaque fois
@@ -144,7 +174,7 @@ public class Jeu {
 			else
 			{
 				// ajoute a la liste de joueur et declaration des objets joueur
-				lesJoueurs.add(new Joueur (tempNom, (String)arrayPions.get(tempCouleur-1)));	//-1 pour retomber sur les indices du tableau
+				lesJoueurs.add(new Joueur (tempNom1, (String)arrayPions.get(tempCouleur-1)));	//-1 pour retomber sur les indices du tableau
 			}
 			
 			arrayPions.remove(tempCouleur-1); 	//on enlève la couleur pour indiquer que la couleur n'est plus disponible
@@ -687,7 +717,10 @@ public class Jeu {
 	/////////////////////////////////////////////////////
 	//////////////// FONCTION MAIN //////////////////////
 	/////////////////////////////////////////////////////
-	public static void main (String [] args) {
+	public static void main (String [] args) throws FileNotFoundException, IOException {
+		
+		Jeu jeu = null;
+		Plateau p = null;
 		
 		// on va demander si on veut charger une partie ou en créer une
 		Scanner sc = new Scanner(System.in); // pour recuperer ce qui est taper au clavier
@@ -696,29 +729,29 @@ public class Jeu {
 		{
 			System.out.println("1) Nouvelle partie");
 			System.out.println("2) Charger partie");
+			System.out.print("Que voulez vous faire ? ");
 			reponse = sc.nextInt();
 		}
 		
 		if (reponse == 1)
 		{
-			// On creer le jeu
-			
+		// On creer le jeu
 			System.out.print ("Veuillez entrer le nom de la partie: ");
 			String nom = sc.nextLine();
 			
 			// on créer le jeu et le plateau
-			Jeu jeu = new Jeu (nom);
-			Plateau p = new Plateau();
+			jeu = new Jeu (nom);
+			p = new Plateau();
 						
 			// on appel la methode pour creer les joueur
 			jeu.creerJoueur();
 		}
 		else if(reponse == 2)
 		{
-			System.out.print ("Veuillez entrer le nom de la partie à charger: ");
+			System.out.print ("Veuillez entrer le nom de la partie a charger (faire attention aux majuscules ...): ");
 			String nom = sc.nextLine();
 			
-			//Jeu jeu = new Jeu (nom, 1);
+			jeu = new Jeu (nom, 1);
 		}
 			
 		

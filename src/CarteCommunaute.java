@@ -5,14 +5,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class CarteCommunaute extends Carte{
-	private int numCarteCommunaute;
-	private String texte;
-	
-	
-	// on va cr�er un constructeur qui construit les cartes a partir de la lecture d'un fichier .txt
+public class CarteCommunaute extends Carte {
+		
+	// on va cree un constructeur qui construit les cartes a partir de la lecture d'un fichier .txt
 	CarteCommunaute (int i) { // est l'indice de la carte a creer
-		int nbCarteChance = i;
+		int nbCarte = i;
 		String description = ""; // va recevoir le texte de la carte
 				
 		// on d�clare le nouveau fichier
@@ -50,13 +47,8 @@ public class CarteCommunaute extends Carte{
 	// methode toString pour afficher une carte chance
 	public String toString () {
 		String s = "";
-		s = s +"num carte : " +numCarteCommunaute +"\n" +texte;
+		s = s +"num carte caisse de communaute : " +numCarte +"\n" +texte;
 		return s;
-	}
-	
-	// methode pour obtenir le numero de la carte
-	public int getNum () {
-		return this.numCarteCommunaute;
 	}
 	
 	/////////////////////////////////////////////////////

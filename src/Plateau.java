@@ -1,9 +1,12 @@
 package src;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Plateau {
 	static ArrayList <Case> touteCase;
@@ -20,11 +23,11 @@ public class Plateau {
 		this.nbCase = 39;
 		this.argentPlateau = 0;
 	
-		// on cr�er toutes les cartes chance
+		// on cree toutes les cartes chance
 		for (int i=1; i<16; i++) // 16 cartes en tout
 			listeCarteChance.add(new CarteChance(i));
 		
-		// on cr�er toutes les cartes caisse de communaute
+		// on cree toutes les cartes caisse de communaute
 		for (int j=1; j<16; j++) // toujours 16 cartes
 			listeCarteCommunaute.add(new CarteCommunaute(j));
 		
@@ -72,6 +75,57 @@ public class Plateau {
 		
 	} // fin du constructeur
 	
+	
+	// methode pour construire une partie pour un chargement (reprendre une partie en cours)
+	Plateau (String nomPartieACharger, String fichierACharger) throws FileNotFoundException, IOException {
+		// on declare le fichier dans lequel on va lire
+		File file = new File ("Sauv" +nomPartieACharger +File.separator +fichierACharger);
+					
+		// si le fichier existe on va faire les operation suivante
+		if (file.exists())
+		{
+			// on test si pas de probleme
+			try 
+			{
+				file.createNewFile();
+			}
+			// si erreur
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		} // fin du if
+				
+		// on va s'occuper de la lecture
+		try (FileInputStream fis = new FileInputStream(file)) 
+		{
+			// on creer un scanner
+			Scanner sc = new Scanner (fis);
+			String temp = "";
+			// on recuperer tout les attributs un par un
+			
+			// on recup la liste de toute les cases pour les reconstruire
+			for (int i=0; i<40; i++)
+			{
+				this.touteCase.add(new Case(sc.nextLine(), i));
+			}
+			temp = sc.nextLine();
+			this.nbCase = sc.nextInt();
+			this.argentPlateau = sc.nextInt();
+			
+			// on cree toutes les cartes chance
+			for (int i=1; i<16; i++) // 16 cartes en tout
+				this.listeCarteChance.add(new CarteChance(i));
+			
+			// on cree toutes les cartes caisse de communaute
+			for (int j=1; j<16; j++) // toujours 16 cartes
+				this.listeCarteCommunaute.add(new CarteCommunaute(j));
+		}
+	} // fin du constructeur
+	
+	
+	
+	
 	// methode pour sauvegarder le joueur
 	public void sauvegarde(String nomPartie, String nomFichier) {
 		try
@@ -89,28 +143,19 @@ public class Plateau {
 			// on va ecrire tout les noms de case
 			for (int i=0; i<touteCase.size(); i++)
 				pw.write(touteCase.get(i).getNomCase() +"\n");
-			pw.write("\n");
+			pw.write('/' +"\n");
 			
-			// on va ecrire tout les numeros de carte
-			for (int x=0; x<this.listeCarteChance.size(); x++)
-				pw.write(this.listeCarteChance.get(x).getNum());
-			pw.write("\n");
-			
-			// on va ecrire tout les numeros de carte
-			for (int z=0; z<this.listeCarteCommunaute.size(); z++)
-				pw.write(this.listeCarteCommunaute.get(z).getNum());
-			pw.write("\n");
-				
 			pw.write(this.nbCase);
 			pw.write(this.argentPlateau);
 			pw.close();
 		}
 		catch (IOException exception)
 		{
-			System.out.println("Impossible d'écrire la sauvegarde " +exception.getMessage());
+			System.out.println("Impossible d'ecrire la sauvegarde du plateau" +exception.getMessage());
 		}
 	}
-		
+	
+	
 	// methode pour retourner une case en fonction de son numero
 	Case getCase (int ind) {
 		return touteCase.get(ind);
