@@ -2,8 +2,9 @@
 ///////////////////////////////////////////////////
 // Fichier de sauvegarde du jeu
 nom
+ordre
 nbJoueur
-
+/
 //selon le nombre de joueur
 nom fichier joueur 1 : joueur1.txt
 ...
@@ -36,12 +37,6 @@ int nbTourEnPrison
 // Fichier de sauvegarde du plateau
 ArrayList toutCase
 // liste de tout les noms de case
-/
-ArrayList listeCarte change
-// liste des numero
-/
-ArrayList listeCarteCommunaute
-// liste des numero
 /
 nbCase
 argentPlateau

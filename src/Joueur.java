@@ -267,7 +267,7 @@ public class Joueur{
 		boolean veut = false;
 		// on affiche le nom pour savoir a qui on parle
 		System.out.println(nom);
-		System.out.println("Voulez vous acheter la propriété ? (entrer le numéro de votre réponse)");
+		System.out.println("Voulez vous acheter la propriete ? (entrer le numéro de votre réponse)");
 		System.out.println("1) Oui");
 		System.out.println("2) Non");
 		

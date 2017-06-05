@@ -17,12 +17,14 @@ public class Jeu {
 	String nom;
 	static int nbJoueur;
 	static ArrayList <Joueur> lesJoueurs;
+	private int ordre;
 	
 	
 	//constructeur pour nouvelle partie
 	Jeu (String nom) {
 		this.nom = nom;
 		lesJoueurs = new ArrayList <Joueur> ();
+		ordre = 0;
 	}
 	
 	// methode pour construire une partie pour un chargement (reprendre une partie en cours)
@@ -53,6 +55,7 @@ public class Jeu {
 			String temp = "";
 			
 			this.nom = sc.next();
+			this.ordre = sc.nextInt();
 			this.nbJoueur = sc.nextInt();
 			
 			// on ajoute les joueurs a la liste de joueur en les construissant en meme temps
@@ -82,6 +85,7 @@ public class Jeu {
 				
 			PrintWriter pw = new PrintWriter (file);
 			pw.write(nom +"\n");
+			pw.write(ordre);
 			pw.write(lesJoueurs.size() +"\n");
 			pw.write("/" +"\n");  		// pour symbolyse le saut de ligne
 			// on va donner le nom des fichiers a ecrire pour les joueurs
@@ -559,7 +563,7 @@ public class Jeu {
 						// on le fait sortir de prison
 						lesJoueurs.get(ordre).sortPrison();
 					}
-					else // sinon il a le droit de tirer les d�s et si il fait un double il peut sortir
+					else // sinon il a le droit de tirer les des et si il fait un double il peut sortir
 					{
 						if(lanceDes() == 2 || lanceDes() == 4 || lanceDes() == 6 || lanceDes() == 8 || lanceDes() == 10 || lanceDes() == 12)
 							lesJoueurs.get(ordre).sortPrison();
@@ -599,14 +603,14 @@ public class Jeu {
 		int nbMaisonAAjouter = 0;
 		Scanner scImmo = new Scanner(System.in);
 		
-		System.out.println("Voulez vous acheter une maison ou un hôtel ?   (selectionnez le numero correspondant)");
+		System.out.println("Voulez vous acheter une maison ou un hotel ?   (selectionnez le numero correspondant)");
 		System.out.println("1) Oui");
 		System.out.println("2) Non");
 		reponse = scImmo.nextInt();
 		
 		if (reponse == 1)	// si il veut acheter
 		{
-			System.out.println("Quel type d'immobilié voulez vous acheter ?   (selectionnez le numero correspondant)");
+			System.out.println("Quel type d'immobilier voulez vous acheter ?   (selectionnez le numero correspondant)");
 			System.out.println("1) Maison");
 			System.out.println("2) Hôtel");
 			tempRepImmo = scImmo.nextInt();
@@ -636,10 +640,10 @@ public class Jeu {
 							erreur = false;
 						}
 						else
-							System.out.println("Vous ne pouvez pas ajouter autant de maison, il y a déjà " +lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() +" maisons sur cette case");
+							System.out.println("Vous ne pouvez pas ajouter autant de maison, il y a deja� " +lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() +" maisons sur cette case");
 					}
 					else
-						System.out.println("Cette propriété est hypothéqué, vous ne pouvez pas ajouter d'immobilié sur cette case");
+						System.out.println("Cette propriete est hypothequee, vous ne pouvez pas ajouter d'immobilier sur cette case");
 				}
 				
 				
@@ -661,7 +665,7 @@ public class Jeu {
 							choisi = true;
 						}
 						else
-							System.out.println("Cette case est hypothequé, vous ne pouvez pas ajoute d'immo sur cette case");
+							System.out.println("Cette case est hypothequee, vous ne pouvez pas ajoute d'immo sur cette case");
 				
 					}
 				}
@@ -676,43 +680,50 @@ public class Jeu {
 	
 	// methode pour payer le loyer a un autre joueur lorsque l'on tombe sur sa case
 	public void payerLoyer(int ordre){
-		// on recupere le joueur qui possède la case
+		// on recupere le joueur qui possede la case
 		Joueur j2 = lesJoueurs.get(ordre).getCaseActuelle().getProprietaire();
-		// on regarde si la case a des maisons ou un hotel
-		boolean vide = true; 	// pour dire de base que la case n'a rien dessus
-		if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() != 0 || lesJoueurs.get(ordre).getCaseActuelle().getNbHotel() !=0)
-			vide = false;
 		
-		int somme = 0;
-		// si la case est vide, on regarde si il a les trois terrains
-		if (vide)
+		// on va dabord regarder si la case n'est pas hypothequer
+		if (!lesJoueurs.get(ordre).getCaseActuelle().estHypotheque())
 		{
-			//on va regarder si il a toute les proprietes de la meme couleur pour multiplié le prix du loyer
-			// on va pacourir toute les cartes du joueur qui va recuperer l'argent pour voir si il les a toute
-			j2.aTouteCaseCouleur(lesJoueurs.get(ordre).getCaseActuelle().getCouleur());
-			// on retire l'argent au joueur est on le donne a l'autre
-			somme = (2 * (lesJoueurs.get(ordre).getCaseActuelle().getLoyer()));
-		}
-		else	// si il y a de l'immobilier sur la case
-		{
+			// on regarde si la case a des maisons ou un hotel
+			boolean vide = true; 	// pour dire de base que la case n'a rien dessus
+			if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() != 0 || lesJoueurs.get(ordre).getCaseActuelle().getNbHotel() !=0)
+				vide = false;
 			
-			// on va regarder le nombre de maison qu'il y a sur la propriété
-			if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 1)
-				somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyer1Maison();
-			else if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 2)
-				somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyer2Maison();
-			else if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 3)
-				somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyer3Maison();
-			else if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 4)
-				somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyer4Maison();
-			else
-				somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyerHotel();
+			int somme = 0;
+			// si la case est vide, on regarde si il a les trois terrains
+			if (vide)
+			{
+				//on va regarder si il a toute les proprietes de la meme couleur pour multiplié le prix du loyer
+				// on va pacourir toute les cartes du joueur qui va recuperer l'argent pour voir si il les a toute
+				j2.aTouteCaseCouleur(lesJoueurs.get(ordre).getCaseActuelle().getCouleur());
+				// on retire l'argent au joueur est on le donne a l'autre
+				somme = (2 * (lesJoueurs.get(ordre).getCaseActuelle().getLoyer()));
+			}
+			else	// si il y a de l'immobilier sur la case
+			{
+				
+				// on va regarder le nombre de maison qu'il y a sur la propriété
+				if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 1)
+					somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyer1Maison();
+				else if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 2)
+					somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyer2Maison();
+				else if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 3)
+					somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyer3Maison();
+				else if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 4)
+					somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyer4Maison();
+				else
+					somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyerHotel();
+			}
+			
+			lesJoueurs.get(ordre).retirerArgent(somme);
+			j2.gagneArgent(somme);
 		}
+		else
+			System.out.println("Cette case est hypotheque, vous ne payer rien !");
 		
-		lesJoueurs.get(ordre).retirerArgent(somme);
-		j2.gagneArgent(somme);
-		
-	} // fin de la méthode des loyers
+	} // fin de la methode des loyers
 	
 	/////////////////////////////////////////////////////
 	//////////////// FONCTION MAIN //////////////////////
@@ -722,31 +733,34 @@ public class Jeu {
 		Jeu jeu = null;
 		Plateau p = null;
 		
-		// on va demander si on veut charger une partie ou en créer une
-		Scanner sc = new Scanner(System.in); // pour recuperer ce qui est taper au clavier
-		int reponse = 0;
-		while (reponse != 1 || reponse != 2)
+		// on va demander si on veut charger une partie ou en creer une
+		Scanner sc = new Scanner(System.in); // pour recuperer ce qui est taper au clavier (entre dans le terminal)
+		int reponseSauv = 0;
+		
+		while (reponseSauv != 1 || reponseSauv != 2)
 		{
+			
 			System.out.println("1) Nouvelle partie");
 			System.out.println("2) Charger partie");
-			System.out.print("Que voulez vous faire ? ");
-			reponse = sc.nextInt();
+			System.out.print("Que voulez vous faire ? 	(Entrez le numero correspondant) ");
+			System.out.println(sc.nextInt());
+			reponseSauv = sc.nextInt();
 		}
-		
-		if (reponse == 1)
+		System.out.println(reponseSauv + "test");
+		if (reponseSauv == 1)
 		{
 		// On creer le jeu
 			System.out.print ("Veuillez entrer le nom de la partie: ");
 			String nom = sc.nextLine();
 			
-			// on créer le jeu et le plateau
+			// on cree le jeu et le plateau
 			jeu = new Jeu (nom);
 			p = new Plateau();
 						
 			// on appel la methode pour creer les joueur
 			jeu.creerJoueur();
 		}
-		else if(reponse == 2)
+		else if(reponseSauv == 2)
 		{
 			System.out.print ("Veuillez entrer le nom de la partie a charger (faire attention aux majuscules ...): ");
 			String nom = sc.nextLine();
@@ -756,13 +770,12 @@ public class Jeu {
 			
 		
 		// on va faire marcher les joueurs
-		int ordre = 0;
 		boolean fini = false; 	// lorsque la partie doit d'arreter
 
-		// on va vérifier qu'in joueur n'est pas ruine
+		// on va verifier qu'un joueur n'est pas ruine
 		for (int j=0; j<lesJoueurs.size(); j++)
 		{
-			//si il est ruiné on le retire de la liste des joueurs
+			//si il est ruine on le retire de la liste des joueurs
 			if (lesJoueurs.get(j).ruine())
 				lesJoueurs.remove(j);
 		}
@@ -813,19 +826,20 @@ public class Jeu {
 			// si c'est une case piege (taxes, prison ... )
 			else if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "depart" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "aller_prison" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "prison" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "impots_sur_le_revenu" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "chance" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "communaute" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "parc_gratuit" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "taxe_de_luxe")
 			{
-				// on lance la méthode pour s'occuper des cases pieges
+				// on lance la methode pour s'occuper des cases pieges
+				jeu.tomberCasePiege(p, ordre);
 			}
 			
 			// si c'est une carte de propriete
 			else	
 			{
-				// on va voir si la propriété n'appartient deja pas a quelqu'un si c'est non lui demande si il veut acheter
+				// on va voir si la propriete n'appartient deja pas a quelqu'un si c'est non lui demande si il veut acheter
 				if (lesJoueurs.get(ordre).getCaseActuelle().getProprietaire() == null)
 				{
-					// on va voir si le joueur veut acheter la propriété
+					// on va voir si le joueur veut acheter la propriete
 					if (lesJoueurs.get(ordre).veutAcheter())	// si le joueur veut acheter
 					{
-						//il l'acheter et on donne une phrase de réponse
+						//il l'acheter et on donne une phrase de reponse
 						lesJoueurs.get(ordre).acheterCase(lesJoueurs.get(ordre).getCaseActuelle());
 						System.out.println("Vous avez bien acheter cette propriete");
 					}
@@ -836,7 +850,7 @@ public class Jeu {
 					jeu.payerLoyer(ordre);
 			}
 			
-			// on va voir si le joueur a la possibilité d'acheter de l'immobilier, si c'est possible on lui demande ce qu'il veut acheter
+			// on va voir si le joueur a la possibilite d'acheter de l'immobilier, si c'est possible on lui demande ce qu'il veut acheter
 			if (lesJoueurs.get(ordre).peutAcheterImmo ())	// on verifie qu'il a trois cartes de la même couleur
 			{
 				// on va lancer la fonction pour acheter de l'immobilier
@@ -844,15 +858,24 @@ public class Jeu {
 			}
 			
 			
-			// le fait qu'un joueur puisse hypothequé
-			// ne peut pas recevoir les impots sur une case hypotheque
-			// Lorsque toute les cartes sont vendu, on va pourvoir faire le Trock
-			
-			
+			// on va demander si les joueurs veulent sauvegarder
+			System.out.println("Voulez vous sauvegarder la partie ?	(taper le numero correspondant)");
+			System.out.println("1) Oui");
+			System.out.println("2) Non");
+			int repSauv = sc.nextInt();
+			if (repSauv == 1)
+				jeu.sauvegarde(p);
 			
 			ordre = (ordre + 1) % lesJoueurs.size();	// pour passer au joueur suivant			
 		} // fin du while
-				
+		
+		
+		
+		
+		
+		
+		
+		
 	} // Fin de la fonction main
 	
 } 	// Fin de la classe Jeu
