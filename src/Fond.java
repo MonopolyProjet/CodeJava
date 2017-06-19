@@ -22,6 +22,7 @@ public class Fond extends JPanel implements ActionListener{
 	private JButton btnAcheter;
 	private JButton btnPasAcheter;
 	private JButton btnQuitter;
+	private JButton bouttonOK;
 	
 	
 	private JButton btnFinTour;
@@ -59,18 +60,20 @@ public class Fond extends JPanel implements ActionListener{
 	private JLabel soldePlateau;
 	private JLabel soldeJoueur;
 	
+	private JLabel labelInfo;
+	
 	// declaration du textField
 	private JTextField zone1;
+	// on cree le text field
+	private JTextField fieldNomPartie;
 	
 	// declaration de l'image
 	private Icon imageMonopoly;
 	
 	// constructeur
-	Fond (Jeu sonJeu){
+	Fond (){
 		
-		// on lui donne son jeu
-		this.jeu = sonJeu;
-		
+				
 		// on cree tout les boutons
 		btnFinTour = new JButton("Fin Tour");
 		btnAcheter = new JButton("Acheter");
@@ -82,13 +85,7 @@ public class Fond extends JPanel implements ActionListener{
 		panelInterraction = new JPanel();
 		panelBoutons = new JPanel();
 		
-		// on cree tout les labels pour la communication
-		fondMonopoly = new JLabel("", SwingConstants.CENTER);
-		soldePlateau = new JLabel("Solde Plateau : ");
-		soldeJoueur = new JLabel("Solde Joueur : ");
 		
-		// on cree le text field
-		zone1 = new JTextField();
 		
 		// on cree l'image
 		imageMonopoly = new ImageIcon("src/imageMonopoly.jpg");
@@ -186,9 +183,9 @@ public class Fond extends JPanel implements ActionListener{
 		
 		// panel pour la saisie des informations des partie
 		panelSaisie = new JPanel();
-		JLabel labelInfo = new JLabel("Entrez le nom de la partie", JLabel.CENTER);
+		labelInfo = new JLabel("Entrez le nom de la partie", JLabel.CENTER);
 		JTextField fieldNomPartie = new JTextField();
-		JButton bouttonOK = new JButton ("Ok");
+		bouttonOK = new JButton ("Ok");
 		bouttonOK.addActionListener(this);
 		
 		panelSaisie.setLayout(new GridLayout (3, 1));
@@ -275,8 +272,25 @@ public class Fond extends JPanel implements ActionListener{
 			panelHimo.setVisible(false);
 			panelSortiPrison.setVisible(false);
 			panelAchat.setVisible(false);
+			if (e.getActionCommand()== "Ok")
+			{
+				this.jeu = new Jeu(this.fieldNomPartie.getText());
+			}
 		}
-			
+		else if (e.getActionCommand() == "Charger partie")
+		{
+			// on change les affichages
+			panelGestionPartie.setVisible(false);
+			panelSaisie.setVisible(true);
+			panelLancerDe.setVisible(false);
+			panelHimo.setVisible(false);
+			panelSortiPrison.setVisible(false);
+			panelAchat.setVisible(false);
+			if (e.getActionCommand()== "Ok")
+			{
+				this.jeu = new Jeu(this.fieldNomPartie.getText(), 1);
+			}
+		}
 			
 			
 			
