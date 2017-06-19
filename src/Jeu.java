@@ -18,7 +18,8 @@ public class Jeu {
 	static int nbJoueur;
 	static ArrayList <Joueur> lesJoueurs;
 	private static int ordre;
-	
+	Scanner sc = new Scanner(System.in); // pour recuperer ce qui est taper au clavier (entre dans le terminal)
+	private Plateau plateau;
 	
 	//constructeur pour nouvelle partie
 	Jeu (String nom) {
@@ -725,16 +726,107 @@ public class Jeu {
 		
 	} // fin de la methode des loyers
 	
-	/////////////////////////////////////////////////////
-	//////////////// FONCTION MAIN //////////////////////
-	/////////////////////////////////////////////////////
-	public static void main (String [] args) throws FileNotFoundException, IOException {
+	public void verifJoueurEnVie(){
+		for (int j=0; j<lesJoueurs.size(); j++)
+		{
+			//si il est ruine on le retire de la liste des joueurs
+			if (lesJoueurs.get(j).ruine())
+				lesJoueurs.remove(j);
+		}
+	}
+	
+	public void DebutTour(){
 		
-		Jeu jeu = null;
-		Plateau p = null;
+			///////////////////////////////////////////////////////////
+			/////////////////   deplacement du joueur /////////////////
 		
-		// on va demander si on veut charger une partie ou en creer une
-		Scanner sc = new Scanner(System.in); // pour recuperer ce qui est taper au clavier (entre dans le terminal)
+		System.out.println(lesJoueurs.get(ordre).getNom() + " est a la case : " + lesJoueurs.get(ordre).getCaseActuelle() +"\n");
+		
+		// on va savoir de combien de case il va avancer en lancant les des
+		int nbCasesAvance = lanceDes();
+		// si il y a double 6 il ramasse l'argent sur la plateau
+		if (nbCasesAvance == 12)
+		{
+			// il recuperer l'argent du plateau
+			lesJoueurs.get(ordre).gagneArgent(plateau.getArgentPlateau());
+			plateau.retirerArgentPlateau();	// on remet l'argent du plateau a 0
+		}
+		// on gere le deplacement du joueur desormais
+		int ind = lesJoueurs.get(ordre).getIndCaseActuelle() + nbCasesAvance % 40;	// on recupere l'indice de la nouvelle case
+		lesJoueurs.get(ordre).avancerJoueur(plateau.getCase(ind), nbCasesAvance);		// on dit au joueur d'avancer jusqu'a la nouvelle case
+		
+		// phrase pour dire de combien de case le joueur a avancÃ© et on affiche sa case actuelle
+		System.out.println("\n" +lesJoueurs.get(ordre).getNom() + " avance de " + nbCasesAvance + " cases.");
+		System.out.println(lesJoueurs.get(ordre).getNom() + " est maintenant Ã  la case : " + lesJoueurs.get(ordre).getCaseActuelle());
+					
+	}
+	
+	public void ReactTypeCase(){
+		
+			/////////////////////////////////////////////////////////////////////////////
+			/////// ON VA VOIR L'ACTION A REALISER EN FONCTION DU TYPE DE LA CASE ///////
+		
+		// si c'est une case de type chance
+			if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "chance")	
+			{
+			// on lance la mÃ©thode qui s'occupe des actions des cartes chance
+				tirerCarteChance(plateau, ordre);		// on envoi le plateau et l'indice du joueur	
+			}
+				
+			// si c'est une case de type caisse de communaute
+			else if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "communaute")	
+			{
+				// on lance la mÃ©thode qui s'occupe des actions des cartes chance
+				tirerCarteCaisseCommunaute(plateau, ordre);		// on envoi le plateau et l'indice du joueur				
+			}
+				
+			// si c'est une case piege (taxes, prison ... )
+			else if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "depart" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "aller_prison" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "prison" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "impots_sur_le_revenu" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "chance" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "communaute" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "parc_gratuit" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "taxe_de_luxe")
+			{
+					// on lance la methode pour s'occuper des cases pieges
+				tomberCasePiege(plateau, ordre);
+			}
+			// si c'est une carte de propriete
+			else	
+			{
+			// on va voir si la propriete n'appartient deja pas a quelqu'un si c'est non lui demande si il veut acheter
+			if (lesJoueurs.get(ordre).getCaseActuelle().getProprietaire() == null)
+			{
+				// on va voir si le joueur veut acheter la propriete
+			if (lesJoueurs.get(ordre).veutAcheter())	// si le joueur veut acheter
+			{
+				//il l'acheter et on donne une phrase de reponse
+				lesJoueurs.get(ordre).acheterCase(lesJoueurs.get(ordre).getCaseActuelle());
+				System.out.println("Vous avez bien acheter cette propriete");
+			}
+			else	// si il la veut pas, on va la mettre aux encheres
+				mettreAuxEncheres(ordre);
+			}
+			else // si elles est a quelqu'un, il va payer le taxe
+				payerLoyer(ordre);
+			}
+		// on va voir si le joueur a la possibilite d'acheter de l'immobilier, si c'est possible on lui demande ce qu'il veut acheter
+			if (lesJoueurs.get(ordre).peutAcheterImmo ())	// on verifie qu'il a trois cartes de la mÃªme couleur
+				{
+					// on va lancer la fonction pour acheter de l'immobilier
+					acheterImmo(ordre, plateau);
+			}
+	}
+	
+	public void demandeSauvegarde(){
+		// on va demander si les joueurs veulent sauvegarder
+					System.out.println("Voulez vous sauvegarder la partie ?	(taper le numero correspondant)");
+					System.out.println("1) Oui");
+					System.out.println("2) Non");
+					int repSauv = sc.nextInt();
+					if (repSauv == 1)
+						sauvegarde(plateau);
+					
+					ordre = (ordre + 1) % lesJoueurs.size();	// pour passer au joueur suivant
+	}
+	
+	// Gère la création ou la reprise d'une partie au lancement
+	public void start() throws FileNotFoundException, IOException{
 		int reponseSauv = 0;
 		
 		while (reponseSauv != 1 || reponseSauv != 2)
@@ -754,8 +846,8 @@ public class Jeu {
 			String nom = sc.nextLine();
 			
 			// on cree le jeu et le plateau
-			jeu = new Jeu (nom);
-			p = new Plateau();
+			Jeu jeu = new Jeu (nom);
+			Plateau p = new Plateau();
 						
 			// on appel la methode pour creer les joueur
 			jeu.creerJoueur();
@@ -765,117 +857,45 @@ public class Jeu {
 			System.out.print ("Veuillez entrer le nom de la partie a charger (faire attention aux majuscules ...): ");
 			String nom = sc.nextLine();
 			
-			jeu = new Jeu (nom, 1);
+			Jeu jeu = new Jeu (nom, 1);
 		}
-			
+	}
+	
+	/////////////////////////////////////////////////////
+	//////////////// FONCTION MAIN //////////////////////
+	/////////////////////////////////////////////////////
+	public static void main (String [] args) throws FileNotFoundException, IOException {
+		
+		Jeu jeu = null;
+		Plateau p = null;
+		
+		//Gère la reprise d'une partie ou la création d'une partie au lancement
+		jeu.start();
 		
 		// on va faire marcher les joueurs
 		boolean fini = false; 	// lorsque la partie doit d'arreter
 
 		// on va verifier qu'un joueur n'est pas ruine
-		for (int j=0; j<lesJoueurs.size(); j++)
-		{
-			//si il est ruine on le retire de la liste des joueurs
-			if (lesJoueurs.get(j).ruine())
-				lesJoueurs.remove(j);
-		}
+		jeu.verifJoueurEnVie();
 		
 		while (!fini)
 		{
-			///////////////////////////////////////////////////////////
-			/////////////////   deplacement du joueur /////////////////
+			//Annonce de la position du joueur, gère les evenements de début de tours (lancer de dés, gain du plateau, etc)
+			jeu.DebutTour();
 			
-			// on affiche la case actuelle du joueur pour qu'il sache ou il est sur le plateau
-			System.out.println(lesJoueurs.get(ordre).getNom() + " est Ã  la case : " + lesJoueurs.get(ordre).getCaseActuelle() +"\n");
-			
-			// on va savoir de combien de case il va avancer en lancant les des
-			int nbCasesAvance = jeu.lanceDes();
-			// si il y a double 6 il ramasse l'argent sur la plateau
-			if (nbCasesAvance == 12)
-			{
-				// il recuperer l'argent du plateau
-				lesJoueurs.get(ordre).gagneArgent(p.getArgentPlateau());
-				p.retirerArgentPlateau();	// on remet l'argent du plateau a 0
+			//Réagis en fonction de la case sur laquelle arrive le joueur
+			jeu.ReactTypeCase();
+					
+			//Demande au joueur si ils souhaitent sauvegarder
+			jeu.demandeSauvegarde();
+						
+			if(lesJoueurs.size()==0){
+				fini = true;
 			}
-			
-			// on gere le deplacement du joueur desormais
-			int ind = lesJoueurs.get(ordre).getIndCaseActuelle() + nbCasesAvance % 40;	// on recupere l'indice de la nouvelle case
-			lesJoueurs.get(ordre).avancerJoueur(p.getCase(ind), nbCasesAvance);		// on dit au joueur d'avancer jusqu'a la nouvelle case
-			
-			// phrase pour dire de combien de case le joueur a avancÃ© et on affiche sa case actuelle
-			System.out.println("\n" +lesJoueurs.get(ordre).getNom() + " avance de " + nbCasesAvance + " cases.");
-			System.out.println(lesJoueurs.get(ordre).getNom() + " est maintenant Ã  la case : " + lesJoueurs.get(ordre).getCaseActuelle());
-			
-			/////////////////////////////////////////////////////////////////////////////
-			/////// ON VA VOIR L'ACTION A REALISER EN FONCTION DU TYPE DE LA CASE ///////
-			
-			// si c'est une case de type chance
-			if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "chance")	
-			{
-				// on lance la mÃ©thode qui s'occupe des actions des cartes chance
-				jeu.tirerCarteChance(p, ordre);		// on envoi le plateau et l'indice du joueur	
-			}
-			
-			// si c'est une case de type caisse de communaute
-			else if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "communaute")	
-			{
-				// on lance la mÃ©thode qui s'occupe des actions des cartes chance
-				jeu.tirerCarteCaisseCommunaute(p, ordre);		// on envoi le plateau et l'indice du joueur				
-			}
-			
-			// si c'est une case piege (taxes, prison ... )
-			else if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "depart" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "aller_prison" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "prison" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "impots_sur_le_revenu" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "chance" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "communaute" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "parc_gratuit" || lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "taxe_de_luxe")
-			{
-				// on lance la methode pour s'occuper des cases pieges
-				jeu.tomberCasePiege(p, ordre);
-			}
-			
-			// si c'est une carte de propriete
-			else	
-			{
-				// on va voir si la propriete n'appartient deja pas a quelqu'un si c'est non lui demande si il veut acheter
-				if (lesJoueurs.get(ordre).getCaseActuelle().getProprietaire() == null)
-				{
-					// on va voir si le joueur veut acheter la propriete
-					if (lesJoueurs.get(ordre).veutAcheter())	// si le joueur veut acheter
-					{
-						//il l'acheter et on donne une phrase de reponse
-						lesJoueurs.get(ordre).acheterCase(lesJoueurs.get(ordre).getCaseActuelle());
-						System.out.println("Vous avez bien acheter cette propriete");
-					}
-					else	// si il la veut pas, on va la mettre aux encheres
-						mettreAuxEncheres(ordre);
-				}
-				else // si elles est a quelqu'un, il va payer le taxe
-					jeu.payerLoyer(ordre);
-			}
-			
-			// on va voir si le joueur a la possibilite d'acheter de l'immobilier, si c'est possible on lui demande ce qu'il veut acheter
-			if (lesJoueurs.get(ordre).peutAcheterImmo ())	// on verifie qu'il a trois cartes de la mÃªme couleur
-			{
-				// on va lancer la fonction pour acheter de l'immobilier
-				jeu.acheterImmo(ordre, p);
-			}
-			
-			
-			// on va demander si les joueurs veulent sauvegarder
-			System.out.println("Voulez vous sauvegarder la partie ?	(taper le numero correspondant)");
-			System.out.println("1) Oui");
-			System.out.println("2) Non");
-			int repSauv = sc.nextInt();
-			if (repSauv == 1)
-				jeu.sauvegarde(p);
-			
-			ordre = (ordre + 1) % lesJoueurs.size();	// pour passer au joueur suivant			
 		} // fin du while
-		
-		
-		
-		
-		
-		
-		
+			
 		
 	} // Fin de la fonction main
+	
 	
 } 	// Fin de la classe Jeu
