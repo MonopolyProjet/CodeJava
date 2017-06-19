@@ -31,9 +31,18 @@ public class Fond extends JPanel implements ActionListener{
 	private JPanel panelDroit;
 	private JPanel panelSolde;
 	private JPanel panelCommunication;
-	private JPanel panelGestionPartie;
+	
 	private JPanel panelBoutonsAction;
 	private JPanel panelBoutonsCommuns;
+	
+	//tout les panels de boutons possible
+	private JPanel panelGestionPartie;
+	private JPanel panelLancerDe;
+	private JPanel panelHimo;
+	private JPanel panelSortiPrison;
+	private JPanel panelAchat;
+	private JPanel panelSaisie;
+	
 	private JPanel panelInterraction;
 	private JPanel panelBoutons;
 	private JPanel panelQuitter;
@@ -94,11 +103,12 @@ public class Fond extends JPanel implements ActionListener{
         mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         // on la rend visible
         mainFrame.setVisible(true);
+        mainFrame.setLayout(new GridLayout(1,2));
+		mainFrame.pack();
+		mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		
-		BorderLayout layoutDroit = new BorderLayout(); //Utile aussi pour le panel Solde
 		
-		Font font = new Font("Yu Gothic UI Semibold", Font.PLAIN, 36);
 		
 		
 		/////////////Panel Gauche
@@ -113,100 +123,24 @@ public class Fond extends JPanel implements ActionListener{
 		mainFrame.add(panelGauche);
 		
 		
-		//Panel communication va contenir les retours du jeu + le panel pour les boutons
-		panelInterraction.setLayout(new GridLayout(2,1));
-		panelInterraction.add(zone1);
-		zone1.setEnabled(false);
-		panelInterraction.add(panelBoutons);
 		
 		
 		
-		
-		//Panel Boutons qui contient tous les boutons
-		
-		// on va faire deux boutons en haut pour charger, nouvelle est sauvegarde
-		// layout avec les trois partie
-		panelBoutons.setLayout(new GridLayout (3,1));
-		
-		// on créer le panel du haut
-		panelGestionPartie = new JPanel();
-		panelGestionPartie.setLayout (new GridLayout(1,3));
-		
-		// on declare les boutons correspondants et on leur fixe le actionListener
-		btnNouvellePartie = new JButton("Nouvelle Partie");
-		btnNouvellePartie.addActionListener(this);
-		btnChargerPartie = new JButton("Charger Partie");
-		btnChargerPartie.addActionListener(this);
-		btnSauverPartie = new JButton("Sauver Partie");
-		btnSauverPartie.addActionListener(this);
-		
-		// on y ajoute les boutons dans le bon ordre
-		panelGestionPartie.add(btnNouvellePartie);
-		panelGestionPartie.add(btnChargerPartie);
-		panelGestionPartie.add(btnSauverPartie);
-		
-		// on ajoute ce panel au panel bouton
-		panelBoutons.add(panelGestionPartie);
-		
-		
-		// 			Panel  avec tout les bouton d'interraction
-		// on va placer les boutons en grille au dessus d'un grand bouton pour finir son tour
-		panelBoutonsAction = new JPanel();
-		panelBoutonsAction.setLayout(new BorderLayout());
-		
-		// on cree tout les boutons et en meme temps on met l'actionListener
-		panelBoutonsCommuns = new JPanel();
-		panelBoutonsCommuns.setLayout(new GridLayout (2,3));
-		
-		btnLancerDes = new JButton ("Lancer les dés");
-		btnLancerDes.addActionListener(this);
-		btnAcheterMaison = new JButton("Acheter une maison");
-		btnAcheterMaison.addActionListener(this);
-		btnAcheterHotel = new JButton ("Acheter un hôtel");
-		btnAcheterHotel.addActionListener(this);
-		btnSortiPrison = new JButton("Payer quotion");
-		btnSortiPrison.addActionListener(this);
-		btnAcheter = new JButton("Acheter propriété");
-		btnAcheter.addActionListener(this);
-		btnPasAcheter = new JButton("Ne pas acheter propriété");
-		btnPasAcheter.addActionListener(this);
-		
-		// on les ajoute bien au layout
-		panelBoutonsCommuns.add(btnLancerDes);
-		panelBoutonsCommuns.add(btnAcheterMaison);
-		panelBoutonsCommuns.add(btnAcheterHotel);
-		panelBoutonsCommuns.add(btnSortiPrison);
-		panelBoutonsCommuns.add(btnAcheter);
-		panelBoutonsCommuns.add(btnPasAcheter);
-		
-		// on ajoute ce panel au conteneur
-		panelBoutons.add(panelBoutonsCommuns);
-		
-		// on ajout celui pour finir son tour
-		btnFinTour = new JButton("Fin de tour");
-		btnFinTour.addActionListener(this);
-		panelBoutonsAction.add(btnFinTour, BorderLayout.SOUTH);
-
-		
-		
-		
-
-		//			Panel Droit
+		//		Panel Droit
 		// on va faire un layout avec 3 lignes : les soldes, la communication, les boutons et un moyen de quitter en bas
 		panelDroit.setLayout(new GridLayout (4,1));
 		
-		// on fait les différent panel
+		// on fait les différents panel
 		
 		// panel pour les soldes
+		Font font = new Font("Yu Gothic UI Semibold", Font.PLAIN, 36);
 		panelSolde.setLayout(new GridLayout(1,4));
 		labelAnnonceArgentPlateau = new JLabel("Argent plateau:", JLabel.RIGHT);
 		labelAnnonceArgentPlateau.setFont(font);
-		
 		labelSoldePlateau = new JLabel ("", JLabel.RIGHT);
 		
-		this.labelAnnonceArgentJoueur = new JLabel ("Argent joueur: ", JLabel.RIGHT);
+		labelAnnonceArgentJoueur = new JLabel ("Argent joueur: ", JLabel.RIGHT);
 		labelAnnonceArgentJoueur.setFont(font);
-		
 		labelSoldeJoueur = new JLabel ("", JLabel.RIGHT);
 		
 		// on ajoute les elements au panel
@@ -226,6 +160,88 @@ public class Fond extends JPanel implements ActionListener{
 		// on l'ajoute au panel droit
 		panelDroit.add(panelCommunication);
 		
+		
+		///////// Panel Boutons qui contient tous les boutons //////////////
+		
+		// on va créer tous les panel possible avec les boutons
+		panelGestionPartie = new JPanel ();
+		panelGestionPartie.setLayout(new GridLayout (3,1));
+		
+		// on declare les boutons correspondants et on leur fixe le actionListener
+		btnNouvellePartie = new JButton("Nouvelle partie");
+		btnNouvellePartie.addActionListener(this);
+		btnChargerPartie = new JButton("Charger partie");
+		btnChargerPartie.addActionListener(this);
+		btnSauverPartie = new JButton("Sauver partie");
+		btnSauverPartie.addActionListener(this);
+		
+		// on y ajoute les boutons dans le bon ordre
+		panelGestionPartie.add(btnNouvellePartie);
+		panelGestionPartie.add(btnChargerPartie);
+		panelGestionPartie.add(btnSauverPartie);
+		
+		// on ajoute ce panel au panel bouton
+		panelBoutons.add(panelGestionPartie);
+		
+		
+		// panel pour la saisie des informations des partie
+		panelSaisie = new JPanel();
+		JLabel labelInfo = new JLabel("Entrez le nom de la partie", JLabel.CENTER);
+		JTextField fieldNomPartie = new JTextField();
+		JButton bouttonOK = new JButton ("Ok");
+		bouttonOK.addActionListener(this);
+		
+		panelSaisie.setLayout(new GridLayout (3, 1));
+		panelSaisie.add(labelInfo);
+		panelSaisie.add(labelInfo);
+		
+		
+		//panel pour les boutons d'achat de l'immobilier
+		panelHimo = new JPanel ();
+		panelHimo.setLayout(new GridLayout(1,2));
+		btnAcheterMaison = new JButton("Acheter une maison");
+		btnAcheterMaison.addActionListener(this);
+		btnAcheterHotel = new JButton ("Acheter un hôtel");
+		btnAcheterHotel.addActionListener(this);
+		panelHimo.add(btnAcheterMaison);
+		panelHimo.add(btnAcheterHotel);
+		
+		
+		// panel pour lancer les des
+		panelLancerDe = new JPanel ();
+		btnLancerDes = new JButton ("Lancer les dés");
+		btnLancerDes.addActionListener(this);
+		panelLancerDe.add(btnLancerDes);
+		
+		// panel pour les boutons sortir de prison
+		panelSortiPrison = new JPanel ();
+		panelSortiPrison.setLayout(new GridLayout (1,2));
+		btnSortiPrison = new JButton("Payer quotion");
+		btnSortiPrison.addActionListener(this);
+		panelSortiPrison.add(btnLancerDes);
+		panelSortiPrison.add(btnSortiPrison);
+		
+		// panel pour savoir si veut acheter
+		panelAchat = new JPanel ();
+		panelAchat.setLayout(new GridLayout (1,2));
+		btnAcheter = new JButton("Acheter propriété");
+		btnAcheter.addActionListener(this);
+		btnPasAcheter = new JButton("Ne pas acheter propriété");
+		btnPasAcheter.addActionListener(this);
+		panelAchat.add(btnAcheter);
+		panelAchat.add(btnPasAcheter);
+		
+		
+		
+		
+		// on les ajoute tout les panel au panel "panelBoutons"
+		panelBoutons.add(panelGestionPartie);
+		panelBoutons.add(panelSaisie);
+		panelBoutons.add(panelLancerDe);
+		panelBoutons.add(panelHimo);
+		panelBoutons.add(panelSortiPrison);
+		panelBoutons.add(panelAchat);		
+		
 		// on ajoute le panel avec les boutons
 		panelDroit.add(panelBoutons);
 		
@@ -235,24 +251,36 @@ public class Fond extends JPanel implements ActionListener{
 		btnQuitter = new JButton("Quitter");
 		panelQuitter.add(btnQuitter);
 		// on l'ajoute a panel droit
-		panelDroit.add(panelQuitter);
+		panelDroit.add(panelQuitter);		
 		
-		mainFrame.setLayout(new GridLayout(1,2));
-		mainFrame.pack();
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setVisible(true);
-		mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
-		btnNouvellePartie.addActionListener(this);
-		btnSauverPartie.addActionListener(this);
-		btnChargerPartie.addActionListener(this);
-		btnFinTour.addActionListener(this);
-		btnAcheter.addActionListener(this);
+		// on va rendre le premier panel necessaire visible
+		panelGestionPartie.setVisible(true);
+		panelSaisie.setVisible(false);
+		panelLancerDe.setVisible(false);
+		panelHimo.setVisible(false);
+		panelSortiPrison.setVisible(false);
+		panelAchat.setVisible(false);
 	} 
 	
 	// pour gerer les actions qui vont etre faite avec les boutons
 	public void actionPerformed(ActionEvent e){	
-		
+		// selon chaque bouton on va traiter les actions
+		if (e.getActionCommand() == "Nouvelle partie")
+		{
+			// on change les affichages
+			panelGestionPartie.setVisible(false);
+			panelSaisie.setVisible(true);
+			panelLancerDe.setVisible(false);
+			panelHimo.setVisible(false);
+			panelSortiPrison.setVisible(false);
+			panelAchat.setVisible(false);
+		}
+			
+			
+			
+			
+			
 	}
 	
 	
