@@ -80,7 +80,7 @@ public class Jeu {
 			if (dossier.isDirectory() == false)
 					dossier.mkdir();
 			
-			// on créer le fichier dans le dossier de la sauvegarde
+			// on cr��er le fichier dans le dossier de la sauvegarde
 			File file = new File (dossier +File.separator +this.nom + ".txt");
 						
 				
@@ -91,7 +91,7 @@ public class Jeu {
 			pw.write("/" +"\n");  		// pour symbolyse le saut de ligne
 			// on va donner le nom des fichiers a ecrire pour les joueurs
 			for (int i=0; i<this.nbJoueur; i++)
-				pw.write("joueur" +i +".txt" +"\n");	// on met le numéro pour pouvoir le reconstruire a partir de ces fichiers
+				pw.write("joueur" +i +".txt" +"\n");	// on met le num��ro pour pouvoir le reconstruire a partir de ces fichiers
 			pw.write("/" +"\n");  		// pour symbolyse le saut de ligne
 			pw.write("plateau.txt");
 			pw.close();
@@ -115,7 +115,7 @@ public class Jeu {
 	// fonction pour creer les joueurs
 	public void creerJoueur () {
 		
-		int i = 0; // compteur pour la d�claration des joueurs
+		int i = 0; // compteur pour la d���claration des joueurs
 		int tempCouleur;
 		String tempNom;
 		// ArrayList avec toutes les couleurs de pion
@@ -132,7 +132,7 @@ public class Jeu {
 		
 		// on va creer les joueurs mais on doit savoir combien il y en a
 		System.out.println("\n" +"Entrez mainenant le nombre de joueur de cette partie (entre 2 et 8)");
-		this.nbJoueur = sc.nextInt();	//on donne une valeur à la variable
+		this.nbJoueur = sc.nextInt();	//on donne une valeur �� la variable
 		// on verifie que le nombre de joueur
 		while (nbJoueur < 2 ||  nbJoueur > 8 )
 		{
@@ -169,8 +169,8 @@ public class Jeu {
 			// on recupere la reponse
 			System.out.print("Entrez le chiffre correspondant a la couleur du pion que le joueur veut: ");
 			tempCouleur = sc2.nextInt ();
-			// on vérifie que la donnees est valide
-			if(tempCouleur > 8 - i) // -i car une couleur est enlever à chaque fois
+			// on v��rifie que la donnees est valide
+			if(tempCouleur > 8 - i) // -i car une couleur est enlever �� chaque fois
 			{
 				System.out.println("Nombre invalide veuillez recommencer ...");
 				// on recupere la reponse
@@ -182,8 +182,8 @@ public class Jeu {
 				lesJoueurs.add(new Joueur (tempNom1, (String)arrayPions.get(tempCouleur-1)));	//-1 pour retomber sur les indices du tableau
 			}
 			
-			arrayPions.remove(tempCouleur-1); 	//on enlève la couleur pour indiquer que la couleur n'est plus disponible
-			i++; // on augmente i pour passer à la construction du joueur suivant
+			arrayPions.remove(tempCouleur-1); 	//on enl��ve la couleur pour indiquer que la couleur n'est plus disponible
+			i++; // on augmente i pour passer �� la construction du joueur suivant
 		}		
 	}
 	
@@ -199,11 +199,11 @@ public class Jeu {
 		return appartient;
 	}
 
-	// methode pour lancer les dés
+	// methode pour lancer les d��s
 	private int lanceDes () {
 		int nbAlea = 0;
 		
-		Random r = new Random(); //Génération du nombre aléatoire
+		Random r = new Random(); //G��n��ration du nombre al��atoire
 		nbAlea = 2 + r.nextInt(12 - 2); //On fait en sorte que le nombre soit compris entre 2 et 12
 		
 		return nbAlea;
@@ -213,7 +213,7 @@ public class Jeu {
 	private static int nombreAlea () {
 		int nbAlea = 0;
 		
-		Random r = new Random(); //Génération du nombre aléatoire
+		Random r = new Random(); //G��n��ration du nombre al��atoire
 		nbAlea = 2 + r.nextInt(16); //On fait en sorte que le nombre soit compris entre 2 et 12
 		
 		return nbAlea;
@@ -226,21 +226,21 @@ public class Jeu {
 		ArrayList <Joueur> joueursEnCourse = new ArrayList <Joueur> (); 
 		int j = 0;
 		
-		// on va créer une ArrayListe de joueur avec tout les joueurs
+		// on va cr��er une ArrayListe de joueur avec tout les joueurs
 		for (int i=0; i<nbJoueur; i++)
 		{
-			if (i != ordre) // on ajoute pas le joueur qui a refusé la propriete
+			if (i != ordre) // on ajoute pas le joueur qui a refus�� la propriete
 				joueursEnCourse.add(lesJoueurs.get(i));
 		}
 		
-		// on va demander a chaque joueur de la liste cree si ils veulent acheter la propriété
+		// on va demander a chaque joueur de la liste cree si ils veulent acheter la propri��t��
 		while (joueursEnCourse.size() != 1)		// tant qu'il ne reste pas un seul joueur en course on recommence
 		{
 			if (joueursEnCourse.get(j).veutAcheter())
-				valeurProp += 20000; 	// le prix de la propriété augmente petit a petit
+				valeurProp += 20000; 	// le prix de la propri��t�� augmente petit a petit
 			else
 			{
-				// on supprime le joueur de la liste des joueurs interressé
+				// on supprime le joueur de la liste des joueurs interress��
 				joueursEnCourse.remove(j);
 			}
 			
@@ -248,14 +248,14 @@ public class Jeu {
 			j++;	
 		}
 		
-		// le joueur qui a encherie en dernier va acheter la propriété
+		// le joueur qui a encherie en dernier va acheter la propri��t��
 		joueursEnCourse.get(0).acheterCaseEnchere(lesJoueurs.get(ordre).getCaseActuelle(), valeurProp);
 		
 	}	// fin de la methode mettreAuxEnchere
 	
 	// methode pour tirer une carte chance et l'ensemble de l'execution qui en suit
 	private void tirerCarteChance(Plateau p, int ordre) {
-		// on tire la carte chance qui est au debut de la pile et on la remet à la fin apres
+		// on tire la carte chance qui est au debut de la pile et on la remet �� la fin apres
 		CarteChance chance = p.getCarteChance(0);
 		// on va l'afficher
 		System.out.println(chance);
@@ -270,7 +270,7 @@ public class Jeu {
 			lesJoueurs.get(ordre).setIndCaseActuelle("prison", 10);
 		break;
 		case 2:
-			//"Aller à la gare la plus proche. Si vous passez par la case départ recevez 200 000
+			//"Aller �� la gare la plus proche. Si vous passez par la case d��part recevez 200 000
 			
 			if (lesJoueurs.get(ordre).getCaseActuelle().getNumCase()==7)
 			{
@@ -357,14 +357,14 @@ public class Jeu {
 
 		break;
 		case 3:
-			//"Rdv case Henri-Martin. Si vous passez par la case départ recevez 200 000"
+			//"Rdv case Henri-Martin. Si vous passez par la case d��part recevez 200 000"
 			lesJoueurs.get(ordre).setIndCaseActuelle("henri-martin", 24);
 			if (lesJoueurs.get(ordre).getCaseActuelle().getNumCase()>24){
 				lesJoueurs.get(ordre).gagneArgent(200000);
 			}
 		break;
 		case 4:
-			//"Avancez jusqu'aux Champs Elysées."
+			//"Avancez jusqu'aux Champs Elys��es."
 			lesJoueurs.get(ordre).setIndCaseActuelle("champs", 37);
 		break;
 		case 5:
@@ -372,11 +372,11 @@ public class Jeu {
 			lesJoueurs.get(ordre).gagneArgent(1500);
 		break;
 		case 6:
-			//﻿"Payer M15 mille pour nettoyer les 32 fenêtres du Louvres."
+			//���"Payer M15 mille pour nettoyer les 32 fen��tres du Louvres."
 			lesJoueurs.get(ordre).payerTaxe(15000);
 			p.ajouterArgentPlateau(15000);
 		case 7:
-			//"Payer M50 milles à chaque joueur en échange de nourriture provenant du monde entier." 
+			//"Payer M50 milles �� chaque joueur en ��change de nourriture provenant du monde entier." 
 			for(int i=0; i<nbJoueur; i++){
 				if(ordre!=i) {
 					lesJoueurs.get(ordre).payerTaxe(50000);
@@ -397,12 +397,12 @@ public class Jeu {
 		case 11:
 		break;
 		case 12:
-			//"Avancez jusqu'à la case départ, recevez M200 milles."
+			//"Avancez jusqu'�� la case d��part, recevez M200 milles."
 			lesJoueurs.get(ordre).setIndCaseActuelle("depart", 0);
 			lesJoueurs.get(ordre).passeCaseDepart();
 		break;
 		case 13:
-			// "Avancez jusqu'aux boulevard de la villette. Si vous passez par la case départ, recevez M200 milles."
+			// "Avancez jusqu'aux boulevard de la villette. Si vous passez par la case d��part, recevez M200 milles."
 			lesJoueurs.get(ordre).setIndCaseActuelle("villette", 11);
 			if (lesJoueurs.get(ordre).getCaseActuelle().getNumCase()>11){
 				lesJoueurs.get(ordre).gagneArgent(200000);
@@ -411,12 +411,12 @@ public class Jeu {
 		case 14:
 		break;
 		case 15:
-			//"Votre entreprise de réparation de bicyclette vous rapporte 50000"
+			//"Votre entreprise de r��paration de bicyclette vous rapporte 50000"
 			lesJoueurs.get(ordre).gagneArgent(50000);
 		break;
 		case 16:
-			//"Vous faites redécorer vos propriétés par un designer de renommée internationale. 
-			//Pour chaque maison payer M25 milles, pour chaque hôtel payer M100 Milles."
+			//"Vous faites red��corer vos propri��t��s par un designer de renomm��e internationale. 
+			//Pour chaque maison payer M25 milles, pour chaque h��tel payer M100 Milles."
 			lesJoueurs.get(ordre).payerTaxe(lesJoueurs.get(ordre).getNbMaisons()*25000);
 			lesJoueurs.get(ordre).payerTaxe(lesJoueurs.get(ordre).getNbHotels()*100000);
 		break;
@@ -424,7 +424,7 @@ public class Jeu {
 		
 		// on supprime la carte au debut de la liste pour la mettre a la fin
 		p.mettreAjourListeCarteChance();
-	} // fin de la méthode
+	} // fin de la m��thode
 	
 	
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -440,12 +440,12 @@ public class Jeu {
 		switch (indCarte)
 		{
 		case 1:
-			// "La taxe d'habitation augmente. Payer M40 milles par maison. Payer M115 milles par hôtel."
+			// "La taxe d'habitation augmente. Payer M40 milles par maison. Payer M115 milles par h��tel."
 			int prixMaison = 40000, prixHotel = 115000;
 			// on compte cb d'hotel et cb de maison
 			int nbMaison = 0, nbHotel = 0;
-			// on parcourt tout ses propriété et on compte le nombre de maison et d'hotem
-			// on recupere le nombre de propriété
+			// on parcourt tout ses propri��t�� et on compte le nombre de maison et d'hotem
+			// on recupere le nombre de propri��t��
 			int nbProp = lesJoueurs.get(ordre).getNbProp();
 			// boucle pour avoir compter
 			for (int i=0; i<nbProp; i++)
@@ -461,23 +461,23 @@ public class Jeu {
 			p.ajouterArgentPlateau(retrait);
 		break;
 		case 2:
-			// "Vous organisez une fête privée sur les bords de Seine. Payer M50 milles."
+			// "Vous organisez une f��te priv��e sur les bords de Seine. Payer M50 milles."
 			lesJoueurs.get(ordre).retirerArgent(50000);
 			p.ajouterArgentPlateau(50000);
 		break;
 		case 3:
-			// "Votre compagnie ferroviaire dégage de gros profits. Recevez M200 milles."
+			// "Votre compagnie ferroviaire d��gage de gros profits. Recevez M200 milles."
 			lesJoueurs.get(ordre).gagneArgent(200000);
 		break;
 		case 4:
-			// "Le fisc effectue un contrôle de vos impôts. Allez en prion. Avancez tout droit en prison. 
-			//Ne passez pas par la case départ. Ne toucher pas M200 milles."
+			// "Le fisc effectue un contr��le de vos imp��ts. Allez en prion. Avancez tout droit en prison. 
+			//Ne passez pas par la case d��part. Ne toucher pas M200 milles."
 			Case cPrison = p.getCase(11);
 			lesJoueurs.get(ordre).avancerJoueur(cPrison, 11);
 			System.out.println("Vous etes maintenant en prison ...");
 		break;
 		case 5:
-			// "Vous bénéficiez d'une remise d'impôt. Recevez M50 milles."
+			// "Vous b��n��ficiez d'une remise d'imp��t. Recevez M50 milles."
 			lesJoueurs.get(ordre).gagneArgent(50000);
 		break;
 		case 6:
@@ -485,7 +485,7 @@ public class Jeu {
 			lesJoueurs.get(ordre).gagneArgent(10000);
 			break;
 		case 7:
-			// "Tout le monde se cotise pour participer à un séjour à la campagne. Chacun vous verse M10 milles."
+			// "Tout le monde se cotise pour participer �� un s��jour �� la campagne. Chacun vous verse M10 milles."
 			int somme = (nbJoueur - 1) * 10000;
 			lesJoueurs.get(ordre).gagneArgent(somme);
 			// on enleve l'argent a tout les autres joueurs
@@ -499,11 +499,11 @@ public class Jeu {
 			lesJoueurs.get(ordre).gagneArgent(25000);
 		break;
 		case 9:
-			// "Vous louez votre musée d'art pour une exposition internationale. Recevez M100 milles."
+			// "Vous louez votre mus��e d'art pour une exposition internationale. Recevez M100 milles."
 			lesJoueurs.get(ordre).gagneArgent(100000);
 		break;
 		case 10:
-			// "Vous organisez le festival de la Saint-Patrick à Pigale.Payer M100 milles."
+			// "Vous organisez le festival de la Saint-Patrick �� Pigale.Payer M100 milles."
 			lesJoueurs.get(ordre).retirerArgent(100000);
 			p.ajouterArgentPlateau(100000);
 		break;
@@ -512,27 +512,27 @@ public class Jeu {
 			lesJoueurs.get(ordre).gagneArgent(20000);
 		break;
 		case 12:
-			// "Vous dépensez M50 milles au marché de noël des Champs Elysées."
+			// "Vous d��pensez M50 milles au march�� de no��l des Champs Elys��es."
 			lesJoueurs.get(ordre).retirerArgent(50000);
 			p.ajouterArgentPlateau(50000);
 		break;
 		case 13:
-			// "Avancez jusqu'à la case départ. Touchez M200 milles."
+			// "Avancez jusqu'�� la case d��part. Touchez M200 milles."
 			Case cDepart = p.getCase(1);
 			lesJoueurs.get(ordre).avancerJoueur(cDepart, 1);
-			System.out.println("Vous etes maintenant à la case départ.");
+			System.out.println("Vous etes maintenant �� la case d��part.");
 			lesJoueurs.get(ordre).passeCaseDepart();
 		break;
 		case 14:
-			// "VOUS ETES LIBERE DE PRISON. Cette carte peut être conservée jusqu'à ce qu'elle soit utilisée ou vendue."
+			// "VOUS ETES LIBERE DE PRISON. Cette carte peut ��tre conserv��e jusqu'�� ce qu'elle soit utilis��e ou vendue."
 			lesJoueurs.get(ordre).ajouterCarteCommunaute(co);
 		break;
 		case 15:
-			// "Les entrées de votre soirée spéciale Karaoké vous rapportent M10 milles."
+			// "Les entr��es de votre soir��e sp��ciale Karaok�� vous rapportent M10 milles."
 			lesJoueurs.get(ordre).gagneArgent(10000);
 		break;
 		case 16:
-			// "Vous louez votre batiment destiné aux sciences à une équipe de chercheurs étrangers. Recevez M100 milles."
+			// "Vous louez votre batiment destin�� aux sciences �� une ��quipe de chercheurs ��trangers. Recevez M100 milles."
 			lesJoueurs.get(ordre).gagneArgent(100000);
 		break;
 		}// fin du sswitch
@@ -540,7 +540,7 @@ public class Jeu {
 		// on supprime la carte au debut de la liste pour la mettre a la fin
 		p.mettreAjourListeCarteCo();
 				
-	} // fin de la méthode pour tirer une carte caisse de communaute
+	} // fin de la m��thode pour tirer une carte caisse de communaute
 	
 	// methode pour tirer une carte caisse de communaute et l'ensemble de l'execution qui en suit
 		private void tomberCasePiege (Plateau p,int ordre) {
@@ -613,7 +613,7 @@ public class Jeu {
 		{
 			System.out.println("Quel type d'immobilier voulez vous acheter ?   (selectionnez le numero correspondant)");
 			System.out.println("1) Maison");
-			System.out.println("2) Hôtel");
+			System.out.println("2) H��tel");
 			tempRepImmo = scImmo.nextInt();
 			
 			// on va lancer la fonction correspondante
@@ -633,7 +633,7 @@ public class Jeu {
 					// on regarde que la case n'est pas hypotheque
 					if (!tempCase.estHypotheque())
 					{
-						// on regarde qu'il n'y a déjà pas 4 maisons sur la propriete
+						// on regarde qu'il n'y a d��j�� pas 4 maisons sur la propriete
 						if (tempCase.getNbMaison() + nbMaisonAAjouter <= 4)
 						{
 							// on ajoute la maison
@@ -641,7 +641,7 @@ public class Jeu {
 							erreur = false;
 						}
 						else
-							System.out.println("Vous ne pouvez pas ajouter autant de maison, il y a deja� " +lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() +" maisons sur cette case");
+							System.out.println("Vous ne pouvez pas ajouter autant de maison, il y a deja��� " +lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() +" maisons sur cette case");
 					}
 					else
 						System.out.println("Cette propriete est hypothequee, vous ne pouvez pas ajouter d'immobilier sur cette case");
@@ -674,10 +674,10 @@ public class Jeu {
 		}
 		
 		
-		else // si il ne veut pas acheter d'immobilié
-			System.out.println("Très bien, ce sera pour une prochaine fois !");
+		else // si il ne veut pas acheter d'immobili��
+			System.out.println("Tr��s bien, ce sera pour une prochaine fois !");
 		
-	} // fin de la méthode de la gestion des achats de l'immobilier
+	} // fin de la m��thode de la gestion des achats de l'immobilier
 	
 	// methode pour payer le loyer a un autre joueur lorsque l'on tombe sur sa case
 	public void payerLoyer(int ordre){
@@ -696,7 +696,7 @@ public class Jeu {
 			// si la case est vide, on regarde si il a les trois terrains
 			if (vide)
 			{
-				//on va regarder si il a toute les proprietes de la meme couleur pour multiplié le prix du loyer
+				//on va regarder si il a toute les proprietes de la meme couleur pour multipli�� le prix du loyer
 				// on va pacourir toute les cartes du joueur qui va recuperer l'argent pour voir si il les a toute
 				j2.aTouteCaseCouleur(lesJoueurs.get(ordre).getCaseActuelle().getCouleur());
 				// on retire l'argent au joueur est on le donne a l'autre
@@ -705,7 +705,7 @@ public class Jeu {
 			else	// si il y a de l'immobilier sur la case
 			{
 				
-				// on va regarder le nombre de maison qu'il y a sur la propriété
+				// on va regarder le nombre de maison qu'il y a sur la propri��t��
 				if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 1)
 					somme = lesJoueurs.get(ordre).getCaseActuelle().getLoyer1Maison();
 				else if (lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() == 2)
@@ -755,9 +755,9 @@ public class Jeu {
 		int ind = lesJoueurs.get(ordre).getIndCaseActuelle() + nbCasesAvance % 40;	// on recupere l'indice de la nouvelle case
 		lesJoueurs.get(ordre).avancerJoueur(plateau.getCase(ind), nbCasesAvance);		// on dit au joueur d'avancer jusqu'a la nouvelle case
 		
-		// phrase pour dire de combien de case le joueur a avancé et on affiche sa case actuelle
+		// phrase pour dire de combien de case le joueur a avanc�� et on affiche sa case actuelle
 		System.out.println("\n" +lesJoueurs.get(ordre).getNom() + " avance de " + nbCasesAvance + " cases.");
-		System.out.println(lesJoueurs.get(ordre).getNom() + " est maintenant à la case : " + lesJoueurs.get(ordre).getCaseActuelle());
+		System.out.println(lesJoueurs.get(ordre).getNom() + " est maintenant �� la case : " + lesJoueurs.get(ordre).getCaseActuelle());
 					
 	}
 	
@@ -769,14 +769,14 @@ public class Jeu {
 		// si c'est une case de type chance
 			if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "chance")	
 			{
-			// on lance la méthode qui s'occupe des actions des cartes chance
+			// on lance la m��thode qui s'occupe des actions des cartes chance
 				tirerCarteChance(plateau, ordre);		// on envoi le plateau et l'indice du joueur	
 			}
 				
 			// si c'est une case de type caisse de communaute
 			else if (lesJoueurs.get(ordre).getCaseActuelle().getNomCase() == "communaute")	
 			{
-				// on lance la méthode qui s'occupe des actions des cartes chance
+				// on lance la m��thode qui s'occupe des actions des cartes chance
 				tirerCarteCaisseCommunaute(plateau, ordre);		// on envoi le plateau et l'indice du joueur				
 			}
 				
@@ -806,7 +806,7 @@ public class Jeu {
 				payerLoyer(ordre);
 			}
 		// on va voir si le joueur a la possibilite d'acheter de l'immobilier, si c'est possible on lui demande ce qu'il veut acheter
-			if (lesJoueurs.get(ordre).peutAcheterImmo ())	// on verifie qu'il a trois cartes de la même couleur
+			if (lesJoueurs.get(ordre).peutAcheterImmo ())	// on verifie qu'il a trois cartes de la m��me couleur
 				{
 					// on va lancer la fonction pour acheter de l'immobilier
 					acheterImmo(ordre, plateau);
@@ -825,7 +825,7 @@ public class Jeu {
 					ordre = (ordre + 1) % lesJoueurs.size();	// pour passer au joueur suivant
 	}
 	
-	// G�re la cr�ation ou la reprise d'une partie au lancement
+	// G�re la cr�ation ou la reprise d'une partie au lancement
 	public void start() throws FileNotFoundException, IOException{
 		int reponseSauv = 0;
 		
@@ -861,15 +861,20 @@ public class Jeu {
 		}
 	}
 	
+	/// methode pour recuperer le plateau
+	public Plateau getPlateau() {
+		return this.plateau;
+	}
+	
 	/////////////////////////////////////////////////////
 	//////////////// FONCTION MAIN //////////////////////
 	/////////////////////////////////////////////////////
-	public static void main (String [] args) throws FileNotFoundException, IOException {
+	/* public static void main (String [] args) throws FileNotFoundException, IOException {
 		
 		Jeu jeu = null;
 		Plateau p = null;
 		
-		//G�re la reprise d'une partie ou la cr�ation d'une partie au lancement
+		//Gere la reprise d'une partie ou la cr�ation d'une partie au lancement
 		jeu.start();
 		
 		// on va faire marcher les joueurs
@@ -880,10 +885,10 @@ public class Jeu {
 		
 		while (!fini)
 		{
-			//Annonce de la position du joueur, g�re les evenements de d�but de tours (lancer de d�s, gain du plateau, etc)
+			//Annonce de la position du joueur, g�re les evenements de d�but de tours (lancer de d�s, gain du plateau, etc)
 			jeu.DebutTour();
 			
-			//R�agis en fonction de la case sur laquelle arrive le joueur
+			//R�agis en fonction de la case sur laquelle arrive le joueur
 			jeu.ReactTypeCase();
 					
 			//Demande au joueur si ils souhaitent sauvegarder
@@ -895,7 +900,7 @@ public class Jeu {
 		} // fin du while
 			
 		
-	} // Fin de la fonction main
+	} // Fin de la fonction main */
 	
 	
 } 	// Fin de la classe Jeu
