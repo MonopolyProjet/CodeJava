@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 public class Fond extends JPanel implements ActionListener{
@@ -43,6 +44,7 @@ public class Fond extends JPanel implements ActionListener{
 	private JPanel panelSortiPrison;
 	private JPanel panelAchat;
 	private JPanel panelSaisie;
+	private JPanel panelSaisieJoueur;
 	
 	private JPanel panelInterraction;
 	private JPanel panelBoutons;
@@ -176,6 +178,46 @@ public class Fond extends JPanel implements ActionListener{
 		panelSaisie.add(labelInfo);
 		panelSaisie.add(labelInfo);
 		
+		// panel pour la saisie des joueurs
+		panelSaisieJoueur = new JPanel ();
+		panelSaisieJoueur.setLayout(new GridLayout(4,1));
+		JPanel panelInfoSaisieJoueur = new JPanel ();
+		panelInfoSaisieJoueur.setLayout(new GridLayout (1,2));
+		JLabel annonceInfoCbJoueur = new JLabel ("Joueur deja enregistre :", JLabel.LEFT);
+		JLabel infoCbJoueur = new JLabel ("", JLabel.LEFT);
+		panelInfoSaisieJoueur.add(annonceInfoCbJoueur);
+		panelInfoSaisieJoueur.add(infoCbJoueur);
+		panelSaisieJoueur.add(panelInfoSaisieJoueur);
+		JLabel labelConsigne = new JLabel ("Entrez le nom du joueur a ajouter");
+		panelSaisieJoueur.add(labelConsigne);
+		JTextField fieldSaisieJoueur = new JTextField ("Nom du joueur");
+		panelSaisieJoueur.add(fieldSaisieJoueur);
+		// pour les couleurs
+		JPanel panelCouleur = new JPanel ();
+		panelCouleur.setLayout(new GridLayout (1, 2));
+		JLabel annonceCouleur = new JLabel ("Choisisez une couleur");
+		panelCouleur.add(annonceCouleur);
+		// on fait une liste deroulente
+		JComboBox comboCouleur = new JComboBox ();
+		comboCouleur.addItem("Rouge");
+		comboCouleur.addItem("Bleu");
+		comboCouleur.addItem("Noir");
+		comboCouleur.addItem("Rose");
+		comboCouleur.addItem("Marron");
+		comboCouleur.addItem("Mauve");
+		comboCouleur.addItem("Cyan");
+		comboCouleur.addItem("Vert");
+		panelCouleur.add(comboCouleur);
+		// pour valider ou finir
+		JPanel panelBoutonsSaisieJoueur = new JPanel ();
+		panelBoutonsSaisieJoueur.setLayout(new GridLayout (1,2));
+		JButton boutonAjouter = new JButton ("Ajouter");
+		boutonAjouter.addActionListener(this);
+		panelSaisieJoueur.add(boutonAjouter);
+		JButton boutonTerminerSaisie = new JButton ("Terminer");
+		boutonTerminerSaisie.addActionListener(this);
+		panelSaisieJoueur.add(boutonTerminerSaisie);
+		
 		
 		//panel pour les boutons d'achat de l'immobilier
 		panelHimo = new JPanel ();
@@ -191,7 +233,7 @@ public class Fond extends JPanel implements ActionListener{
 		// panel pour lancer les des
 		panelLancerDe = new JPanel ();
 		panelLancerDe.setLayout(new GridLayout(2,1));
-		labelAnnonceLancerDe = new JLabel ("Lancer les des pour avancer")
+		labelAnnonceLancerDe = new JLabel ("Lancer les des pour avancer");
 		btnLancerDes = new JButton ("Lancer les des");
 		btnLancerDes.addActionListener(this);
 		panelLancerDe.add(labelAnnonceLancerDe);
@@ -221,6 +263,7 @@ public class Fond extends JPanel implements ActionListener{
 		// on les ajoute tout les panel au panel "panelBoutons"
 		panelBoutons.add(panelGestionPartie);
 		panelBoutons.add(panelSaisie);
+		panelBoutons.add(panelSaisieJoueur);
 		panelBoutons.add(panelLancerDe);
 		panelBoutons.add(panelHimo);
 		panelBoutons.add(panelSortiPrison);
@@ -243,6 +286,7 @@ public class Fond extends JPanel implements ActionListener{
 		// on va rendre le premier panel necessaire visible
 		panelGestionPartie.setVisible(true);
 		panelSaisie.setVisible(false);
+		panelSaisieJoueur.setVisible(false);
 		panelLancerDe.setVisible(false);
 		panelHimo.setVisible(false);
 		panelSortiPrison.setVisible(false);
@@ -255,9 +299,10 @@ public class Fond extends JPanel implements ActionListener{
 		// bouton nouvelle partie
 		if (e.getActionCommand() == "Nouvelle partie")
 		{
-			// on change les affichages
+			// on change les affichages pour pouvoir ecrire le nom de la partie
 			panelGestionPartie.setVisible(false);
 			panelSaisie.setVisible(true);
+			panelSaisieJoueur.setVisible(false);
 			panelLancerDe.setVisible(false);
 			panelHimo.setVisible(false);
 			panelSortiPrison.setVisible(false);
@@ -265,6 +310,14 @@ public class Fond extends JPanel implements ActionListener{
 			if (e.getActionCommand()== "Ok")
 			{
 				this.jeu = new Jeu(this.fieldNomPartie.getText());
+				// on chage l'affichage pour entre les joueurs
+				panelGestionPartie.setVisible(false);
+				panelSaisie.setVisible(false);
+				panelSaisieJoueur.setVisible(true);
+				panelLancerDe.setVisible(false);
+				panelHimo.setVisible(false);
+				panelSortiPrison.setVisible(false);
+				panelAchat.setVisible(false);
 			}
 			this.labelCommunication.setText("Nouvelle partie crée");
 			// on va créer tout les joueurs un par un
@@ -276,6 +329,7 @@ public class Fond extends JPanel implements ActionListener{
 			// on change les affichages
 			panelGestionPartie.setVisible(false);
 			panelSaisie.setVisible(true);
+			panelSaisieJoueur.setVisible(false);
 			panelLancerDe.setVisible(false);
 			panelHimo.setVisible(false);
 			panelSortiPrison.setVisible(false);
@@ -295,6 +349,7 @@ public class Fond extends JPanel implements ActionListener{
 			// on cache le panel de gestion et on met les autres
 			panelGestionPartie.setVisible(false);
 			panelSaisie.setVisible(false);
+			panelSaisieJoueur.setVisible(false);
 			panelLancerDe.setVisible(true);
 			panelHimo.setVisible(false);
 			panelSortiPrison.setVisible(false);
