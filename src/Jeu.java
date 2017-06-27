@@ -17,7 +17,7 @@ public class Jeu {
 	String nom;
 	static int nbJoueur;
 	static ArrayList <Joueur> lesJoueurs;
-	private int ordre;
+	private static int ordre;
 	
 	
 	//constructeur pour nouvelle partie
@@ -640,7 +640,7 @@ public class Jeu {
 							erreur = false;
 						}
 						else
-							System.out.println("Vous ne pouvez pas ajouter autant de maison, il y a deja  " +lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() +" maisons sur cette case");
+							System.out.println("Vous ne pouvez pas ajouter autant de maison, il y a dejaï¿½ " +lesJoueurs.get(ordre).getCaseActuelle().getNbMaison() +" maisons sur cette case");
 					}
 					else
 						System.out.println("Cette propriete est hypothequee, vous ne pouvez pas ajouter d'immobilier sur cette case");
