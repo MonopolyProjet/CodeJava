@@ -100,14 +100,10 @@ public class Fond extends JPanel implements ActionListener{
 				/////////////Panel Gauche
 		// on lui donne son layout
 		panelGauche.setLayout(new GridLayout(1,1));
-		// on change la couleur du fond
-		panelGauche.setBackground(Color.BLACK);
-		// on fixe l'image du plateau
 		// on cree l'image
-			
-		fondMonopoly = new JLabel( new ImageIcon("imageMonopoly.jpg"));
-		panelGauche.setLayout(new BorderLayout());
-		panelGauche.add(fondMonopoly, BorderLayout.CENTER);
+		fondMonopoly = new JLabel(new ImageIcon("src\\imageMonopoly.jpg"));
+		//panelGauche.setLayout(new BorderLayout());
+		panelGauche.add(fondMonopoly);
 
 		
 		// on l'ajoute a la fenetre
