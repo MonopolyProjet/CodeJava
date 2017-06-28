@@ -865,6 +865,22 @@ public class Jeu {
 	public Plateau getPlateau() {
 		return this.plateau;
 	}
+
+	// methode pour ajouter un joueur depuis l'interface graphique
+	public void ajouterJoueur(String tempNom, int tempCouleur) {
+		// on recré la liste de couleur (String) pour commaparer avec le numero recu
+		ArrayList<String> tempListeCouleur = new ArrayList();
+		tempListeCouleur.add("Rouge");
+		tempListeCouleur.add("Bleu");
+		tempListeCouleur.add("Noir");
+		tempListeCouleur.add("Rose");
+		tempListeCouleur.add("Marron");
+		tempListeCouleur.add("Mauve");
+		tempListeCouleur.add("Cyan");
+		tempListeCouleur.add("Vert");
+		// on crée le joueur
+		this.lesJoueurs.add(new Joueur (tempNom, tempListeCouleur.get(tempCouleur)));
+	}
 	
 	/////////////////////////////////////////////////////
 	//////////////// FONCTION MAIN //////////////////////

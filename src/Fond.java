@@ -68,6 +68,7 @@ public class Fond extends JPanel implements ActionListener{
 	private JLabel annonceCouleur;
 	private JLabel labelInfo;
 	
+	
 	// declaration du textField
 	private JTextField zone1;
 	// on cree le text field
@@ -173,7 +174,7 @@ public class Fond extends JPanel implements ActionListener{
 		// panel pour la saisie des informations des partie
 		panelSaisie = new JPanel();
 		labelInfo = new JLabel("Entrez le nom de la partie", JLabel.CENTER);
-		JTextField fieldNomPartie = new JTextField();
+		fieldNomPartie = new JTextField();
 		bouttonOK = new JButton ("Ok");
 		bouttonOK.addActionListener(this);
 		panelSaisie.setLayout(new GridLayout (3, 1));
@@ -185,25 +186,19 @@ public class Fond extends JPanel implements ActionListener{
 		
 		// panel pour la saisie des joueurs
 		panelSaisieJoueur = new JPanel ();
-		panelSaisieJoueur.setLayout(new GridLayout(4,1));
-		JPanel panelInfoSaisieJoueur = new JPanel ();
-		panelInfoSaisieJoueur.setLayout(new GridLayout (1,2));
-		JLabel annonceInfoCbJoueur = new JLabel ("Joueur deja enregistre :", JLabel.LEFT);
-		JLabel infoCbJoueur = new JLabel ("", JLabel.LEFT);
-		panelInfoSaisieJoueur.add(annonceInfoCbJoueur);
-		panelInfoSaisieJoueur.add(infoCbJoueur);
-		panelSaisieJoueur.add(panelInfoSaisieJoueur);
-		JLabel labelConsigne = new JLabel ("Entrez le nom du joueur a ajouter");
+		panelSaisieJoueur.setLayout(new GridLayout(4,2));
+		annonceInfoCbJoueur = new JLabel ("Joueur deja enregistre :", JLabel.LEFT);
+		panelSaisieJoueur.add(annonceInfoCbJoueur);
+		infoCbJoueur = new JLabel ("", JLabel.LEFT);
+		panelSaisieJoueur.add(infoCbJoueur);
+		labelConsigne = new JLabel ("Entrez le nom du joueur a ajouter");
 		panelSaisieJoueur.add(labelConsigne);
-		JTextField fieldSaisieJoueur = new JTextField ("Nom du joueur");
+		fieldSaisieJoueur = new JTextField ("");
 		panelSaisieJoueur.add(fieldSaisieJoueur);
-		// pour les couleurs
-		JPanel panelCouleur = new JPanel ();
-		panelCouleur.setLayout(new GridLayout (1, 2));
-		JLabel annonceCouleur = new JLabel ("Choisisez une couleur");
-		panelCouleur.add(annonceCouleur);
+		annonceCouleur = new JLabel ("Choisisez une couleur");
+		panelSaisieJoueur.add(annonceCouleur);
 		// on fait une liste deroulente
-		JComboBox comboCouleur = new JComboBox ();
+		comboCouleur = new JComboBox ();
 		comboCouleur.addItem("Rouge");
 		comboCouleur.addItem("Bleu");
 		comboCouleur.addItem("Noir");
@@ -212,10 +207,8 @@ public class Fond extends JPanel implements ActionListener{
 		comboCouleur.addItem("Mauve");
 		comboCouleur.addItem("Cyan");
 		comboCouleur.addItem("Vert");
-		panelCouleur.add(comboCouleur);
+		panelSaisieJoueur.add(comboCouleur);
 		// pour valider ou finir
-		JPanel panelBoutonsSaisieJoueur = new JPanel ();
-		panelBoutonsSaisieJoueur.setLayout(new GridLayout (1,2));
 		JButton boutonAjouter = new JButton ("Ajouter");
 		boutonAjouter.addActionListener(this);
 		panelSaisieJoueur.add(boutonAjouter);
@@ -312,9 +305,12 @@ public class Fond extends JPanel implements ActionListener{
 		}
 		else if (e.getActionCommand()== "Ok")
 		{
+			System.out.println("Test ok apres saisie du nom de la partie");
 			// on cree la partie
-			this.jeu = new Jeu(this.fieldNomPartie.getText());
-			// on chage l'affichage pour entre les joueurs
+			String tempNomPartie = fieldNomPartie.getText();
+			System.out.println(tempNomPartie);
+			this.jeu = new Jeu(tempNomPartie);
+			// on change l'affichage pour entre les joueurs
 			panelSaisie.setVisible(false);
 			panelSaisieJoueur.setVisible(true);
 			panelLancerDe.setVisible(false);
@@ -328,24 +324,24 @@ public class Fond extends JPanel implements ActionListener{
 			// si le joueur doit etre ajouter
 		else if (e.getActionCommand() == "Ajouter")
 		{
-					// on recupere le nom
-					String tempNom = fieldSaisieJoueur.getText();
-					// la couleur
-					int tempCouleur = this.comboCouleur.getSelectedIndex();
-					// jeu.ajouterJoueur(tempNom, tempCouleur);
-				}
-				if (e.getActionCommand() == "Terminer")
-				{
-					// on change les panels
-					panelSaisie.setVisible(false);
-					panelSaisieJoueur.setVisible(false);
-					panelLancerDe.setVisible(true);
-					panelHimo.setVisible(false);
-					panelSortiPrison.setVisible(false);
-					panelAchat.setVisible(false);
-				}
-			}
-			this.labelCommunication.setText("Nouvelle partie crée vous allez pouvoir jouer");
+			// on recupere le nom
+			String tempNom = fieldSaisieJoueur.getText();
+			// la couleur
+			int tempCouleur = this.comboCouleur.getSelectedIndex();
+			jeu.ajouterJoueur(tempNom, tempCouleur);
+			this.labelCommunication.setText("Joueur cree");
+		}
+		else if (e.getActionCommand() == "Terminer")
+		{
+			// on change les panels
+			panelSaisie.setVisible(false);
+			panelSaisieJoueur.setVisible(false);
+			panelLancerDe.setVisible(true);
+			panelHimo.setVisible(false);
+			panelSortiPrison.setVisible(false);
+			panelAchat.setVisible(false);
+	
+			this.labelCommunication.setText("Tous les joueurs ont ete cree, vous allez pouvoir jouer");
 			// on va créer tout les joueurs un par un
 			
 		}
