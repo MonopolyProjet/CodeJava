@@ -15,6 +15,7 @@ public class FenetreMonopoly {
 		// on fait en sorte que la fenetre soit sur tout l'ecran
 	    mainFrame.setSize(1000, 1000);
 	    mainFrame.setAlwaysOnTop(true);
+	    mainFrame.pack();
 	    mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 	    // on recupere la forme
@@ -23,9 +24,5 @@ public class FenetreMonopoly {
 	    
 	    // on la rend visible
 		mainFrame.setVisible(true);
-		
-		mainFrame.setLayout(new GridLayout(1,2));
-		mainFrame.pack();
-		mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 }

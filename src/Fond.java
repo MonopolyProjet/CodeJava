@@ -124,23 +124,21 @@ public class Fond extends JPanel implements ActionListener{
 		panelDroit.add(labelAnnonceJoueurJoue);
 		
 		// panel pour les soldes
-		Font font = new Font("Yu Gothic UI Semibold", Font.PLAIN, 36);
+		Font font = new Font("Yu Gothic UI Semibold", Font.PLAIN, 26);
 		panelSolde = new JPanel();
 		panelSolde.setLayout(new GridLayout(1,4));
-		labelAnnonceArgentPlateau = new JLabel("Argent plateau:", JLabel.LEFT);
+		labelAnnonceArgentPlateau = new JLabel("Argent plateau :", JLabel.LEFT);
 		labelAnnonceArgentPlateau.setFont(font);
 		labelSoldePlateau = new JLabel ("", JLabel.LEFT);
 		
-		labelAnnonceArgentJoueur = new JLabel ("Argent joueur: ", JLabel.LEFT);
+		labelAnnonceArgentJoueur = new JLabel ("Argent joueur : ", JLabel.LEFT);
 		labelAnnonceArgentJoueur.setFont(font);
 		labelSoldeJoueur = new JLabel ("", JLabel.LEFT);
-		
 		// on ajoute les elements au panel
 		panelSolde.add(labelAnnonceArgentPlateau);
 		panelSolde.add(labelSoldePlateau);
 		panelSolde.add(labelAnnonceArgentJoueur);
 		panelSolde.add(labelSoldeJoueur);
-		
 		// on l'ajoute au panel droit
 		panelDroit.add(panelSolde);
 		
@@ -148,7 +146,6 @@ public class Fond extends JPanel implements ActionListener{
 		panelCommunication = new JPanel();
 		labelCommunication = new JLabel ("", JLabel.CENTER);
 		panelCommunication.add(labelCommunication);
-		
 		// on l'ajoute au panel droit
 		panelDroit.add(panelCommunication);
 		
@@ -157,8 +154,7 @@ public class Fond extends JPanel implements ActionListener{
 		
 		// on va creer tous les panel possible avec les boutons
 		panelGestionPartie = new JPanel ();
-		panelGestionPartie.setLayout(new GridLayout (3,1));
-		
+		panelGestionPartie.setLayout(new GridLayout (1,3));
 		// on declare les boutons correspondants et on leur fixe le actionListener
 		btnNouvellePartie = new JButton("Nouvelle partie");
 		btnNouvellePartie.addActionListener(this);
@@ -166,12 +162,10 @@ public class Fond extends JPanel implements ActionListener{
 		btnChargerPartie.addActionListener(this);
 		btnSauverPartie = new JButton("Sauver partie");
 		btnSauverPartie.addActionListener(this);
-		
 		// on y ajoute les boutons dans le bon ordre
 		panelGestionPartie.add(btnNouvellePartie);
 		panelGestionPartie.add(btnChargerPartie);
 		panelGestionPartie.add(btnSauverPartie);
-		
 		// on ajoute ce panel au panel bouton
 		panelDroit.add(panelGestionPartie);
 		
@@ -182,10 +176,12 @@ public class Fond extends JPanel implements ActionListener{
 		JTextField fieldNomPartie = new JTextField();
 		bouttonOK = new JButton ("Ok");
 		bouttonOK.addActionListener(this);
-		
 		panelSaisie.setLayout(new GridLayout (3, 1));
 		panelSaisie.add(labelInfo);
-		panelSaisie.add(labelInfo);
+		panelSaisie.add(fieldNomPartie);
+		panelSaisie.add(bouttonOK);
+		// on ajoute au panel droit
+		panelBoutons.add(panelSaisie);
 		
 		// panel pour la saisie des joueurs
 		panelSaisieJoueur = new JPanel ();
@@ -226,7 +222,7 @@ public class Fond extends JPanel implements ActionListener{
 		JButton boutonTerminerSaisie = new JButton ("Terminer");
 		boutonTerminerSaisie.addActionListener(this);
 		panelSaisieJoueur.add(boutonTerminerSaisie);
-		
+		panelBoutons.add(panelSaisieJoueur);
 		
 		//panel pour les boutons d'achat de l'immobilier
 		panelHimo = new JPanel ();
@@ -237,7 +233,8 @@ public class Fond extends JPanel implements ActionListener{
 		btnAcheterHotel.addActionListener(this);
 		panelHimo.add(btnAcheterMaison);
 		panelHimo.add(btnAcheterHotel);
-		
+		// on l'ajout au panel droit
+		panelBoutons.add(panelHimo);
 		
 		// panel pour lancer les des
 		panelLancerDe = new JPanel ();
@@ -247,6 +244,8 @@ public class Fond extends JPanel implements ActionListener{
 		btnLancerDes.addActionListener(this);
 		panelLancerDe.add(labelAnnonceLancerDe);
 		panelLancerDe.add(btnLancerDes);
+		// on l'ajout au panel droit
+		panelBoutons.add(panelLancerDe);
 		
 		// panel pour les boutons sortir de prison
 		panelSortiPrison = new JPanel ();
@@ -255,6 +254,8 @@ public class Fond extends JPanel implements ActionListener{
 		btnSortiPrison.addActionListener(this);
 		panelSortiPrison.add(btnLancerDes);
 		panelSortiPrison.add(btnSortiPrison);
+		// on l'ajout au panel droit
+		panelBoutons.add(panelSortiPrison);
 		
 		// panel pour savoir si veut acheter
 		panelAchat = new JPanel ();
@@ -265,18 +266,10 @@ public class Fond extends JPanel implements ActionListener{
 		btnPasAcheter.addActionListener(this);
 		panelAchat.add(btnAcheter);
 		panelAchat.add(btnPasAcheter);
+		// on l'ajout au panel droit
+		panelBoutons.add(panelAchat);
 		
 		
-		
-		
-		// on les ajoute tout les panel au panel "panelBoutons"
-		panelBoutons.add(panelGestionPartie);
-		panelBoutons.add(panelSaisie);
-		panelBoutons.add(panelSaisieJoueur);
-		panelBoutons.add(panelLancerDe);
-		panelBoutons.add(panelHimo);
-		panelBoutons.add(panelSortiPrison);
-		panelBoutons.add(panelAchat);		
 		
 		// on ajoute le panel avec les boutons
 		panelDroit.add(panelBoutons);
@@ -285,6 +278,7 @@ public class Fond extends JPanel implements ActionListener{
 		// panel pour le bouton quitter
 		panelQuitter = new JPanel ();
 		btnQuitter = new JButton("Quitter");
+		btnQuitter.addActionListener(this);
 		panelQuitter.add(btnQuitter);
 		// on l'ajoute a panel droit
 		panelDroit.add(panelQuitter);		
@@ -307,6 +301,7 @@ public class Fond extends JPanel implements ActionListener{
 		// bouton nouvelle partie
 		if (e.getActionCommand() == "Nouvelle partie")
 		{
+			System.out.println("Test nouvelle partie");
 			// on change les affichages pour pouvoir ecrire le nom de la partie
 			panelSaisie.setVisible(true);
 			panelSaisieJoueur.setVisible(false);
@@ -314,29 +309,30 @@ public class Fond extends JPanel implements ActionListener{
 			panelHimo.setVisible(false);
 			panelSortiPrison.setVisible(false);
 			panelAchat.setVisible(false);
-			if (e.getActionCommand()== "Ok")
-			{
-				// on cree la partie
-				this.jeu = new Jeu(this.fieldNomPartie.getText());
-				// on chage l'affichage pour entre les joueurs
-				panelSaisie.setVisible(false);
-				panelSaisieJoueur.setVisible(true);
-				panelLancerDe.setVisible(false);
-				panelHimo.setVisible(false);
-				panelSortiPrison.setVisible(false);
-				panelAchat.setVisible(false);
-				//on rend les boutons inactifs
-				this.btnNouvellePartie.setEnabled(false);
-				this.btnChargerPartie.setEnabled(false);
-				
-				// si le joueur doit etre ajouter
-				if (e.getActionCommand() == "Ajouter")
-				{
+		}
+		else if (e.getActionCommand()== "Ok")
+		{
+			// on cree la partie
+			this.jeu = new Jeu(this.fieldNomPartie.getText());
+			// on chage l'affichage pour entre les joueurs
+			panelSaisie.setVisible(false);
+			panelSaisieJoueur.setVisible(true);
+			panelLancerDe.setVisible(false);
+			panelHimo.setVisible(false);
+			panelSortiPrison.setVisible(false);
+			panelAchat.setVisible(false);
+			//on rend les boutons inactifs
+			this.btnNouvellePartie.setEnabled(false);
+			this.btnChargerPartie.setEnabled(false);
+		}	
+			// si le joueur doit etre ajouter
+		else if (e.getActionCommand() == "Ajouter")
+		{
 					// on recupere le nom
 					String tempNom = fieldSaisieJoueur.getText();
 					// la couleur
 					int tempCouleur = this.comboCouleur.getSelectedIndex();
-					jeu.ajouterJoueur(tempNom, tempCouleur);
+					// jeu.ajouterJoueur(tempNom, tempCouleur);
 				}
 				if (e.getActionCommand() == "Terminer")
 				{
@@ -356,6 +352,7 @@ public class Fond extends JPanel implements ActionListener{
 		// bouton charger partie
 		else if (e.getActionCommand() == "Charger partie")
 		{
+			System.out.println("Test charger partie");
 			// on change les affichages
 			panelSaisie.setVisible(true);
 			panelSaisieJoueur.setVisible(false);
@@ -365,7 +362,7 @@ public class Fond extends JPanel implements ActionListener{
 			panelAchat.setVisible(false);
 			if (e.getActionCommand()== "Ok")
 			{
-				this.jeu = new Jeu(this.fieldNomPartie.getText(), 1);
+				// this.jeu = new Jeu(this.fieldNomPartie.getText(), 1);
 			}
 			this.labelCommunication.setText("Partie chargée");
 			// on change les affichages
@@ -382,6 +379,7 @@ public class Fond extends JPanel implements ActionListener{
 		// bouton de sauvegarde
 		else if (e.getActionCommand()== "Sauver partie")
 		{
+			System.out.println("Test sauver partie");
 			jeu.sauvegarde(jeu.getPlateau());
 			this.labelCommunication.setText("Partie sauvegardée");
 			
@@ -396,6 +394,7 @@ public class Fond extends JPanel implements ActionListener{
 		// lorsque l'on lance les des
 		else if (e.getActionCommand() == "Lancer les des")
 		{
+			System.out.println("Test Lancer Des");
 			// on rend le panel visible
 			panelSaisie.setVisible(false);
 			panelSaisieJoueur.setVisible(false);
@@ -406,7 +405,21 @@ public class Fond extends JPanel implements ActionListener{
 			// on fait avancer son pion
 			// jeu.avancerJoueur();
 		}
-		else if ()
+		//pour le bouton quitter
+		else if (e.getActionCommand() == "Quitter")
+		{
+			System.out.println("Test Quitter");
+			
+			int retour = JOptionPane.showConfirmDialog(this,"Oui - Non", "Sauvegarder avant de quitter ?",JOptionPane.OK_CANCEL_OPTION);
+			if(retour == JOptionPane.YES_OPTION)
+			{
+				this.jeu.sauvegarde(this.jeu.getPlateau());
+				this.labelCommunication.setText("Partie sauvegardée");
+				System.exit(0);
+			}
+			else if (retour == JOptionPane.NO_OPTION)
+				System.exit(0);
+		}
 		
 			
 	} // fin du actionPerformed
