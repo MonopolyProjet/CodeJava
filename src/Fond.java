@@ -33,7 +33,8 @@ public class Fond extends JPanel implements ActionListener{
 	private JPanel panelDroit;
 	private JPanel panelSolde;
 	private JPanel panelCommunication;
-	
+	private JPanel panelInfoSaisieJoueur;
+	private JPanel panelCouleur;
 	private JPanel panelBoutonsAction;
 	private JPanel panelBoutonsCommuns;
 	
@@ -51,26 +52,32 @@ public class Fond extends JPanel implements ActionListener{
 	private JPanel panelQuitter;
 		
 	// declaration label
+	private JLabel labelAnnonceJoueurJoue;
 	private JLabel labelAnnonceArgentPlateau;
 	private JLabel labelSoldePlateau;
 	private JLabel labelAnnonceArgentJoueur;
 	private JLabel labelSoldeJoueur;
 	private JLabel labelCommunication;
 	private JLabel labelAnnonceLancerDe;
-	
+	private JLabel annonceInfoCbJoueur;
+	private JLabel infoCbJoueur;
+	private JLabel labelConsigne;
 	private JLabel fondMonopoly;
 	private JLabel soldePlateau;
 	private JLabel soldeJoueur;
-	
+	private JLabel annonceCouleur;
 	private JLabel labelInfo;
 	
 	// declaration du textField
 	private JTextField zone1;
 	// on cree le text field
 	private JTextField fieldNomPartie;
+	private JTextField fieldSaisieJoueur;
 	
 	// declaration de l'image
 	private Icon imageMonopoly;
+	
+	private JComboBox comboCouleur;
 	
 	// constructeur
 	Fond (){
@@ -97,9 +104,11 @@ public class Fond extends JPanel implements ActionListener{
 		panelGauche.setBackground(Color.BLACK);
 		// on fixe l'image du plateau
 		// on cree l'image
-		imageMonopoly = new ImageIcon("src/imageMonopoly.jpg");
-		fondMonopoly.setIcon(imageMonopoly);
-		panelGauche.add(fondMonopoly);
+			
+		fondMonopoly = new JLabel( new ImageIcon("imageMonopoly.jpg"));
+		panelGauche.setLayout(new BorderLayout());
+		panelGauche.add(fondMonopoly, BorderLayout.CENTER);
+
 		
 		// on l'ajoute a la fenetre
 		this.add(panelGauche);
@@ -110,9 +119,13 @@ public class Fond extends JPanel implements ActionListener{
 		
 		//		Panel Droit
 		// on va faire un layout avec 3 lignes : les soldes, la communication, les boutons et un moyen de quitter en bas
-		panelDroit.setLayout(new GridLayout (4,1));
+		panelDroit.setLayout(new GridLayout (6,1));
 		
-		// on fait les diff��rents panel
+		// on fait les differents panel
+		
+		// panel pour afficher le nom du joueur qui va jouer
+		labelAnnonceJoueurJoue = new JLabel ("", JLabel.CENTER);
+		panelDroit.add(labelAnnonceJoueurJoue);
 		
 		// panel pour les soldes
 		Font font = new Font("Yu Gothic UI Semibold", Font.PLAIN, 36);
@@ -164,7 +177,7 @@ public class Fond extends JPanel implements ActionListener{
 		panelGestionPartie.add(btnSauverPartie);
 		
 		// on ajoute ce panel au panel bouton
-		panelBoutons.add(panelGestionPartie);
+		panelDroit.add(panelGestionPartie);
 		
 		
 		// panel pour la saisie des informations des partie
@@ -284,7 +297,6 @@ public class Fond extends JPanel implements ActionListener{
 		this.add(panelDroit);
 		
 		// on va rendre le premier panel necessaire visible
-		panelGestionPartie.setVisible(true);
 		panelSaisie.setVisible(false);
 		panelSaisieJoueur.setVisible(false);
 		panelLancerDe.setVisible(false);
@@ -300,7 +312,6 @@ public class Fond extends JPanel implements ActionListener{
 		if (e.getActionCommand() == "Nouvelle partie")
 		{
 			// on change les affichages pour pouvoir ecrire le nom de la partie
-			panelGestionPartie.setVisible(false);
 			panelSaisie.setVisible(true);
 			panelSaisieJoueur.setVisible(false);
 			panelLancerDe.setVisible(false);
@@ -309,17 +320,40 @@ public class Fond extends JPanel implements ActionListener{
 			panelAchat.setVisible(false);
 			if (e.getActionCommand()== "Ok")
 			{
+				// on cree la partie
 				this.jeu = new Jeu(this.fieldNomPartie.getText());
 				// on chage l'affichage pour entre les joueurs
-				panelGestionPartie.setVisible(false);
 				panelSaisie.setVisible(false);
 				panelSaisieJoueur.setVisible(true);
 				panelLancerDe.setVisible(false);
 				panelHimo.setVisible(false);
 				panelSortiPrison.setVisible(false);
 				panelAchat.setVisible(false);
+				//on rend les boutons inactifs
+				this.btnNouvellePartie.setEnabled(false);
+				this.btnChargerPartie.setEnabled(false);
+				
+				// si le joueur doit etre ajouter
+				if (e.getActionCommand() == "Ajouter")
+				{
+					// on recupere le nom
+					String tempNom = fieldSaisieJoueur.getText();
+					// la couleur
+					int tempCouleur = this.comboCouleur.getSelectedIndex();
+					jeu.ajouterJoueur(tempNom, tempCouleur);
+				}
+				if (e.getActionCommand() == "Terminer")
+				{
+					// on change les panels
+					panelSaisie.setVisible(false);
+					panelSaisieJoueur.setVisible(false);
+					panelLancerDe.setVisible(true);
+					panelHimo.setVisible(false);
+					panelSortiPrison.setVisible(false);
+					panelAchat.setVisible(false);
+				}
 			}
-			this.labelCommunication.setText("Nouvelle partie crée");
+			this.labelCommunication.setText("Nouvelle partie crée vous allez pouvoir jouer");
 			// on va créer tout les joueurs un par un
 			
 		}
@@ -327,7 +361,6 @@ public class Fond extends JPanel implements ActionListener{
 		else if (e.getActionCommand() == "Charger partie")
 		{
 			// on change les affichages
-			panelGestionPartie.setVisible(false);
 			panelSaisie.setVisible(true);
 			panelSaisieJoueur.setVisible(false);
 			panelLancerDe.setVisible(false);
@@ -339,6 +372,16 @@ public class Fond extends JPanel implements ActionListener{
 				this.jeu = new Jeu(this.fieldNomPartie.getText(), 1);
 			}
 			this.labelCommunication.setText("Partie chargée");
+			// on change les affichages
+			panelSaisie.setVisible(false);
+			panelSaisieJoueur.setVisible(false);
+			panelLancerDe.setVisible(true);
+			panelHimo.setVisible(false);
+			panelSortiPrison.setVisible(false);
+			panelAchat.setVisible(false);
+			//on rend les boutons inactifs
+			this.btnNouvellePartie.setEnabled(false);
+			this.btnChargerPartie.setEnabled(false);
 		}
 		// bouton de sauvegarde
 		else if (e.getActionCommand()== "Sauver partie")
@@ -347,7 +390,6 @@ public class Fond extends JPanel implements ActionListener{
 			this.labelCommunication.setText("Partie sauvegardée");
 			
 			// on cache le panel de gestion et on met les autres
-			panelGestionPartie.setVisible(false);
 			panelSaisie.setVisible(false);
 			panelSaisieJoueur.setVisible(false);
 			panelLancerDe.setVisible(true);
@@ -355,21 +397,21 @@ public class Fond extends JPanel implements ActionListener{
 			panelSortiPrison.setVisible(false);
 			panelAchat.setVisible(false);
 		}
+		// lorsque l'on lance les des
 		else if (e.getActionCommand() == "Lancer les des")
 		{
-			jeu.
+			// on rend le panel visible
+			panelSaisie.setVisible(false);
+			panelSaisieJoueur.setVisible(false);
+			panelLancerDe.setVisible(true);
+			panelHimo.setVisible(false);
+			panelSortiPrison.setVisible(false);
+			panelAchat.setVisible(false);
+			// on fait avancer son pion
+			// jeu.avancerJoueur();
 		}
+		else if ()
 		
 			
-	}
-	
-	
-	// pour ordonner l'affichage
-	public static void main (String args[]){
-		Fond f = new Fond();
-		f.setSize(1400,1050);
-		f.setVisible(true);	
-		
-		
-	}
-}
+	} // fin du actionPerformed
+}// fin de la classe Fond
